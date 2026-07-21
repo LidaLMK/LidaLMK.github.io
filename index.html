@@ -1,42 +1,59 @@
+Yes. I will keep your original visual format and overall structure rather than replacing it with a completely different website.
+
+I only expanded it by:
+
+* Preserving your existing hero, navigation, cards, spacing, colors, and typography
+* Adding the Night Drive interactive experience
+* Adding a new Experience navigation item
+* Broadening your research presentation to include:
+    * MPC
+    * Optimal control
+    * Dynamic optimization
+    * Continuous-time optimization
+    * Multiparametric programming
+    * Mathematical modeling
+    * Scientific computing
+    * Machine learning
+* Keeping the game as one memorable section inside a professional research portfolio
+
+Replace your entire current index.html with this:
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-
-    <title>Lida Lamakani | Optimization and Machine Learning</title>
-
+    <title>Lida Lamakani | Optimization, Control and Machine Learning</title>
     <meta
         name="description"
-        content="Personal portfolio of Lida Lamakani, researcher in optimization, control, machine learning, and scientific computing."
+        content="Personal portfolio of Lida Lamakani, researcher in optimization, model predictive control, dynamic optimization, modeling, machine learning, and scientific computing."
     >
-
     <style>
         * {
             box-sizing: border-box;
         }
-
         html {
             scroll-behavior: smooth;
         }
-
         body {
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
             background: #080b14;
             color: #f5f7ff;
             line-height: 1.6;
+            overflow-x: hidden;
         }
-
         a {
             color: inherit;
             text-decoration: none;
         }
-
+        button,
+        input {
+            font: inherit;
+        }
         .background-glow {
             position: fixed;
             width: 500px;
@@ -48,56 +65,58 @@
             right: -120px;
             z-index: -1;
         }
-
+        .background-glow-second {
+            position: fixed;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: rgba(101, 215, 255, 0.08);
+            filter: blur(120px);
+            bottom: -180px;
+            left: -140px;
+            z-index: -1;
+        }
         .container {
             width: min(1120px, 90%);
             margin: 0 auto;
         }
-
         header {
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 50;
             background: rgba(8, 11, 20, 0.82);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-
         nav {
             min-height: 72px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-
         .logo {
             font-size: 20px;
             font-weight: 700;
             letter-spacing: 0.5px;
         }
-
         .nav-links {
             display: flex;
-            gap: 28px;
+            gap: 24px;
             font-size: 15px;
             color: #c7ccdc;
         }
-
         .nav-links a:hover {
             color: #ffffff;
         }
-
         .hero {
             min-height: 88vh;
             display: flex;
             align-items: center;
             padding: 80px 0;
         }
-
         .hero-content {
-            max-width: 850px;
+            max-width: 900px;
         }
-
         .eyebrow {
             color: #9c91ff;
             font-size: 14px;
@@ -106,14 +125,12 @@
             text-transform: uppercase;
             margin-bottom: 18px;
         }
-
         h1 {
             margin: 0;
             font-size: clamp(52px, 9vw, 105px);
             line-height: 0.95;
             letter-spacing: -5px;
         }
-
         .gradient-text {
             background: linear-gradient(
                 90deg,
@@ -125,21 +142,18 @@
             background-clip: text;
             color: transparent;
         }
-
         .hero-description {
-            max-width: 730px;
+            max-width: 790px;
             margin-top: 30px;
             font-size: clamp(19px, 2vw, 25px);
             color: #b7bdce;
         }
-
         .buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 14px;
             margin-top: 38px;
         }
-
         .button {
             display: inline-flex;
             align-items: center;
@@ -148,28 +162,28 @@
             padding: 0 24px;
             border-radius: 999px;
             font-weight: 700;
-            transition: transform 0.25s ease;
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+            cursor: pointer;
         }
-
         .button:hover {
             transform: translateY(-3px);
         }
-
         .button-primary {
+            border: none;
             background: #ffffff;
             color: #080b14;
         }
-
         .button-secondary {
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
             background: rgba(255, 255, 255, 0.04);
         }
-
         section {
             padding: 100px 0;
         }
-
         .section-label {
             color: #9c91ff;
             font-size: 14px;
@@ -177,19 +191,28 @@
             letter-spacing: 2px;
             text-transform: uppercase;
         }
-
         h2 {
             margin: 12px 0 35px;
             font-size: clamp(34px, 5vw, 56px);
             line-height: 1.1;
         }
-
+        .section-description {
+            max-width: 820px;
+            margin-top: -15px;
+            margin-bottom: 36px;
+            font-size: 19px;
+            color: #b7bdce;
+        }
         .grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
-
+        .grid-four {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
         .card {
             min-height: 260px;
             padding: 28px;
@@ -200,38 +223,240 @@
                 transform 0.3s ease,
                 border-color 0.3s ease;
         }
-
         .card:hover {
             transform: translateY(-7px);
             border-color: rgba(156, 145, 255, 0.65);
         }
-
         .card-number {
             color: #7d8499;
             font-size: 14px;
         }
-
         .card h3 {
             margin-top: 45px;
             font-size: 25px;
         }
-
         .card p {
             color: #aeb4c5;
         }
-
         .about-text {
-            max-width: 850px;
+            max-width: 900px;
             font-size: clamp(21px, 3vw, 31px);
             color: #c7ccda;
         }
-
+        /* INTERACTIVE EXPERIENCE */
+        .experience-container {
+            width: min(1220px, 94%);
+            margin: 0 auto;
+        }
+        .experience-heading {
+            max-width: 850px;
+            margin-bottom: 35px;
+        }
+        .experience-card {
+            position: relative;
+            min-height: 680px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 28px;
+            background: #090e1b;
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.36);
+        }
+        .experience-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            background:
+                linear-gradient(
+                    180deg,
+                    transparent 0%,
+                    transparent 60%,
+                    rgba(0, 0, 0, 0.46) 100%
+                ),
+                radial-gradient(
+                    circle at 76% 17%,
+                    rgba(101, 215, 255, 0.12),
+                    transparent 30%
+                );
+        }
+        .game-header {
+            position: absolute;
+            z-index: 15;
+            top: 22px;
+            left: 22px;
+            right: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+        .game-title strong {
+            display: block;
+            font-size: 18px;
+        }
+        .game-title span {
+            display: block;
+            margin-top: 2px;
+            color: #9ba3b7;
+            font-size: 13px;
+        }
+        .status-pill {
+            padding: 8px 13px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            background: rgba(8, 11, 20, 0.74);
+            color: #c7ccdc;
+            font-size: 12px;
+            backdrop-filter: blur(10px);
+        }
+        #gameCanvas {
+            width: 100%;
+            height: 680px;
+            display: block;
+        }
+        .game-interface {
+            position: absolute;
+            z-index: 16;
+            left: 22px;
+            right: 22px;
+            bottom: 22px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 16px;
+            align-items: end;
+        }
+        .control-panel {
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 20px;
+            background: rgba(8, 11, 20, 0.80);
+            backdrop-filter: blur(14px);
+        }
+        .control-labels {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 9px;
+            color: #aeb4c5;
+            font-size: 13px;
+        }
+        .control-labels strong {
+            color: #ffffff;
+        }
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+            accent-color: #65d7ff;
+        }
+        .metrics {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .metric {
+            min-width: 96px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.045);
+        }
+        .metric small {
+            display: block;
+            margin-bottom: 3px;
+            color: #8f96aa;
+        }
+        .metric strong {
+            font-size: 15px;
+        }
+        .game-buttons {
+            display: grid;
+            gap: 10px;
+        }
+        .game-buttons .button {
+            min-width: 155px;
+        }
+        .game-overlay {
+            position: absolute;
+            z-index: 40;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            padding: 28px;
+            background: rgba(5, 8, 16, 0.76);
+            backdrop-filter: blur(13px);
+            transition:
+                opacity 0.3s ease,
+                visibility 0.3s ease;
+        }
+        .game-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .overlay-box {
+            width: min(580px, 100%);
+            padding: 36px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 26px;
+            background: rgba(9, 14, 27, 0.94);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+        }
+        .overlay-box h3 {
+            margin: 8px 0 14px;
+            font-size: clamp(30px, 5vw, 50px);
+            line-height: 1.05;
+        }
+        .overlay-box p {
+            margin: 0 auto 24px;
+            color: #b7bdce;
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .result-item {
+            padding: 14px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.045);
+        }
+        .result-item small {
+            display: block;
+            margin-bottom: 5px;
+            color: #8f96aa;
+        }
+        .research-message {
+            margin-top: 28px;
+            padding: 34px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            background:
+                radial-gradient(
+                    circle at 85% 20%,
+                    rgba(156, 145, 255, 0.15),
+                    transparent 28%
+                ),
+                rgba(255, 255, 255, 0.035);
+        }
+        .research-message strong {
+            display: block;
+            max-width: 900px;
+            margin-bottom: 14px;
+            font-size: clamp(28px, 4vw, 48px);
+            line-height: 1.12;
+        }
+        .research-message p {
+            max-width: 860px;
+            color: #b7bdce;
+            font-size: 18px;
+        }
         footer {
             padding: 50px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             color: #8f96aa;
         }
-
         .fade-in {
             opacity: 0;
             transform: translateY(24px);
@@ -239,75 +464,111 @@
                 opacity 0.8s ease,
                 transform 0.8s ease;
         }
-
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
-
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
             .nav-links {
                 display: none;
             }
-
             h1 {
                 letter-spacing: -3px;
             }
-
-            .grid {
+            .grid,
+            .grid-four {
                 grid-template-columns: 1fr;
             }
-
             .hero {
                 min-height: auto;
                 padding: 120px 0 80px;
             }
+            .game-interface {
+                grid-template-columns: 1fr;
+            }
+            .game-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+            .game-buttons .button {
+                min-width: 0;
+            }
+            .metrics {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .metric {
+                min-width: 0;
+            }
+            #gameCanvas,
+            .experience-card {
+                height: 650px;
+                min-height: 650px;
+            }
+        }
+        @media (max-width: 560px) {
+            .experience-container {
+                width: min(96%, 1220px);
+            }
+            .game-header {
+                top: 16px;
+                left: 16px;
+                right: 16px;
+            }
+            .game-title span {
+                max-width: 180px;
+            }
+            .game-interface {
+                left: 14px;
+                right: 14px;
+                bottom: 14px;
+            }
+            .overlay-box {
+                padding: 26px 20px;
+            }
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-
 <body>
-
     <div class="background-glow"></div>
-
+    <div class="background-glow-second"></div>
     <header>
         <nav class="container">
             <a class="logo" href="#home">LIDA LAMAKANI</a>
-
             <div class="nav-links">
                 <a href="#about">About</a>
+                <a href="#experience">Experience</a>
                 <a href="#work">Work</a>
                 <a href="#expertise">Expertise</a>
                 <a href="#contact">Contact</a>
             </div>
         </nav>
     </header>
-
     <main>
-
         <section class="hero" id="home">
             <div class="container hero-content fade-in">
-
                 <p class="eyebrow">
-                    Optimization · Control · Machine Learning
+                    Optimization · Control · Modeling · Machine Learning
                 </p>
-
                 <h1>
                     Engineering
                     <span class="gradient-text">intelligent systems.</span>
                 </h1>
-
                 <p class="hero-description">
                     I develop computational methods for optimization,
-                    control, scientific computing, and machine learning
+                    model predictive control, dynamic systems,
+                    scientific computing, modeling, and machine learning
                     with applications in complex engineering systems.
                 </p>
-
                 <div class="buttons">
-                    <a class="button button-primary" href="#work">
-                        Explore my work
+                    <a
+                        class="button button-primary"
+                        href="#experience"
+                    >
+                        Experience my research
                     </a>
-
                     <a
                         class="button button-secondary"
                         href="https://github.com/LidaLMK"
@@ -317,135 +578,365 @@
                         GitHub
                     </a>
                 </div>
-
             </div>
         </section>
-
         <section id="about">
             <div class="container fade-in">
-
                 <p class="section-label">About</p>
-
                 <h2>Research with real-world impact.</h2>
-
                 <p class="about-text">
                     My work combines mathematical optimization,
-                    dynamic systems, machine learning, and numerical
-                    computation. I am interested in transforming advanced
-                    research into practical tools for engineering,
-                    decision-making, automation, and industry.
+                    dynamic systems, model predictive control,
+                    multiparametric programming, continuous-time
+                    optimization, modeling, scientific computing,
+                    and machine learning. I am interested in transforming
+                    advanced research into practical computational tools
+                    for engineering, automation, intelligent control,
+                    and industrial decision-making.
                 </p>
-
             </div>
         </section>
-
+        <section id="experience">
+            <div class="experience-container fade-in">
+                <div class="experience-heading">
+                    <p class="section-label">
+                        Interactive research experience
+                    </p>
+                    <h2>Can you control the future?</h2>
+                    <p class="section-description">
+                        Guide an autonomous car to the target using one
+                        control input. The translucent ghost predicts
+                        where your current decision may lead.
+                    </p>
+                </div>
+                <div class="experience-card">
+                    <div class="game-header">
+                        <div class="game-title">
+                            <strong>Night Drive</strong>
+                            <span>
+                                A short dynamic optimization experience
+                            </span>
+                        </div>
+                        <div
+                            class="status-pill"
+                            id="statusPill"
+                        >
+                            Ready
+                        </div>
+                    </div>
+                    <canvas
+                        id="gameCanvas"
+                        aria-label="Interactive night driving optimal control experience"
+                    ></canvas>
+                    <div class="game-interface">
+                        <div class="control-panel">
+                            <div class="control-labels">
+                                <span>Brake</span>
+                                <strong id="controlValue">
+                                    0.00
+                                </strong>
+                                <span>Accelerate</span>
+                            </div>
+                            <input
+                                id="controlSlider"
+                                type="range"
+                                min="-1"
+                                max="1"
+                                step="0.01"
+                                value="0"
+                                aria-label="Acceleration and braking control"
+                            >
+                            <div class="metrics">
+                                <div class="metric">
+                                    <small>Distance</small>
+                                    <strong id="distanceMetric">
+                                        85 m
+                                    </strong>
+                                </div>
+                                <div class="metric">
+                                    <small>Speed</small>
+                                    <strong id="speedMetric">
+                                        0.0
+                                    </strong>
+                                </div>
+                                <div class="metric">
+                                    <small>Energy</small>
+                                    <strong id="energyMetric">
+                                        0%
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-buttons">
+                            <button
+                                class="button button-primary"
+                                id="startButton"
+                                type="button"
+                            >
+                                Start
+                            </button>
+                            <button
+                                class="button button-secondary"
+                                id="resetButton"
+                                type="button"
+                            >
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        class="game-overlay"
+                        id="introOverlay"
+                    >
+                        <div class="overlay-box">
+                            <p class="section-label">
+                                Experience dynamic optimization
+                            </p>
+                            <h3>
+                                One slider. Many possible futures.
+                            </h3>
+                            <p>
+                                Accelerate or brake to stop the car
+                                at the target. The ghost car shows
+                                where your current control may take you.
+                            </p>
+                            <button
+                                class="button button-primary"
+                                id="overlayStart"
+                                type="button"
+                            >
+                                Begin
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        class="game-overlay hidden"
+                        id="resultOverlay"
+                    >
+                        <div class="overlay-box">
+                            <p class="section-label">
+                                Your control
+                            </p>
+                            <h3 id="resultTitle">
+                                You found a feasible control.
+                            </h3>
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <small>Accuracy</small>
+                                    <strong id="resultAccuracy">
+                                        —
+                                    </strong>
+                                </div>
+                                <div class="result-item">
+                                    <small>Energy</small>
+                                    <strong id="resultEnergy">
+                                        —
+                                    </strong>
+                                </div>
+                                <div class="result-item">
+                                    <small>Smoothness</small>
+                                    <strong id="resultSmoothness">
+                                        —
+                                    </strong>
+                                </div>
+                            </div>
+                            <p>
+                                Your trajectory is feasible.
+                                Now compare it with an optimized control.
+                            </p>
+                            <button
+                                class="button button-primary"
+                                id="showOptimal"
+                                type="button"
+                            >
+                                Show optimized control
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        class="game-overlay hidden"
+                        id="familyOverlay"
+                    >
+                        <div class="overlay-box">
+                            <p class="section-label">
+                                Multiparametric insight
+                            </p>
+                            <h3>
+                                One scenario is only the beginning.
+                            </h3>
+                            <p>
+                                Different starting positions and
+                                velocities require different optimal
+                                control strategies.
+                            </p>
+                            <button
+                                class="button button-primary"
+                                id="showFamily"
+                                type="button"
+                            >
+                                Reveal the family of solutions
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="research-message">
+                    <strong>
+                        Every optimization problem contains
+                        countless possible futures.
+                    </strong>
+                    <p>
+                        The challenge is not merely controlling the system.
+                        The challenge is discovering the best control before
+                        the future unfolds. My research develops computational
+                        methods that reveal how optimal solutions change over
+                        time and across initial conditions, system parameters,
+                        and operating scenarios.
+                    </p>
+                </div>
+            </div>
+        </section>
         <section id="work">
             <div class="container fade-in">
-
                 <p class="section-label">Selected work</p>
-
                 <h2>Problems I study and solve.</h2>
-
+                <p class="section-description">
+                    My research spans mathematical theory,
+                    computational methods, control systems,
+                    scientific computing, and data-driven engineering.
+                </p>
                 <div class="grid">
-
                     <article class="card">
                         <span class="card-number">01</span>
-
                         <h3>Dynamic Optimization</h3>
-
                         <p>
                             Computational frameworks for solving
-                            continuous-time and multiparametric
-                            optimization problems.
+                            time-dependent optimization problems
+                            in complex engineering systems.
                         </p>
                     </article>
-
                     <article class="card">
                         <span class="card-number">02</span>
-
-                        <h3>Intelligent Control</h3>
-
+                        <h3>Model Predictive Control</h3>
                         <p>
-                            Advanced control methods for complex,
-                            constrained, and nonlinear engineering systems.
+                            Predictive control strategies for constrained
+                            systems using optimization models and
+                            explicit control policies.
                         </p>
                     </article>
-
                     <article class="card">
                         <span class="card-number">03</span>
-
-                        <h3>Machine Learning</h3>
-
+                        <h3>Continuous-Time Optimization</h3>
                         <p>
-                            Data-driven models and scientific machine
-                            learning methods for prediction,
-                            decision-making, and engineering analysis.
+                            Continuous-time formulations for optimal
+                            control, dynamic optimization, and
+                            parameter-dependent solution structures.
                         </p>
                     </article>
-
+                    <article class="card">
+                        <span class="card-number">04</span>
+                        <h3>Multiparametric Programming</h3>
+                        <p>
+                            Explicit solution maps that show how
+                            optimal decisions change across parameters,
+                            states, and initial conditions.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <span class="card-number">05</span>
+                        <h3>Mathematical Modeling</h3>
+                        <p>
+                            Dynamic models, system representations,
+                            simulation frameworks, and computational
+                            models for engineering analysis.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <span class="card-number">06</span>
+                        <h3>Machine Learning</h3>
+                        <p>
+                            Data-driven and scientific machine learning
+                            methods for prediction, approximation,
+                            analysis, and engineering decision-making.
+                        </p>
+                    </article>
                 </div>
-
             </div>
         </section>
-
         <section id="expertise">
             <div class="container fade-in">
-
                 <p class="section-label">Expertise</p>
-
                 <h2>Technical foundations.</h2>
-
-                <div class="grid">
-
+                <div class="grid-four">
                     <article class="card">
-                        <h3>Optimization</h3>
-
+                        <span class="card-number">
+                            Optimization and control
+                        </span>
+                        <h3>
+                            Mathematical Decision Methods
+                        </h3>
                         <p>
-                            Mathematical programming, multiparametric
-                            programming, numerical optimization, and
-                            optimal control.
+                            Mathematical programming, dynamic optimization,
+                            nonlinear optimization, optimal control,
+                            model predictive control, and multiparametric
+                            programming.
                         </p>
                     </article>
-
                     <article class="card">
-                        <h3>Scientific Computing</h3>
-
+                        <span class="card-number">
+                            Modeling
+                        </span>
+                        <h3>
+                            Dynamic System Modeling
+                        </h3>
+                        <p>
+                            Continuous-time and discrete-time systems,
+                            state-space models, differential equations,
+                            simulation, parameterization, and engineering
+                            model development.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <span class="card-number">
+                            Computation
+                        </span>
+                        <h3>
+                            Scientific Computing
+                        </h3>
                         <p>
                             Python-based computational frameworks,
                             numerical algorithms, simulation,
-                            visualization, and reproducible research.
+                            visualization, reproducible research,
+                            and computational workflow development.
                         </p>
                     </article>
-
                     <article class="card">
-                        <h3>AI for Engineering</h3>
-
+                        <span class="card-number">
+                            Artificial intelligence
+                        </span>
+                        <h3>
+                            Machine Learning for Engineering
+                        </h3>
                         <p>
                             Machine learning, deep learning,
+                            scientific machine learning, surrogate models,
                             data analytics, and intelligent
                             decision-support systems.
                         </p>
                     </article>
-
                 </div>
-
             </div>
         </section>
-
         <section id="contact">
             <div class="container fade-in">
-
                 <p class="section-label">Contact</p>
-
                 <h2>Let’s build something meaningful.</h2>
-
                 <p class="about-text">
                     I am interested in research collaborations,
-                    technical projects, and opportunities in
-                    optimization, control, machine learning,
-                    and engineering technology.
+                    technical projects, and opportunities involving
+                    optimization, model predictive control,
+                    dynamic systems, mathematical modeling,
+                    machine learning, and computational engineering.
                 </p>
-
                 <div class="buttons">
                     <a
                         class="button button-primary"
@@ -456,24 +947,19 @@
                         View GitHub
                     </a>
                 </div>
-
             </div>
         </section>
-
     </main>
-
     <footer>
         <div class="container">
             © <span id="year"></span> Lida Lamakani
         </div>
     </footer>
-
     <script>
         document.getElementById("year").textContent =
             new Date().getFullYear();
-
-        const elements = document.querySelectorAll(".fade-in");
-
+        const fadeElements =
+            document.querySelectorAll(".fade-in");
         const observer = new IntersectionObserver(
             entries => {
                 entries.forEach(entry => {
@@ -486,11 +972,1110 @@
                 threshold: 0.15
             }
         );
-
-        elements.forEach(element => {
+        fadeElements.forEach(element => {
             observer.observe(element);
         });
+        const canvas =
+            document.getElementById("gameCanvas");
+        const ctx =
+            canvas.getContext("2d");
+        const slider =
+            document.getElementById("controlSlider");
+        const controlValue =
+            document.getElementById("controlValue");
+        const distanceMetric =
+            document.getElementById("distanceMetric");
+        const speedMetric =
+            document.getElementById("speedMetric");
+        const energyMetric =
+            document.getElementById("energyMetric");
+        const statusPill =
+            document.getElementById("statusPill");
+        const introOverlay =
+            document.getElementById("introOverlay");
+        const resultOverlay =
+            document.getElementById("resultOverlay");
+        const familyOverlay =
+            document.getElementById("familyOverlay");
+        const resultAccuracy =
+            document.getElementById("resultAccuracy");
+        const resultEnergy =
+            document.getElementById("resultEnergy");
+        const resultSmoothness =
+            document.getElementById("resultSmoothness");
+        const resultTitle =
+            document.getElementById("resultTitle");
+        const startButton =
+            document.getElementById("startButton");
+        const resetButton =
+            document.getElementById("resetButton");
+        const overlayStart =
+            document.getElementById("overlayStart");
+        const showOptimal =
+            document.getElementById("showOptimal");
+        const showFamily =
+            document.getElementById("showFamily");
+        let width = 0;
+        let height = 0;
+        const deviceScale =
+            Math.min(window.devicePixelRatio || 1, 2);
+        const state = {
+            x: 5,
+            v: 0,
+            control: 0,
+            energy: 0,
+            elapsed: 0,
+            running: false,
+            replaying: false,
+            showingFamily: false,
+            targetX: 90,
+            history: [],
+            controlHistory: [],
+            optimalTrajectory: [],
+            familyTrajectories: [],
+            lastTime: performance.now()
+        };
+        function clamp(value, minimum, maximum) {
+            return Math.max(
+                minimum,
+                Math.min(maximum, value)
+            );
+        }
+        function roadY() {
+            return height * 0.72;
+        }
+        function mapX(value) {
+            return 65
+                + (value / 100)
+                * (width - 130);
+        }
+        function resizeCanvas() {
+            const rectangle =
+                canvas.getBoundingClientRect();
+            width = Math.max(
+                320,
+                rectangle.width
+            );
+            height = Math.max(
+                520,
+                rectangle.height
+            );
+            canvas.width =
+                Math.floor(width * deviceScale);
+            canvas.height =
+                Math.floor(height * deviceScale);
+            ctx.setTransform(
+                deviceScale,
+                0,
+                0,
+                deviceScale,
+                0,
+                0
+            );
+        }
+        function resetGame(showIntroduction = false) {
+            state.x = 5;
+            state.v = 0;
+            state.control = 0;
+            state.energy = 0;
+            state.elapsed = 0;
+            state.running = false;
+            state.replaying = false;
+            state.showingFamily = false;
+            state.history = [
+                {
+                    x: state.x,
+                    v: state.v,
+                    time: 0
+                }
+            ];
+            state.controlHistory = [];
+            state.optimalTrajectory = [];
+            state.familyTrajectories = [];
+            state.lastTime =
+                performance.now();
+            slider.value = 0;
+            introOverlay.classList.toggle(
+                "hidden",
+                !showIntroduction
+            );
+            resultOverlay.classList.add("hidden");
+            familyOverlay.classList.add("hidden");
+            statusPill.textContent = "Ready";
+            updateInterface();
+        }
+        function startGame() {
+            resetGame(false);
+            state.running = true;
+            state.lastTime =
+                performance.now();
+            statusPill.textContent = "Live";
+        }
+        function updateSystem(deltaTime) {
+            state.control =
+                Number(slider.value);
+            const acceleration =
+                state.control * 7.2
+                - 0.13 * Math.sign(state.v || 1)
+                - 0.018 * state.v * Math.abs(state.v);
+            state.v +=
+                acceleration * deltaTime;
+            state.v = clamp(
+                state.v,
+                -5,
+                26
+            );
+            state.x +=
+                state.v * deltaTime * 0.58;
+            state.energy +=
+                Math.abs(state.control)
+                * deltaTime
+                * 3.6;
+            state.elapsed +=
+                deltaTime;
+            state.history.push({
+                x: state.x,
+                v: state.v,
+                time: state.elapsed
+            });
+            state.controlHistory.push(
+                state.control
+            );
+            const nearTarget =
+                Math.abs(
+                    state.targetX - state.x
+                ) < 1.5;
+            const nearlyStopped =
+                Math.abs(state.v) < 1.4;
+            const overshot =
+                state.x > state.targetX + 4;
+            const timedOut =
+                state.elapsed > 22;
+            if (
+                (nearTarget && nearlyStopped)
+                || overshot
+                || timedOut
+            ) {
+                finishGame(
+                    nearTarget && nearlyStopped
+                );
+            }
+        }
+        function finishGame(success) {
+            state.running = false;
+            const finalError =
+                Math.abs(
+                    state.targetX - state.x
+                );
+            const accuracy = clamp(
+                100
+                - finalError * 5.5
+                - Math.abs(state.v) * 1.8,
+                0,
+                100
+            );
+            const energyScore = clamp(
+                100 - state.energy * 1.6,
+                0,
+                100
+            );
+            let roughness = 0;
+            for (
+                let index = 1;
+                index < state.controlHistory.length;
+                index++
+            ) {
+                roughness += Math.abs(
+                    state.controlHistory[index]
+                    - state.controlHistory[index - 1]
+                );
+            }
+            const smoothness = clamp(
+                100 - roughness * 4.2,
+                0,
+                100
+            );
+            resultAccuracy.textContent =
+                `${Math.round(accuracy)}%`;
+            resultEnergy.textContent =
+                `${Math.round(energyScore)}%`;
+            resultSmoothness.textContent =
+                `${Math.round(smoothness)}%`;
+            resultTitle.textContent = success
+                ? "You found a feasible control."
+                : "You completed the scenario.";
+            statusPill.textContent = success
+                ? "Feasible control"
+                : "Scenario complete";
+            window.setTimeout(() => {
+                resultOverlay.classList.remove(
+                    "hidden"
+                );
+            }, 450);
+        }
+        function calculateOptimalTrajectory(
+            startingPosition = 5,
+            startingVelocity = 0
+        ) {
+            const trajectory = [];
+            let x = startingPosition;
+            let velocity = startingVelocity;
+            let time = 0;
+            const timeStep = 0.035;
+            while (time < 18) {
+                const remainingDistance =
+                    state.targetX - x;
+                const desiredVelocity = clamp(
+                    remainingDistance * 0.34,
+                    0,
+                    16
+                );
+                const stoppingDistance =
+                    (velocity * velocity)
+                    / (2 * 5.5 + 0.001);
+                let control;
+                if (
+                    remainingDistance
+                    < stoppingDistance + 5
+                ) {
+                    control = clamp(
+                        -0.75
+                        - velocity * 0.025,
+                        -1,
+                        0
+                    );
+                } else {
+                    control = clamp(
+                        (
+                            desiredVelocity
+                            - velocity
+                        ) * 0.16,
+                        -1,
+                        0.82
+                    );
+                }
+                const acceleration =
+                    control * 7.2
+                    - 0.13
+                    * Math.sign(velocity || 1)
+                    - 0.018
+                    * velocity
+                    * Math.abs(velocity);
+                velocity +=
+                    acceleration * timeStep;
+                velocity = clamp(
+                    velocity,
+                    -3,
+                    24
+                );
+                x +=
+                    velocity
+                    * timeStep
+                    * 0.58;
+                time += timeStep;
+                trajectory.push({
+                    x,
+                    v: velocity,
+                    time
+                });
+                if (
+                    Math.abs(
+                        state.targetX - x
+                    ) < 0.8
+                    && Math.abs(velocity) < 0.8
+                ) {
+                    break;
+                }
+            }
+            return trajectory;
+        }
+        function beginOptimalReplay() {
+            resultOverlay.classList.add(
+                "hidden"
+            );
+            state.optimalTrajectory =
+                calculateOptimalTrajectory(
+                    5,
+                    0
+                );
+            state.replaying = true;
+            state.replayStart =
+                performance.now();
+            statusPill.textContent =
+                "Optimized replay";
+            window.setTimeout(() => {
+                state.replaying = false;
+                familyOverlay.classList.remove(
+                    "hidden"
+                );
+            }, 5000);
+        }
+        function revealFamily() {
+            familyOverlay.classList.add(
+                "hidden"
+            );
+            state.showingFamily = true;
+            state.familyTrajectories = [];
+            const initialConditions = [
+                { x: 4, v: 0 },
+                { x: 10, v: 2 },
+                { x: 16, v: 7 },
+                { x: 24, v: 0 },
+                { x: 30, v: 9 },
+                { x: 38, v: 4 },
+                { x: 46, v: 0 },
+                { x: 55, v: 8 },
+                { x: 62, v: 3 },
+                { x: 18, v: 12 }
+            ];
+            initialConditions.forEach(
+                (condition, index) => {
+                    state.familyTrajectories.push({
+                        delay: index * 140,
+                        points:
+                            calculateOptimalTrajectory(
+                                condition.x,
+                                condition.v
+                            )
+                    });
+                }
+            );
+            state.familyStart =
+                performance.now();
+            statusPill.textContent =
+                "Family of optimal controls";
+        }
+        function updateInterface() {
+            const distance =
+                Math.max(
+                    0,
+                    state.targetX - state.x
+                );
+            controlValue.textContent =
+                Number(slider.value).toFixed(2);
+            distanceMetric.textContent =
+                `${distance.toFixed(0)} m`;
+            speedMetric.textContent =
+                `${Math.abs(state.v).toFixed(1)}`;
+            energyMetric.textContent =
+                `${Math.min(
+                    100,
+                    Math.round(state.energy * 1.8)
+                )}%`;
+        }
+        function drawCity() {
+            const roadTop = roadY();
+            const skyGradient =
+                ctx.createLinearGradient(
+                    0,
+                    0,
+                    0,
+                    roadTop
+                );
+            skyGradient.addColorStop(
+                0,
+                "#081021"
+            );
+            skyGradient.addColorStop(
+                1,
+                "#111a2c"
+            );
+            ctx.fillStyle =
+                skyGradient;
+            ctx.fillRect(
+                0,
+                0,
+                width,
+                roadTop
+            );
+            const moonX =
+                width * 0.78;
+            const moonY =
+                height * 0.16;
+            const moonGlow =
+                ctx.createRadialGradient(
+                    moonX,
+                    moonY,
+                    0,
+                    moonX,
+                    moonY,
+                    95
+                );
+            moonGlow.addColorStop(
+                0,
+                "rgba(196, 244, 255, 0.44)"
+            );
+            moonGlow.addColorStop(
+                1,
+                "rgba(196, 244, 255, 0)"
+            );
+            ctx.fillStyle =
+                moonGlow;
+            ctx.beginPath();
+            ctx.arc(
+                moonX,
+                moonY,
+                95,
+                0,
+                Math.PI * 2
+            );
+            ctx.fill();
+            for (
+                let index = 0;
+                index < 72;
+                index++
+            ) {
+                const starX =
+                    (index * 83.21)
+                    % width;
+                const starY =
+                    (
+                        (
+                            index * 47.73
+                        )
+                        % (
+                            roadTop * 0.46
+                        )
+                    ) + 18;
+                const alpha =
+                    0.18
+                    + (
+                        index % 5
+                    ) / 12;
+                ctx.fillStyle =
+                    `rgba(
+                        220,
+                        238,
+                        255,
+                        ${alpha}
+                    )`;
+                ctx.fillRect(
+                    starX,
+                    starY,
+                    1.2,
+                    1.2
+                );
+            }
+            let buildingX = -20;
+            let buildingIndex = 0;
+            while (
+                buildingX < width + 50
+            ) {
+                const buildingWidth =
+                    34
+                    + (
+                        buildingIndex * 17
+                    ) % 58;
+                const buildingHeight =
+                    55
+                    + (
+                        buildingIndex * 29
+                    ) % 155;
+                ctx.fillStyle =
+                    "#0b1324";
+                ctx.fillRect(
+                    buildingX,
+                    roadTop - buildingHeight,
+                    buildingWidth,
+                    buildingHeight
+                );
+                for (
+                    let windowY =
+                        roadTop
+                        - buildingHeight
+                        + 14;
+                    windowY < roadTop - 12;
+                    windowY += 18
+                ) {
+                    for (
+                        let windowX =
+                            buildingX + 8;
+                        windowX
+                        < buildingX
+                        + buildingWidth
+                        - 7;
+                        windowX += 14
+                    ) {
+                        if (
+                            (
+                                windowX
+                                + windowY
+                                + buildingIndex
+                            ) % 4 < 1.6
+                        ) {
+                            ctx.fillStyle =
+                                "rgba(101, 215, 255, 0.20)";
+                            ctx.fillRect(
+                                windowX,
+                                windowY,
+                                4,
+                                6
+                            );
+                        }
+                    }
+                }
+                buildingX +=
+                    buildingWidth + 8;
+                buildingIndex++;
+            }
+            const roadGradient =
+                ctx.createLinearGradient(
+                    0,
+                    roadTop,
+                    0,
+                    height
+                );
+            roadGradient.addColorStop(
+                0,
+                "#151b28"
+            );
+            roadGradient.addColorStop(
+                1,
+                "#070a10"
+            );
+            ctx.fillStyle =
+                roadGradient;
+            ctx.fillRect(
+                0,
+                roadTop,
+                width,
+                height - roadTop
+            );
+            ctx.setLineDash([
+                18,
+                18
+            ]);
+            ctx.strokeStyle =
+                "rgba(255, 255, 255, 0.23)";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(
+                0,
+                roadTop + 68
+            );
+            ctx.lineTo(
+                width,
+                roadTop + 68
+            );
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+        function drawTarget() {
+            const x =
+                mapX(state.targetX);
+            const y =
+                roadY() + 42;
+            const targetGlow =
+                ctx.createRadialGradient(
+                    x,
+                    y,
+                    0,
+                    x,
+                    y,
+                    45
+                );
+            targetGlow.addColorStop(
+                0,
+                "rgba(126, 240, 182, 0.55)"
+            );
+            targetGlow.addColorStop(
+                1,
+                "rgba(126, 240, 182, 0)"
+            );
+            ctx.fillStyle =
+                targetGlow;
+            ctx.beginPath();
+            ctx.arc(
+                x,
+                y,
+                45,
+                0,
+                Math.PI * 2
+            );
+            ctx.fill();
+            ctx.strokeStyle =
+                "#7ef0b6";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(
+                x,
+                y,
+                13,
+                0,
+                Math.PI * 2
+            );
+            ctx.stroke();
+            ctx.fillStyle =
+                "rgba(255, 255, 255, 0.84)";
+            ctx.font =
+                "12px Arial, sans-serif";
+            ctx.textAlign =
+                "center";
+            ctx.fillText(
+                "TARGET",
+                x,
+                y - 28
+            );
+        }
+        function drawCar(
+            xValue,
+            alpha = 1,
+            color = "101, 215, 255"
+        ) {
+            const x =
+                mapX(xValue);
+            const y =
+                roadY() + 42;
+            ctx.save();
+            ctx.globalAlpha =
+                alpha;
+            ctx.translate(
+                x,
+                y
+            );
+            const carGlow =
+                ctx.createRadialGradient(
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    46
+                );
+            carGlow.addColorStop(
+                0,
+                `rgba(${color}, 0.32)`
+            );
+            carGlow.addColorStop(
+                1,
+                `rgba(${color}, 0)`
+            );
+            ctx.fillStyle =
+                carGlow;
+            ctx.beginPath();
+            ctx.arc(
+                0,
+                0,
+                46,
+                0,
+                Math.PI * 2
+            );
+            ctx.fill();
+            ctx.fillStyle =
+                `rgba(${color}, 0.96)`;
+            ctx.beginPath();
+            if (ctx.roundRect) {
+                ctx.roundRect(
+                    -22,
+                    -8,
+                    44,
+                    16,
+                    6
+                );
+            } else {
+                ctx.rect(
+                    -22,
+                    -8,
+                    44,
+                    16
+                );
+            }
+            ctx.fill();
+            ctx.fillStyle =
+                "rgba(230, 248, 255, 0.84)";
+            ctx.beginPath();
+            ctx.moveTo(
+                -11,
+                -8
+            );
+            ctx.lineTo(
+                -4,
+                -15
+            );
+            ctx.lineTo(
+                10,
+                -15
+            );
+            ctx.lineTo(
+                17,
+                -8
+            );
+            ctx.closePath();
+            ctx.fill();
+            ctx.fillStyle =
+                "#050810";
+            ctx.beginPath();
+            ctx.arc(
+                -13,
+                8,
+                5,
+                0,
+                Math.PI * 2
+            );
+            ctx.arc(
+                14,
+                8,
+                5,
+                0,
+                Math.PI * 2
+            );
+            ctx.fill();
+            ctx.restore();
+        }
+        function predictGhostTrajectory() {
+            let x = state.x;
+            let velocity = state.v;
+            const control =
+                Number(slider.value);
+            const prediction = [];
+            const timeStep =
+                0.055;
+            for (
+                let index = 0;
+                index < 78;
+                index++
+            ) {
+                const acceleration =
+                    control * 7.2
+                    - 0.13
+                    * Math.sign(velocity || 1)
+                    - 0.018
+                    * velocity
+                    * Math.abs(velocity);
+                velocity +=
+                    acceleration * timeStep;
+                velocity = clamp(
+                    velocity,
+                    -5,
+                    26
+                );
+                x +=
+                    velocity
+                    * timeStep
+                    * 0.58;
+                prediction.push({
+                    x,
+                    index
+                });
+            }
+            return prediction;
+        }
+        function drawGhostTrajectory() {
+            if (!state.running) {
+                return;
+            }
+            const points =
+                predictGhostTrajectory();
+            const baseY =
+                roadY() + 40;
+            ctx.save();
+            ctx.setLineDash([
+                5,
+                9
+            ]);
+            ctx.strokeStyle =
+                "rgba(156, 145, 255, 0.55)";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            points.forEach(
+                (point, index) => {
+                    const x =
+                        mapX(point.x);
+                    const y =
+                        baseY
+                        - Math.sin(
+                            index * 0.12
+                        ) * 5
+                        - index * 0.06;
+                    if (index === 0) {
+                        ctx.moveTo(
+                            x,
+                            y
+                        );
+                    } else {
+                        ctx.lineTo(
+                            x,
+                            y
+                        );
+                    }
+                }
+            );
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.restore();
+            const finalPoint =
+                points[
+                    points.length - 1
+                ];
+            if (finalPoint) {
+                drawCar(
+                    finalPoint.x,
+                    0.30,
+                    "156, 145, 255"
+                );
+            }
+        }
+        function drawTrajectory(
+            points,
+            color,
+            alpha = 0.9,
+            progress = 1,
+            verticalOffset = 0
+        ) {
+            if (
+                !points
+                || points.length < 2
+            ) {
+                return;
+            }
+            const pointCount =
+                Math.max(
+                    2,
+                    Math.floor(
+                        points.length
+                        * progress
+                    )
+                );
+            ctx.save();
+            ctx.strokeStyle =
+                color;
+            ctx.globalAlpha =
+                alpha;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (
+                let index = 0;
+                index < pointCount;
+                index++
+            ) {
+                const point =
+                    points[index];
+                const x =
+                    mapX(point.x);
+                const y =
+                    roadY()
+                    + 42
+                    + verticalOffset
+                    - Math.sin(
+                        index * 0.11
+                    ) * 7;
+                if (index === 0) {
+                    ctx.moveTo(
+                        x,
+                        y
+                    );
+                } else {
+                    ctx.lineTo(
+                        x,
+                        y
+                    );
+                }
+            }
+            ctx.stroke();
+            ctx.restore();
+        }
+        function drawOptimalReplay(time) {
+            if (
+                !state.replaying
+                || !state.optimalTrajectory.length
+            ) {
+                return;
+            }
+            const elapsed =
+                (
+                    time
+                    - state.replayStart
+                ) / 1000;
+            const progress =
+                clamp(
+                    elapsed / 4.4,
+                    0,
+                    1
+                );
+            drawTrajectory(
+                state.history,
+                "rgba(190, 198, 220, 0.55)",
+                0.8,
+                1,
+                18
+            );
+            drawTrajectory(
+                state.optimalTrajectory,
+                "#ffd166",
+                0.98,
+                progress,
+                -12
+            );
+            const pointIndex =
+                Math.min(
+                    state.optimalTrajectory.length - 1,
+                    Math.floor(
+                        (
+                            state.optimalTrajectory.length
+                            - 1
+                        ) * progress
+                    )
+                );
+            drawCar(
+                state.optimalTrajectory[
+                    pointIndex
+                ].x,
+                1,
+                "255, 209, 102"
+            );
+        }
+        function drawFamily(time) {
+            if (!state.showingFamily) {
+                return;
+            }
+            const elapsed =
+                time - state.familyStart;
+            state.familyTrajectories.forEach(
+                (trajectory, index) => {
+                    const progress =
+                        clamp(
+                            (
+                                elapsed
+                                - trajectory.delay
+                            ) / 2200,
+                            0,
+                            1
+                        );
+                    drawTrajectory(
+                        trajectory.points,
+                        index % 2 === 0
+                            ? "#ffd166"
+                            : "#65d7ff",
+                        0.25
+                        + (
+                            index % 4
+                        ) * 0.06,
+                        progress,
+                        -30 + index * 6
+                    );
+                }
+            );
+            if (elapsed > 2700) {
+                ctx.save();
+                ctx.textAlign =
+                    "center";
+                ctx.fillStyle =
+                    "rgba(245, 247, 255, 0.96)";
+                ctx.font =
+                    "700 24px Arial, sans-serif";
+                ctx.fillText(
+                    "Different initial conditions. Different optimal controls.",
+                    width / 2,
+                    height * 0.20
+                );
+                ctx.fillStyle =
+                    "rgba(183, 189, 206, 0.92)";
+                ctx.font =
+                    "15px Arial, sans-serif";
+                ctx.fillText(
+                    "One computational framework can reveal the entire family.",
+                    width / 2,
+                    height * 0.20 + 31
+                );
+                ctx.restore();
+            }
+        }
+        function drawScene(time) {
+            ctx.clearRect(
+                0,
+                0,
+                width,
+                height
+            );
+            drawCity();
+            drawTarget();
+            if (
+                state.history.length > 1
+                && !state.showingFamily
+            ) {
+                drawTrajectory(
+                    state.history,
+                    "rgba(101, 215, 255, 0.64)",
+                    0.8,
+                    1,
+                    14
+                );
+            }
+            drawGhostTrajectory();
+            if (state.replaying) {
+                drawOptimalReplay(time);
+            } else if (!state.showingFamily) {
+                drawCar(
+                    state.x,
+                    1,
+                    "101, 215, 255"
+                );
+            }
+            drawFamily(time);
+        }
+        function animate(time) {
+            const deltaTime =
+                Math.min(
+                    0.035,
+                    Math.max(
+                        0,
+                        (
+                            time
+                            - state.lastTime
+                        ) / 1000 || 0
+                    )
+                );
+            state.lastTime =
+                time;
+            if (state.running) {
+                updateSystem(
+                    deltaTime
+                );
+                updateInterface();
+            }
+            drawScene(time);
+            requestAnimationFrame(
+                animate
+            );
+        }
+        slider.addEventListener(
+            "input",
+            updateInterface
+        );
+        startButton.addEventListener(
+            "click",
+            startGame
+        );
+        resetButton.addEventListener(
+            "click",
+            () => resetGame(false)
+        );
+        overlayStart.addEventListener(
+            "click",
+            startGame
+        );
+        showOptimal.addEventListener(
+            "click",
+            beginOptimalReplay
+        );
+        showFamily.addEventListener(
+            "click",
+            revealFamily
+        );
+        window.addEventListener(
+            "resize",
+            () => {
+                resizeCanvas();
+                drawScene(
+                    performance.now()
+                );
+            }
+        );
+        resizeCanvas();
+        resetGame(true);
+        requestAnimationFrame(
+            animate
+        );
     </script>
-
 </body>
-</html>
+</html> 
