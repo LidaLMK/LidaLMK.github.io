@@ -1,140 +1,218 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-    <title>Lida Lamakani | Optimization, Control and Machine Learning</title>
+
+    <title>Lida Lamakani | Optimization, Control and Intelligent Systems</title>
+
     <meta
         name="description"
-        content="Personal portfolio of Lida Lamakani, researcher in optimization, model predictive control, dynamic optimization, modeling, machine learning, and scientific computing."
+        content="Personal research portfolio of Lida Lamakani, working across optimization, control, mathematical modeling, scientific computing, and machine learning."
     >
+
     <style>
+        :root {
+            --background: #080b14;
+            --background-deep: #05070d;
+            --panel: rgba(255, 255, 255, 0.04);
+            --panel-strong: rgba(10, 14, 27, 0.96);
+            --text: #f5f7ff;
+            --muted: #b7bdce;
+            --subtle: #8f96aa;
+            --violet: #9c91ff;
+            --cyan: #65d7ff;
+            --gold: #ffd166;
+            --green: #7ef0b6;
+            --red: #ff7e8e;
+            --border: rgba(255, 255, 255, 0.1);
+            --border-strong: rgba(255, 255, 255, 0.18);
+            --shadow: 0 35px 90px rgba(0, 0, 0, 0.38);
+        }
+
         * {
             box-sizing: border-box;
         }
+
         html {
             scroll-behavior: smooth;
         }
+
         body {
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #080b14;
-            color: #f5f7ff;
-            line-height: 1.6;
             overflow-x: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(
+                    circle at 82% 4%,
+                    rgba(104, 84, 255, 0.16),
+                    transparent 27%
+                ),
+                radial-gradient(
+                    circle at 8% 32%,
+                    rgba(101, 215, 255, 0.06),
+                    transparent 24%
+                ),
+                var(--background);
+            color: var(--text);
+            line-height: 1.6;
         }
+
         a {
             color: inherit;
             text-decoration: none;
         }
+
         button,
         input {
             font: inherit;
         }
-        .background-glow {
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            background: rgba(104, 84, 255, 0.22);
-            filter: blur(120px);
-            top: -180px;
-            right: -120px;
-            z-index: -1;
+
+        button {
+            color: inherit;
         }
-        .background-glow-second {
-            position: fixed;
-            width: 420px;
-            height: 420px;
-            border-radius: 50%;
-            background: rgba(101, 215, 255, 0.08);
-            filter: blur(120px);
-            bottom: -180px;
-            left: -140px;
-            z-index: -1;
-        }
+
         .container {
             width: min(1120px, 90%);
             margin: 0 auto;
         }
+
+        .wide-container {
+            width: min(1260px, 94%);
+            margin: 0 auto;
+        }
+
+        .background-glow {
+            position: fixed;
+            z-index: -2;
+            width: 520px;
+            height: 520px;
+            top: -190px;
+            right: -130px;
+            border-radius: 50%;
+            background: rgba(104, 84, 255, 0.2);
+            filter: blur(130px);
+            pointer-events: none;
+        }
+
+        .background-glow-secondary {
+            position: fixed;
+            z-index: -2;
+            width: 460px;
+            height: 460px;
+            left: -180px;
+            bottom: -200px;
+            border-radius: 50%;
+            background: rgba(101, 215, 255, 0.07);
+            filter: blur(130px);
+            pointer-events: none;
+        }
+
         header {
             position: sticky;
             top: 0;
-            z-index: 50;
+            z-index: 100;
             background: rgba(8, 11, 20, 0.82);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
+
         nav {
             min-height: 72px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 32px;
         }
+
         .logo {
             font-size: 20px;
             font-weight: 700;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
+
         .nav-links {
             display: flex;
-            gap: 24px;
-            font-size: 15px;
+            align-items: center;
+            gap: 25px;
             color: #c7ccdc;
+            font-size: 15px;
         }
+
+        .nav-links a {
+            transition: color 0.2s ease;
+        }
+
         .nav-links a:hover {
             color: #ffffff;
         }
+
+        section {
+            padding: 100px 0;
+        }
+
         .hero {
             min-height: 88vh;
             display: flex;
             align-items: center;
-            padding: 80px 0;
+            padding: 90px 0;
         }
+
         .hero-content {
-            max-width: 900px;
+            max-width: 940px;
         }
-        .eyebrow {
-            color: #9c91ff;
+
+        .eyebrow,
+        .section-label {
+            color: var(--violet);
             font-size: 14px;
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 18px;
         }
+
+        .eyebrow {
+            margin: 0 0 18px;
+        }
+
         h1 {
             margin: 0;
             font-size: clamp(52px, 9vw, 105px);
             line-height: 0.95;
             letter-spacing: -5px;
         }
+
         .gradient-text {
             background: linear-gradient(
                 90deg,
                 #ffffff,
-                #9c91ff,
-                #65d7ff
+                var(--violet),
+                var(--cyan)
             );
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
+
         .hero-description {
-            max-width: 790px;
-            margin-top: 30px;
+            max-width: 820px;
+            margin: 30px 0 0;
+            color: var(--muted);
             font-size: clamp(19px, 2vw, 25px);
-            color: #b7bdce;
         }
+
         .buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 14px;
             margin-top: 38px;
         }
+
         .button {
             display: inline-flex;
             align-items: center;
@@ -142,302 +220,438 @@
             min-height: 52px;
             padding: 0 24px;
             border-radius: 999px;
+            border: 0;
+            cursor: pointer;
             font-weight: 700;
             transition:
                 transform 0.25s ease,
+                background 0.25s ease,
                 border-color 0.25s ease,
-                background 0.25s ease;
-            cursor: pointer;
+                opacity 0.25s ease;
         }
+
         .button:hover {
             transform: translateY(-3px);
         }
+
         .button-primary {
-            border: none;
             background: #ffffff;
-            color: #080b14;
+            color: var(--background);
         }
+
         .button-secondary {
             border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.04);
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.04);
         }
-        section {
-            padding: 100px 0;
+
+        .button-small {
+            min-height: 44px;
+            padding: 0 20px;
+            font-size: 14px;
         }
+
         .section-label {
-            color: #9c91ff;
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            margin: 0;
         }
+
         h2 {
-            margin: 12px 0 35px;
-            font-size: clamp(34px, 5vw, 56px);
-            line-height: 1.1;
+            margin: 12px 0 28px;
+            font-size: clamp(36px, 5vw, 58px);
+            line-height: 1.08;
+            letter-spacing: -2px;
         }
+
         .section-description {
-            max-width: 820px;
-            margin-top: -15px;
-            margin-bottom: 36px;
-            font-size: 19px;
-            color: #b7bdce;
+            max-width: 850px;
+            margin: 0;
+            color: var(--muted);
+            font-size: clamp(18px, 2vw, 22px);
         }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .grid-four {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        .card {
-            min-height: 260px;
-            padding: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.04);
-            transition:
-                transform 0.3s ease,
-                border-color 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-7px);
-            border-color: rgba(156, 145, 255, 0.65);
-        }
-        .card-number {
-            color: #7d8499;
-            font-size: 14px;
-        }
-        .card h3 {
-            margin-top: 45px;
-            font-size: 25px;
-        }
-        .card p {
-            color: #aeb4c5;
-        }
+
         .about-text {
-            max-width: 900px;
-            font-size: clamp(21px, 3vw, 31px);
+            max-width: 930px;
             color: #c7ccda;
+            font-size: clamp(21px, 3vw, 31px);
         }
-        /* INTERACTIVE EXPERIENCE */
-        .experience-container {
-            width: min(1220px, 94%);
-            margin: 0 auto;
+
+        /* EXPERIENCE */
+
+        .experience-section {
+            padding-top: 50px;
         }
+
         .experience-heading {
             max-width: 850px;
-            margin-bottom: 35px;
+            margin-bottom: 36px;
         }
-        .experience-card {
-            position: relative;
-            min-height: 680px;
+
+        .experience-frame {
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.11);
-            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 30px;
             background: #090e1b;
-            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.36);
+            box-shadow: var(--shadow);
         }
-        .experience-card::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: 3;
-            pointer-events: none;
-            background:
-                linear-gradient(
-                    180deg,
-                    transparent 0%,
-                    transparent 60%,
-                    rgba(0, 0, 0, 0.46) 100%
-                ),
-                radial-gradient(
-                    circle at 76% 17%,
-                    rgba(101, 215, 255, 0.12),
-                    transparent 30%
-                );
+
+        .scene {
+            position: relative;
+            height: 570px;
+            overflow: hidden;
+            background: #07101e;
         }
-        .game-header {
+
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .scene-header {
             position: absolute;
-            z-index: 15;
-            top: 22px;
-            left: 22px;
-            right: 22px;
+            z-index: 12;
+            top: 24px;
+            left: 26px;
+            right: 26px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
-            gap: 18px;
+            gap: 20px;
+            pointer-events: none;
         }
-        .game-title strong {
+
+        .scene-title strong {
             display: block;
-            font-size: 18px;
+            font-size: 20px;
         }
-        .game-title span {
+
+        .scene-title span {
             display: block;
-            margin-top: 2px;
+            margin-top: 3px;
             color: #9ba3b7;
-            font-size: 13px;
+            font-size: 14px;
         }
+
         .status-pill {
             padding: 8px 13px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.13);
             border-radius: 999px;
-            background: rgba(8, 11, 20, 0.74);
+            background: rgba(7, 10, 18, 0.76);
             color: #c7ccdc;
             font-size: 12px;
             backdrop-filter: blur(10px);
         }
-        #gameCanvas {
-            width: 100%;
-            height: 680px;
-            display: block;
-        }
-        .game-interface {
+
+        .scene-message {
             position: absolute;
-            z-index: 16;
-            left: 22px;
-            right: 22px;
-            bottom: 22px;
+            z-index: 13;
+            top: 105px;
+            left: 50%;
+            width: min(850px, calc(100% - 48px));
+            transform: translateX(-50%);
+            text-align: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.45s ease;
+        }
+
+        .scene-message.visible {
+            opacity: 1;
+        }
+
+        .scene-message strong {
+            display: block;
+            font-size: clamp(24px, 3.4vw, 42px);
+            line-height: 1.1;
+        }
+
+        .scene-message span {
+            display: block;
+            margin-top: 8px;
+            color: #bcc4d7;
+            font-size: clamp(14px, 1.5vw, 18px);
+        }
+
+        .control-area {
+            position: relative;
+            z-index: 20;
             display: grid;
             grid-template-columns: 1fr auto;
-            gap: 16px;
+            gap: 18px;
             align-items: end;
+            padding: 22px;
+            border-top: 1px solid rgba(255, 255, 255, 0.09);
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(8, 11, 20, 0.96),
+                    rgba(5, 8, 15, 0.99)
+                );
         }
+
         .control-panel {
-            padding: 16px;
+            padding: 18px;
             border: 1px solid rgba(255, 255, 255, 0.11);
             border-radius: 20px;
-            background: rgba(8, 11, 20, 0.80);
-            backdrop-filter: blur(14px);
+            background: rgba(255, 255, 255, 0.025);
         }
+
         .control-labels {
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 9px;
-            color: #aeb4c5;
-            font-size: 13px;
+            gap: 15px;
+            margin-bottom: 10px;
+            color: #b1b7c8;
+            font-size: 14px;
         }
+
         .control-labels strong {
             color: #ffffff;
         }
+
         input[type="range"] {
             width: 100%;
             cursor: pointer;
-            accent-color: #65d7ff;
+            accent-color: var(--cyan);
         }
+
         .metrics {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
-            margin-top: 12px;
+            margin-top: 15px;
         }
+
         .metric {
-            min-width: 96px;
-            padding: 10px 12px;
+            min-width: 110px;
+            padding: 11px 14px;
             border-radius: 14px;
             background: rgba(255, 255, 255, 0.045);
         }
+
         .metric small {
             display: block;
             margin-bottom: 3px;
-            color: #8f96aa;
+            color: var(--subtle);
         }
+
         .metric strong {
-            font-size: 15px;
+            font-size: 16px;
         }
+
         .game-buttons {
             display: grid;
             gap: 10px;
         }
+
         .game-buttons .button {
-            min-width: 155px;
+            min-width: 165px;
         }
-        .game-overlay {
+
+        .scene-overlay {
             position: absolute;
             z-index: 40;
             inset: 0;
             display: grid;
             place-items: center;
             padding: 28px;
-            background: rgba(5, 8, 16, 0.76);
-            backdrop-filter: blur(13px);
+            background: rgba(4, 7, 14, 0.75);
+            backdrop-filter: blur(12px);
             transition:
                 opacity 0.3s ease,
                 visibility 0.3s ease;
         }
-        .game-overlay.hidden {
+
+        .scene-overlay.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
-        .overlay-box {
-            width: min(580px, 100%);
-            padding: 36px;
+
+        .overlay-card {
+            width: min(590px, 100%);
+            padding: 38px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             border-radius: 26px;
-            background: rgba(9, 14, 27, 0.94);
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            background: rgba(9, 14, 27, 0.95);
+            box-shadow: 0 30px 75px rgba(0, 0, 0, 0.45);
         }
-        .overlay-box h3 {
-            margin: 8px 0 14px;
+
+        .overlay-card h3 {
+            margin: 8px 0 15px;
             font-size: clamp(30px, 5vw, 50px);
             line-height: 1.05;
         }
-        .overlay-box p {
+
+        .overlay-card p {
             margin: 0 auto 24px;
-            color: #b7bdce;
+            color: var(--muted);
         }
+
         .result-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin: 20px 0;
+            margin: 22px 0;
         }
-        .result-item {
+
+        .result-card {
             padding: 14px;
             border-radius: 15px;
             background: rgba(255, 255, 255, 0.045);
         }
-        .result-item small {
+
+        .result-card small {
             display: block;
             margin-bottom: 5px;
-            color: #8f96aa;
+            color: var(--subtle);
         }
-        .research-message {
-            margin-top: 28px;
-            padding: 34px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
+
+        .experience-explanation {
+            margin-top: 30px;
+            padding: 38px;
+            border: 1px solid var(--border);
+            border-radius: 26px;
             background:
                 radial-gradient(
-                    circle at 85% 20%,
+                    circle at 88% 20%,
                     rgba(156, 145, 255, 0.15),
                     transparent 28%
                 ),
                 rgba(255, 255, 255, 0.035);
         }
-        .research-message strong {
+
+        .experience-explanation strong {
             display: block;
-            max-width: 900px;
-            margin-bottom: 14px;
-            font-size: clamp(28px, 4vw, 48px);
+            max-width: 950px;
+            margin-bottom: 16px;
+            font-size: clamp(30px, 4vw, 50px);
             line-height: 1.12;
         }
-        .research-message p {
-            max-width: 860px;
-            color: #b7bdce;
-            font-size: 18px;
+
+        .experience-explanation p {
+            max-width: 900px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 19px;
         }
+
+        /* PORTFOLIO PORTALS */
+
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 42px;
+        }
+
+        .portal-card {
+            position: relative;
+            min-height: 265px;
+            overflow: hidden;
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.035);
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .portal-card::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            right: -80px;
+            bottom: -90px;
+            border-radius: 50%;
+            background: rgba(156, 145, 255, 0.12);
+            filter: blur(25px);
+            transition: transform 0.4s ease;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-7px);
+            border-color: rgba(156, 145, 255, 0.58);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .portal-card:hover::before {
+            transform: scale(1.35);
+        }
+
+        .portal-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .portal-label {
+            color: var(--violet);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .portal-arrow {
+            font-size: 27px;
+            color: #dfe5f5;
+        }
+
+        .portal-card h3 {
+            margin: 54px 0 12px;
+            font-size: clamp(25px, 3vw, 34px);
+        }
+
+        .portal-card p {
+            max-width: 520px;
+            margin: 0;
+            color: #aeb4c5;
+        }
+
+        .research-spectrum {
+            margin-top: 28px;
+            padding: 32px;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .research-spectrum p {
+            max-width: 970px;
+            margin: 0;
+            color: #c7ccda;
+            font-size: clamp(19px, 2.4vw, 27px);
+        }
+
+        .spectrum-words {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .spectrum-word {
+            padding: 9px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 999px;
+            color: #bec5d7;
+            background: rgba(255, 255, 255, 0.025);
+            font-size: 14px;
+        }
+
         footer {
             padding: 50px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            color: #8f96aa;
+            color: var(--subtle);
         }
+
         .fade-in {
             opacity: 0;
             transform: translateY(24px);
@@ -445,104 +659,141 @@
                 opacity 0.8s ease,
                 transform 0.8s ease;
         }
+
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
+
         @media (max-width: 900px) {
             .nav-links {
                 display: none;
             }
+
             h1 {
                 letter-spacing: -3px;
             }
-            .grid,
-            .grid-four {
+
+            .scene {
+                height: 520px;
+            }
+
+            .control-area {
                 grid-template-columns: 1fr;
             }
-            .hero {
-                min-height: auto;
-                padding: 120px 0 80px;
-            }
-            .game-interface {
-                grid-template-columns: 1fr;
-            }
+
             .game-buttons {
                 grid-template-columns: 1fr 1fr;
             }
+
             .game-buttons .button {
                 min-width: 0;
             }
+
+            .portal-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            section {
+                padding: 78px 0;
+            }
+
+            .wide-container {
+                width: 96%;
+            }
+
+            .scene {
+                height: 470px;
+            }
+
+            .scene-header {
+                top: 17px;
+                left: 17px;
+                right: 17px;
+            }
+
+            .scene-title span {
+                max-width: 190px;
+            }
+
+            .scene-message {
+                top: 100px;
+            }
+
+            .control-area {
+                padding: 14px;
+            }
+
             .metrics {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
             }
+
             .metric {
                 min-width: 0;
+                padding: 10px;
             }
-            #gameCanvas,
-            .experience-card {
-                height: 650px;
-                min-height: 650px;
-            }
-        }
-        @media (max-width: 560px) {
-            .experience-container {
-                width: min(96%, 1220px);
-            }
-            .game-header {
-                top: 16px;
-                left: 16px;
-                right: 16px;
-            }
-            .game-title span {
-                max-width: 180px;
-            }
-            .game-interface {
-                left: 14px;
-                right: 14px;
-                bottom: 14px;
-            }
-            .overlay-box {
-                padding: 26px 20px;
-            }
+
             .result-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .overlay-card {
+                padding: 28px 20px;
+            }
+
+            .portal-card {
+                min-height: 240px;
             }
         }
     </style>
 </head>
+
 <body>
+
     <div class="background-glow"></div>
-    <div class="background-glow-second"></div>
+    <div class="background-glow-secondary"></div>
+
     <header>
         <nav class="container">
-            <a class="logo" href="#home">LIDA LAMAKANI</a>
+            <a class="logo" href="#home">
+                LIDA LAMAKANI
+            </a>
+
             <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#experience">Experience</a>
-                <a href="#work">Work</a>
-                <a href="#expertise">Expertise</a>
+                <a href="#portfolio">Portfolio</a>
                 <a href="#contact">Contact</a>
             </div>
         </nav>
     </header>
+
     <main>
+
         <section class="hero" id="home">
             <div class="container hero-content fade-in">
+
                 <p class="eyebrow">
                     Optimization · Control · Modeling · Machine Learning
                 </p>
+
                 <h1>
                     Engineering
-                    <span class="gradient-text">intelligent systems.</span>
+                    <span class="gradient-text">
+                        intelligent systems.
+                    </span>
                 </h1>
+
                 <p class="hero-description">
-                    I develop computational methods for optimization,
-                    model predictive control, dynamic systems,
-                    scientific computing, modeling, and machine learning
-                    with applications in complex engineering systems.
+                    I develop mathematical and computational methods
+                    for complex engineering systems, connecting
+                    optimization, dynamics, control, modeling,
+                    scientific computing, and data-driven intelligence.
                 </p>
+
                 <div class="buttons">
                     <a
                         class="button button-primary"
@@ -550,6 +801,7 @@
                     >
                         Experience my research
                     </a>
+
                     <a
                         class="button button-secondary"
                         href="https://github.com/LidaLMK"
@@ -559,96 +811,347 @@
                         GitHub
                     </a>
                 </div>
+
             </div>
         </section>
+
         <section id="about">
             <div class="container fade-in">
-                <p class="section-label">About</p>
-                <h2>Research with real-world impact.</h2>
-                <p class="about-text">
-                    My work combines mathematical optimization,
-                    dynamic systems, model predictive control,
-                    multiparametric programming, continuous-time
-                    optimization, modeling, scientific computing,
-                    and machine learning. I am interested in transforming
-                    advanced research into practical computational tools
-                    for engineering, automation, intelligent control,
-                    and industrial decision-making.
+
+                <p class="section-label">
+                    About
                 </p>
+
+                <h2>
+                    Research across connected disciplines.
+                </h2>
+
+                <p class="about-text">
+                    My work is centered on understanding, computing,
+                    and improving decisions in dynamic engineering systems.
+                    I move between mathematical theory, system modeling,
+                    algorithm development, numerical computation,
+                    control, and machine learning depending on the problem.
+                    Rather than being defined by a single technique,
+                    my research is driven by the structure of the system
+                    and the decisions it requires.
+                </p>
+
+                <div class="research-spectrum">
+
+                    <p>
+                        My research has included continuous-time and
+                        discrete-time systems, dynamic optimization,
+                        optimal control, model predictive control,
+                        multiparametric methods, mathematical modeling,
+                        scientific computing, numerical algorithms,
+                        data-driven modeling, and machine learning.
+                    </p>
+
+                    <div class="spectrum-words">
+                        <span class="spectrum-word">
+                            Dynamic systems
+                        </span>
+
+                        <span class="spectrum-word">
+                            Optimization
+                        </span>
+
+                        <span class="spectrum-word">
+                            Optimal control
+                        </span>
+
+                        <span class="spectrum-word">
+                            MPC
+                        </span>
+
+                        <span class="spectrum-word">
+                            Continuous time
+                        </span>
+
+                        <span class="spectrum-word">
+                            Discrete time
+                        </span>
+
+                        <span class="spectrum-word">
+                            Multiparametric methods
+                        </span>
+
+                        <span class="spectrum-word">
+                            Mathematical modeling
+                        </span>
+
+                        <span class="spectrum-word">
+                            Numerical computation
+                        </span>
+
+                        <span class="spectrum-word">
+                            Machine learning
+                        </span>
+                    </div>
+
+                </div>
+
             </div>
         </section>
-        <section id="experience">
-            <div class="experience-container fade-in">
+
+        <section
+            class="experience-section"
+            id="experience"
+        >
+            <div class="wide-container fade-in">
+
                 <div class="experience-heading">
+
                     <p class="section-label">
                         Interactive research experience
                     </p>
-                    <h2>Can you control the future?</h2>
+
+                    <h2>
+                        Take control.
+                    </h2>
+
                     <p class="section-description">
-                        Guide an autonomous car to the target using one
-                        control input. The translucent ghost predicts
-                        where your current decision may lead.
+                        Use one input to guide the car into the target
+                        zone and bring it to rest. A translucent prediction
+                        continuously shows where your current decision
+                        may lead.
                     </p>
+
                 </div>
-                <div class="experience-card">
-                    <div class="game-header">
-                        <div class="game-title">
-                            <strong>Night Drive</strong>
-                            <span>
-                                A short dynamic optimization experience
-                            </span>
+
+                <div class="experience-frame">
+
+                    <div class="scene">
+
+                        <canvas
+                            id="gameCanvas"
+                            aria-label="Interactive optimal control driving experience"
+                        ></canvas>
+
+                        <div class="scene-header">
+
+                            <div class="scene-title">
+                                <strong>
+                                    Night Drive
+                                </strong>
+
+                                <span>
+                                    A dynamic optimization experience
+                                </span>
+                            </div>
+
+                            <div
+                                class="status-pill"
+                                id="statusPill"
+                            >
+                                Ready
+                            </div>
+
                         </div>
+
                         <div
-                            class="status-pill"
-                            id="statusPill"
+                            class="scene-message"
+                            id="sceneMessage"
                         >
-                            Ready
+                            <strong id="sceneMessageTitle"></strong>
+
+                            <span id="sceneMessageText"></span>
                         </div>
+
+                        <div
+                            class="scene-overlay"
+                            id="introOverlay"
+                        >
+                            <div class="overlay-card">
+
+                                <p class="section-label">
+                                    One decision changes the future
+                                </p>
+
+                                <h3>
+                                    Stop inside the target zone.
+                                </h3>
+
+                                <p>
+                                    Move the slider right to accelerate
+                                    and left to brake. The ghost car predicts
+                                    where your present input may take you.
+                                </p>
+
+                                <button
+                                    class="button button-primary"
+                                    id="overlayStart"
+                                    type="button"
+                                >
+                                    Begin
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <div
+                            class="scene-overlay hidden"
+                            id="resultOverlay"
+                        >
+                            <div class="overlay-card">
+
+                                <p class="section-label">
+                                    Your trajectory
+                                </p>
+
+                                <h3 id="resultTitle">
+                                    Scenario complete.
+                                </h3>
+
+                                <div class="result-grid">
+
+                                    <div class="result-card">
+                                        <small>
+                                            Accuracy
+                                        </small>
+
+                                        <strong id="resultAccuracy">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <div class="result-card">
+                                        <small>
+                                            Efficiency
+                                        </small>
+
+                                        <strong id="resultEnergy">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <div class="result-card">
+                                        <small>
+                                            Smoothness
+                                        </small>
+
+                                        <strong id="resultSmoothness">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                </div>
+
+                                <p>
+                                    Now compare your decisions with
+                                    a computed control strategy.
+                                </p>
+
+                                <button
+                                    class="button button-primary"
+                                    id="showOptimal"
+                                    type="button"
+                                >
+                                    Show optimized trajectory
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <div
+                            class="scene-overlay hidden"
+                            id="familyOverlay"
+                        >
+                            <div class="overlay-card">
+
+                                <p class="section-label">
+                                    From one solution to many
+                                </p>
+
+                                <h3>
+                                    What changes when the system starts elsewhere?
+                                </h3>
+
+                                <p>
+                                    Different initial positions and velocities
+                                    require different control strategies.
+                                </p>
+
+                                <button
+                                    class="button button-primary"
+                                    id="showFamily"
+                                    type="button"
+                                >
+                                    Reveal the family of solutions
+                                </button>
+
+                            </div>
+                        </div>
+
                     </div>
-                    <canvas
-                        id="gameCanvas"
-                        aria-label="Interactive night driving optimal control experience"
-                    ></canvas>
-                    <div class="game-interface">
+
+                    <div class="control-area">
+
                         <div class="control-panel">
+
                             <div class="control-labels">
-                                <span>Brake</span>
+                                <span>
+                                    Brake
+                                </span>
+
                                 <strong id="controlValue">
                                     0.00
                                 </strong>
-                                <span>Accelerate</span>
+
+                                <span>
+                                    Accelerate
+                                </span>
                             </div>
+
                             <input
                                 id="controlSlider"
                                 type="range"
                                 min="-1"
                                 max="1"
-                                step="0.01"
                                 value="0"
-                                aria-label="Acceleration and braking control"
+                                step="0.01"
+                                aria-label="Acceleration and braking input"
                             >
+
                             <div class="metrics">
+
                                 <div class="metric">
-                                    <small>Distance</small>
+                                    <small>
+                                        Remaining
+                                    </small>
+
                                     <strong id="distanceMetric">
                                         85 m
                                     </strong>
                                 </div>
+
                                 <div class="metric">
-                                    <small>Speed</small>
+                                    <small>
+                                        Speed
+                                    </small>
+
                                     <strong id="speedMetric">
                                         0.0
                                     </strong>
                                 </div>
+
                                 <div class="metric">
-                                    <small>Energy</small>
+                                    <small>
+                                        Energy use
+                                    </small>
+
                                     <strong id="energyMetric">
                                         0%
                                     </strong>
                                 </div>
+
                             </div>
+
                         </div>
+
                         <div class="game-buttons">
+
                             <button
                                 class="button button-primary"
                                 id="startButton"
@@ -656,6 +1159,7 @@
                             >
                                 Start
                             </button>
+
                             <button
                                 class="button button-secondary"
                                 id="resetButton"
@@ -663,262 +1167,229 @@
                             >
                                 Reset
                             </button>
+
                         </div>
+
                     </div>
-                    <div
-                        class="game-overlay"
-                        id="introOverlay"
-                    >
-                        <div class="overlay-box">
-                            <p class="section-label">
-                                Experience dynamic optimization
-                            </p>
-                            <h3>
-                                One slider. Many possible futures.
-                            </h3>
-                            <p>
-                                Accelerate or brake to stop the car
-                                at the target. The ghost car shows
-                                where your current control may take you.
-                            </p>
-                            <button
-                                class="button button-primary"
-                                id="overlayStart"
-                                type="button"
-                            >
-                                Begin
-                            </button>
-                        </div>
-                    </div>
-                    <div
-                        class="game-overlay hidden"
-                        id="resultOverlay"
-                    >
-                        <div class="overlay-box">
-                            <p class="section-label">
-                                Your control
-                            </p>
-                            <h3 id="resultTitle">
-                                You found a feasible control.
-                            </h3>
-                            <div class="result-grid">
-                                <div class="result-item">
-                                    <small>Accuracy</small>
-                                    <strong id="resultAccuracy">
-                                        —
-                                    </strong>
-                                </div>
-                                <div class="result-item">
-                                    <small>Energy</small>
-                                    <strong id="resultEnergy">
-                                        —
-                                    </strong>
-                                </div>
-                                <div class="result-item">
-                                    <small>Smoothness</small>
-                                    <strong id="resultSmoothness">
-                                        —
-                                    </strong>
-                                </div>
-                            </div>
-                            <p>
-                                Your trajectory is feasible.
-                                Now compare it with an optimized control.
-                            </p>
-                            <button
-                                class="button button-primary"
-                                id="showOptimal"
-                                type="button"
-                            >
-                                Show optimized control
-                            </button>
-                        </div>
-                    </div>
-                    <div
-                        class="game-overlay hidden"
-                        id="familyOverlay"
-                    >
-                        <div class="overlay-box">
-                            <p class="section-label">
-                                Multiparametric insight
-                            </p>
-                            <h3>
-                                One scenario is only the beginning.
-                            </h3>
-                            <p>
-                                Different starting positions and
-                                velocities require different optimal
-                                control strategies.
-                            </p>
-                            <button
-                                class="button button-primary"
-                                id="showFamily"
-                                type="button"
-                            >
-                                Reveal the family of solutions
-                            </button>
-                        </div>
-                    </div>
+
                 </div>
-                <div class="research-message">
+
+                <div class="experience-explanation">
+
                     <strong>
-                        Every optimization problem contains
-                        countless possible futures.
+                        Every dynamic problem contains many possible futures.
                     </strong>
+
                     <p>
-                        The challenge is not merely controlling the system.
-                        The challenge is discovering the best control before
-                        the future unfolds. My research develops computational
-                        methods that reveal how optimal solutions change over
-                        time and across initial conditions, system parameters,
-                        and operating scenarios.
+                        A decision made now changes the state of the system
+                        later. The challenge is not simply producing a feasible
+                        trajectory, but determining the best trajectory while
+                        accounting for dynamics, constraints, objectives,
+                        and initial conditions. My research develops methods
+                        for revealing and computing these relationships.
                     </p>
+
                 </div>
+
             </div>
         </section>
-        <section id="work">
+
+        <section id="portfolio">
             <div class="container fade-in">
-                <p class="section-label">Selected work</p>
-                <h2>Problems I study and solve.</h2>
-                <p class="section-description">
-                    My research spans mathematical theory,
-                    computational methods, control systems,
-                    scientific computing, and data-driven engineering.
+
+                <p class="section-label">
+                    Portfolio
                 </p>
-                <div class="grid">
-                    <article class="card">
-                        <span class="card-number">01</span>
-                        <h3>Dynamic Optimization</h3>
+
+                <h2>
+                    Explore the work, not a fixed list of labels.
+                </h2>
+
+                <p class="section-description">
+                    My work continues to evolve across projects,
+                    methods, applications, and collaborations.
+                    These sections are designed to grow with it.
+                </p>
+
+                <div class="portal-grid">
+
+                    <a
+                        class="portal-card"
+                        href="#"
+                        aria-label="Research overview"
+                    >
+                        <div class="portal-top">
+                            <span class="portal-label">
+                                Research
+                            </span>
+
+                            <span class="portal-arrow">
+                                ↗
+                            </span>
+                        </div>
+
+                        <h3>
+                            Research directions
+                        </h3>
+
                         <p>
-                            Computational frameworks for solving
-                            time-dependent optimization problems
-                            in complex engineering systems.
+                            Questions, methods, theoretical developments,
+                            computational frameworks, and ongoing research.
                         </p>
-                    </article>
-                    <article class="card">
-                        <span class="card-number">02</span>
-                        <h3>Model Predictive Control</h3>
+                    </a>
+
+                    <a
+                        class="portal-card"
+                        href="#"
+                        aria-label="Publications"
+                    >
+                        <div class="portal-top">
+                            <span class="portal-label">
+                                Publications
+                            </span>
+
+                            <span class="portal-arrow">
+                                ↗
+                            </span>
+                        </div>
+
+                        <h3>
+                            Papers and scholarly work
+                        </h3>
+
                         <p>
-                            Predictive control strategies for constrained
-                            systems using optimization models and
-                            explicit control policies.
+                            Journal articles, conference contributions,
+                            manuscripts, presentations, and research outputs.
                         </p>
-                    </article>
-                    <article class="card">
-                        <span class="card-number">03</span>
-                        <h3>Continuous-Time Optimization</h3>
+                    </a>
+
+                    <a
+                        class="portal-card"
+                        href="#"
+                        aria-label="Selected projects"
+                    >
+                        <div class="portal-top">
+                            <span class="portal-label">
+                                Projects
+                            </span>
+
+                            <span class="portal-arrow">
+                                ↗
+                            </span>
+                        </div>
+
+                        <h3>
+                            Selected projects
+                        </h3>
+
                         <p>
-                            Continuous-time formulations for optimal
-                            control, dynamic optimization, and
-                            parameter-dependent solution structures.
+                            Research projects, computational studies,
+                            engineering applications, and collaborative work.
                         </p>
-                    </article>
-                    <article class="card">
-                        <span class="card-number">04</span>
-                        <h3>Multiparametric Programming</h3>
+                    </a>
+
+                    <a
+                        class="portal-card"
+                        href="https://github.com/LidaLMK"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Software and GitHub"
+                    >
+                        <div class="portal-top">
+                            <span class="portal-label">
+                                Software
+                            </span>
+
+                            <span class="portal-arrow">
+                                ↗
+                            </span>
+                        </div>
+
+                        <h3>
+                            Code and computational tools
+                        </h3>
+
                         <p>
-                            Explicit solution maps that show how
-                            optimal decisions change across parameters,
-                            states, and initial conditions.
+                            Numerical implementations, visualization tools,
+                            research software, and reproducible workflows.
                         </p>
-                    </article>
-                    <article class="card">
-                        <span class="card-number">05</span>
-                        <h3>Mathematical Modeling</h3>
+                    </a>
+
+                    <a
+                        class="portal-card"
+                        href="#"
+                        aria-label="Academic profile"
+                    >
+                        <div class="portal-top">
+                            <span class="portal-label">
+                                Profile
+                            </span>
+
+                            <span class="portal-arrow">
+                                ↗
+                            </span>
+                        </div>
+
+                        <h3>
+                            Academic experience
+                        </h3>
+
                         <p>
-                            Dynamic models, system representations,
-                            simulation frameworks, and computational
-                            models for engineering analysis.
+                            Education, research experience, awards,
+                            teaching, presentations, and professional activities.
                         </p>
-                    </article>
-                    <article class="card">
-                        <span class="card-number">06</span>
-                        <h3>Machine Learning</h3>
+                    </a>
+
+                    <a
+                        class="portal-card"
+                        href="#contact"
+                        aria-label="Contact"
+                    >
+                        <div class="portal-top">
+                            <span class="portal-label">
+                                Connect
+                            </span>
+
+                            <span class="portal-arrow">
+                                ↗
+                            </span>
+                        </div>
+
+                        <h3>
+                            Collaboration and contact
+                        </h3>
+
                         <p>
-                            Data-driven and scientific machine learning
-                            methods for prediction, approximation,
-                            analysis, and engineering decision-making.
+                            Research collaborations, technical discussions,
+                            academic opportunities, and interdisciplinary work.
                         </p>
-                    </article>
+                    </a>
+
                 </div>
+
             </div>
         </section>
-        <section id="expertise">
-            <div class="container fade-in">
-                <p class="section-label">Expertise</p>
-                <h2>Technical foundations.</h2>
-                <div class="grid-four">
-                    <article class="card">
-                        <span class="card-number">
-                            Optimization and control
-                        </span>
-                        <h3>
-                            Mathematical Decision Methods
-                        </h3>
-                        <p>
-                            Mathematical programming, dynamic optimization,
-                            nonlinear optimization, optimal control,
-                            model predictive control, and multiparametric
-                            programming.
-                        </p>
-                    </article>
-                    <article class="card">
-                        <span class="card-number">
-                            Modeling
-                        </span>
-                        <h3>
-                            Dynamic System Modeling
-                        </h3>
-                        <p>
-                            Continuous-time and discrete-time systems,
-                            state-space models, differential equations,
-                            simulation, parameterization, and engineering
-                            model development.
-                        </p>
-                    </article>
-                    <article class="card">
-                        <span class="card-number">
-                            Computation
-                        </span>
-                        <h3>
-                            Scientific Computing
-                        </h3>
-                        <p>
-                            Python-based computational frameworks,
-                            numerical algorithms, simulation,
-                            visualization, reproducible research,
-                            and computational workflow development.
-                        </p>
-                    </article>
-                    <article class="card">
-                        <span class="card-number">
-                            Artificial intelligence
-                        </span>
-                        <h3>
-                            Machine Learning for Engineering
-                        </h3>
-                        <p>
-                            Machine learning, deep learning,
-                            scientific machine learning, surrogate models,
-                            data analytics, and intelligent
-                            decision-support systems.
-                        </p>
-                    </article>
-                </div>
-            </div>
-        </section>
+
         <section id="contact">
             <div class="container fade-in">
-                <p class="section-label">Contact</p>
-                <h2>Let’s build something meaningful.</h2>
+
+                <p class="section-label">
+                    Contact
+                </p>
+
+                <h2>
+                    Let’s build something meaningful.
+                </h2>
+
                 <p class="about-text">
                     I am interested in research collaborations,
-                    technical projects, and opportunities involving
-                    optimization, model predictive control,
-                    dynamic systems, mathematical modeling,
-                    machine learning, and computational engineering.
+                    technical projects, and opportunities that connect
+                    mathematics, computation, intelligent systems,
+                    and real engineering problems.
                 </p>
+
                 <div class="buttons">
+
                     <a
                         class="button button-primary"
                         href="https://github.com/LidaLMK"
@@ -927,125 +1398,163 @@
                     >
                         View GitHub
                     </a>
+
                 </div>
+
             </div>
         </section>
+
     </main>
+
     <footer>
         <div class="container">
             © <span id="year"></span> Lida Lamakani
         </div>
     </footer>
+
     <script>
         document.getElementById("year").textContent =
             new Date().getFullYear();
+
         const fadeElements =
             document.querySelectorAll(".fade-in");
-        const observer = new IntersectionObserver(
-            entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("visible");
-                    }
-                });
-            },
-            {
-                threshold: 0.15
-            }
-        );
+
+        const fadeObserver =
+            new IntersectionObserver(
+                entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                        }
+                    });
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
         fadeElements.forEach(element => {
-            observer.observe(element);
+            fadeObserver.observe(element);
         });
+
         const canvas =
             document.getElementById("gameCanvas");
-        const ctx =
+
+        const context =
             canvas.getContext("2d");
+
         const slider =
             document.getElementById("controlSlider");
+
         const controlValue =
             document.getElementById("controlValue");
+
         const distanceMetric =
             document.getElementById("distanceMetric");
+
         const speedMetric =
             document.getElementById("speedMetric");
+
         const energyMetric =
             document.getElementById("energyMetric");
+
         const statusPill =
             document.getElementById("statusPill");
+
         const introOverlay =
             document.getElementById("introOverlay");
+
         const resultOverlay =
             document.getElementById("resultOverlay");
+
         const familyOverlay =
             document.getElementById("familyOverlay");
-        const resultAccuracy =
-            document.getElementById("resultAccuracy");
-        const resultEnergy =
-            document.getElementById("resultEnergy");
-        const resultSmoothness =
-            document.getElementById("resultSmoothness");
+
         const resultTitle =
             document.getElementById("resultTitle");
+
+        const resultAccuracy =
+            document.getElementById("resultAccuracy");
+
+        const resultEnergy =
+            document.getElementById("resultEnergy");
+
+        const resultSmoothness =
+            document.getElementById("resultSmoothness");
+
+        const sceneMessage =
+            document.getElementById("sceneMessage");
+
+        const sceneMessageTitle =
+            document.getElementById("sceneMessageTitle");
+
+        const sceneMessageText =
+            document.getElementById("sceneMessageText");
+
         const startButton =
             document.getElementById("startButton");
+
         const resetButton =
             document.getElementById("resetButton");
+
         const overlayStart =
             document.getElementById("overlayStart");
+
         const showOptimal =
             document.getElementById("showOptimal");
+
         const showFamily =
             document.getElementById("showFamily");
-        let width = 0;
-        let height = 0;
+
+        let canvasWidth = 0;
+        let canvasHeight = 0;
+
         const deviceScale =
             Math.min(window.devicePixelRatio || 1, 2);
+
         const state = {
-            x: 5,
-            v: 0,
+            position: 6,
+            velocity: 0,
             control: 0,
-            energy: 0,
             elapsed: 0,
+            energy: 0,
             running: false,
             replaying: false,
             showingFamily: false,
-            targetX: 90,
-            history: [],
+            targetStart: 84,
+            targetEnd: 91,
+            targetCenter: 87.5,
+            userTrajectory: [],
             controlHistory: [],
             optimalTrajectory: [],
             familyTrajectories: [],
             lastTime: performance.now()
         };
+
         function clamp(value, minimum, maximum) {
             return Math.max(
                 minimum,
                 Math.min(maximum, value)
             );
         }
-        function roadY() {
-            return height * 0.72;
-        }
-        function mapX(value) {
-            return 65
-                + (value / 100)
-                * (width - 130);
-        }
+
         function resizeCanvas() {
             const rectangle =
                 canvas.getBoundingClientRect();
-            width = Math.max(
-                320,
-                rectangle.width
-            );
-            height = Math.max(
-                520,
-                rectangle.height
-            );
+
+            canvasWidth =
+                Math.max(320, rectangle.width);
+
+            canvasHeight =
+                Math.max(360, rectangle.height);
+
             canvas.width =
-                Math.floor(width * deviceScale);
+                Math.floor(canvasWidth * deviceScale);
+
             canvas.height =
-                Math.floor(height * deviceScale);
-            ctx.setTransform(
+                Math.floor(canvasHeight * deviceScale);
+
+            context.setTransform(
                 deviceScale,
                 0,
                 0,
@@ -1054,754 +1563,1232 @@
                 0
             );
         }
-        function resetGame(showIntroduction = false) {
-            state.x = 5;
-            state.v = 0;
+
+        function roadTop() {
+            return canvasHeight * 0.62;
+        }
+
+        function roadCenter() {
+            return canvasHeight * 0.76;
+        }
+
+        function mapPosition(position) {
+            const leftMargin = 58;
+            const rightMargin = 58;
+
+            return leftMargin
+                + (position / 100)
+                * (
+                    canvasWidth
+                    - leftMargin
+                    - rightMargin
+                );
+        }
+
+        function resetGame(showIntro = false) {
+            state.position = 6;
+            state.velocity = 0;
             state.control = 0;
-            state.energy = 0;
             state.elapsed = 0;
+            state.energy = 0;
             state.running = false;
             state.replaying = false;
             state.showingFamily = false;
-            state.history = [
+            state.userTrajectory = [
                 {
-                    x: state.x,
-                    v: state.v,
+                    position: state.position,
+                    velocity: state.velocity,
                     time: 0
                 }
             ];
             state.controlHistory = [];
             state.optimalTrajectory = [];
             state.familyTrajectories = [];
-            state.lastTime =
-                performance.now();
+            state.lastTime = performance.now();
+
             slider.value = 0;
+
             introOverlay.classList.toggle(
                 "hidden",
-                !showIntroduction
+                !showIntro
             );
+
             resultOverlay.classList.add("hidden");
             familyOverlay.classList.add("hidden");
+
+            sceneMessage.classList.remove("visible");
+
             statusPill.textContent = "Ready";
+
             updateInterface();
         }
+
         function startGame() {
             resetGame(false);
+
             state.running = true;
-            state.lastTime =
-                performance.now();
+            state.lastTime = performance.now();
+
             statusPill.textContent = "Live";
         }
+
         function updateSystem(deltaTime) {
             state.control =
                 Number(slider.value);
+
+            const motorForce =
+                state.control * 7.3;
+
+            const rollingResistance =
+                state.velocity > 0
+                    ? 0.16
+                    : 0;
+
+            const aerodynamicDrag =
+                0.018
+                * state.velocity
+                * Math.abs(state.velocity);
+
             const acceleration =
-                state.control * 7.2
-                - 0.13 * Math.sign(state.v || 1)
-                - 0.018 * state.v * Math.abs(state.v);
-            state.v +=
+                motorForce
+                - rollingResistance
+                - aerodynamicDrag;
+
+            state.velocity +=
                 acceleration * deltaTime;
-            state.v = clamp(
-                state.v,
-                -5,
-                26
+
+            state.velocity = clamp(
+                state.velocity,
+                0,
+                25
             );
-            state.x +=
-                state.v * deltaTime * 0.58;
+
+            state.position +=
+                state.velocity
+                * deltaTime
+                * 0.60;
+
+            state.elapsed += deltaTime;
+
             state.energy +=
                 Math.abs(state.control)
                 * deltaTime
-                * 3.6;
-            state.elapsed +=
-                deltaTime;
-            state.history.push({
-                x: state.x,
-                v: state.v,
+                * 3.3;
+
+            state.userTrajectory.push({
+                position: state.position,
+                velocity: state.velocity,
                 time: state.elapsed
             });
+
             state.controlHistory.push(
                 state.control
             );
-            const nearTarget =
-                Math.abs(
-                    state.targetX - state.x
-                ) < 1.5;
-            const nearlyStopped =
-                Math.abs(state.v) < 1.4;
+
+            const insideTarget =
+                state.position >= state.targetStart
+                && state.position <= state.targetEnd;
+
+            const stopped =
+                state.velocity < 0.75;
+
             const overshot =
-                state.x > state.targetX + 4;
+                state.position > state.targetEnd + 5;
+
             const timedOut =
-                state.elapsed > 22;
+                state.elapsed > 24;
+
             if (
-                (nearTarget && nearlyStopped)
+                (insideTarget && stopped)
                 || overshot
                 || timedOut
             ) {
                 finishGame(
-                    nearTarget && nearlyStopped
+                    insideTarget && stopped
                 );
             }
         }
+
         function finishGame(success) {
             state.running = false;
-            const finalError =
+
+            const targetError =
                 Math.abs(
-                    state.targetX - state.x
+                    state.targetCenter
+                    - state.position
                 );
+
             const accuracy = clamp(
                 100
-                - finalError * 5.5
-                - Math.abs(state.v) * 1.8,
+                - targetError * 7
+                - state.velocity * 2.2,
                 0,
                 100
             );
-            const energyScore = clamp(
-                100 - state.energy * 1.6,
+
+            const efficiency = clamp(
+                100 - state.energy * 1.45,
                 0,
                 100
             );
-            let roughness = 0;
+
+            let controlVariation = 0;
+
             for (
                 let index = 1;
                 index < state.controlHistory.length;
                 index++
             ) {
-                roughness += Math.abs(
+                controlVariation += Math.abs(
                     state.controlHistory[index]
                     - state.controlHistory[index - 1]
                 );
             }
+
             const smoothness = clamp(
-                100 - roughness * 4.2,
+                100 - controlVariation * 3.5,
                 0,
                 100
             );
+
             resultAccuracy.textContent =
                 `${Math.round(accuracy)}%`;
+
             resultEnergy.textContent =
-                `${Math.round(energyScore)}%`;
+                `${Math.round(efficiency)}%`;
+
             resultSmoothness.textContent =
                 `${Math.round(smoothness)}%`;
+
             resultTitle.textContent = success
-                ? "You found a feasible control."
-                : "You completed the scenario.";
+                ? "You reached the target."
+                : "The scenario is complete.";
+
             statusPill.textContent = success
-                ? "Feasible control"
+                ? "Target reached"
                 : "Scenario complete";
+
             window.setTimeout(() => {
                 resultOverlay.classList.remove(
                     "hidden"
                 );
-            }, 450);
+            }, 420);
         }
+
         function calculateOptimalTrajectory(
-            startingPosition = 5,
-            startingVelocity = 0
+            initialPosition = 6,
+            initialVelocity = 0
         ) {
             const trajectory = [];
-            let x = startingPosition;
-            let velocity = startingVelocity;
+
+            let position =
+                initialPosition;
+
+            let velocity =
+                initialVelocity;
+
             let time = 0;
+
             const timeStep = 0.035;
-            while (time < 18) {
-                const remainingDistance =
-                    state.targetX - x;
-                const desiredVelocity = clamp(
-                    remainingDistance * 0.34,
-                    0,
-                    16
-                );
+
+            while (time < 20) {
+                const remaining =
+                    state.targetCenter - position;
+
                 const stoppingDistance =
                     (velocity * velocity)
-                    / (2 * 5.5 + 0.001);
+                    / (2 * 5.8 + 0.001);
+
                 let control;
+
                 if (
-                    remainingDistance
-                    < stoppingDistance + 5
+                    remaining
+                    <= stoppingDistance + 5.2
                 ) {
                     control = clamp(
-                        -0.75
+                        -0.72
                         - velocity * 0.025,
                         -1,
                         0
                     );
                 } else {
+                    const desiredVelocity =
+                        clamp(
+                            remaining * 0.32,
+                            0,
+                            15
+                        );
+
                     control = clamp(
                         (
                             desiredVelocity
                             - velocity
-                        ) * 0.16,
+                        ) * 0.17,
                         -1,
                         0.82
                     );
                 }
+
                 const acceleration =
-                    control * 7.2
-                    - 0.13
-                    * Math.sign(velocity || 1)
+                    control * 7.3
+                    - (
+                        velocity > 0
+                            ? 0.16
+                            : 0
+                    )
                     - 0.018
                     * velocity
                     * Math.abs(velocity);
+
                 velocity +=
                     acceleration * timeStep;
+
                 velocity = clamp(
                     velocity,
-                    -3,
-                    24
+                    0,
+                    25
                 );
-                x +=
+
+                position +=
                     velocity
                     * timeStep
-                    * 0.58;
+                    * 0.60;
+
                 time += timeStep;
+
                 trajectory.push({
-                    x,
-                    v: velocity,
+                    position,
+                    velocity,
+                    control,
                     time
                 });
+
                 if (
-                    Math.abs(
-                        state.targetX - x
-                    ) < 0.8
-                    && Math.abs(velocity) < 0.8
+                    position >= state.targetStart
+                    && position <= state.targetEnd
+                    && velocity < 0.55
+                ) {
+                    break;
+                }
+
+                if (
+                    position > state.targetEnd + 2
                 ) {
                     break;
                 }
             }
+
             return trajectory;
         }
+
         function beginOptimalReplay() {
             resultOverlay.classList.add(
                 "hidden"
             );
+
             state.optimalTrajectory =
                 calculateOptimalTrajectory(
-                    5,
+                    6,
                     0
                 );
+
             state.replaying = true;
-            state.replayStart =
-                performance.now();
+            state.replayStart = performance.now();
+
             statusPill.textContent =
                 "Optimized replay";
+
+            sceneMessageTitle.textContent =
+                "Your trajectory and the optimized trajectory";
+
+            sceneMessageText.textContent =
+                "The optimized controller anticipates when to accelerate and when to brake.";
+
+            sceneMessage.classList.add(
+                "visible"
+            );
+
             window.setTimeout(() => {
                 state.replaying = false;
+
+                sceneMessage.classList.remove(
+                    "visible"
+                );
+
                 familyOverlay.classList.remove(
                     "hidden"
                 );
-            }, 5000);
+            }, 5600);
         }
+
         function revealFamily() {
             familyOverlay.classList.add(
                 "hidden"
             );
+
             state.showingFamily = true;
             state.familyTrajectories = [];
+
             const initialConditions = [
-                { x: 4, v: 0 },
-                { x: 10, v: 2 },
-                { x: 16, v: 7 },
-                { x: 24, v: 0 },
-                { x: 30, v: 9 },
-                { x: 38, v: 4 },
-                { x: 46, v: 0 },
-                { x: 55, v: 8 },
-                { x: 62, v: 3 },
-                { x: 18, v: 12 }
+                { position: 4, velocity: 0 },
+                { position: 10, velocity: 2 },
+                { position: 16, velocity: 6 },
+                { position: 23, velocity: 0 },
+                { position: 29, velocity: 9 },
+                { position: 37, velocity: 4 },
+                { position: 45, velocity: 0 },
+                { position: 53, velocity: 7 },
+                { position: 61, velocity: 3 },
+                { position: 20, velocity: 12 }
             ];
+
             initialConditions.forEach(
                 (condition, index) => {
                     state.familyTrajectories.push({
-                        delay: index * 140,
+                        delay: index * 150,
                         points:
                             calculateOptimalTrajectory(
-                                condition.x,
-                                condition.v
+                                condition.position,
+                                condition.velocity
                             )
                     });
                 }
             );
+
             state.familyStart =
                 performance.now();
+
             statusPill.textContent =
                 "Family of optimal controls";
+
+            sceneMessageTitle.textContent =
+                "Different initial conditions. Different optimal controls.";
+
+            sceneMessageText.textContent =
+                "A parameter-dependent framework can reveal the entire family.";
+
+            window.setTimeout(() => {
+                sceneMessage.classList.add(
+                    "visible"
+                );
+            }, 2100);
         }
+
         function updateInterface() {
-            const distance =
+            const remaining =
                 Math.max(
                     0,
-                    state.targetX - state.x
+                    state.targetCenter
+                    - state.position
                 );
+
             controlValue.textContent =
                 Number(slider.value).toFixed(2);
+
             distanceMetric.textContent =
-                `${distance.toFixed(0)} m`;
+                `${remaining.toFixed(0)} m`;
+
             speedMetric.textContent =
-                `${Math.abs(state.v).toFixed(1)}`;
+                state.velocity.toFixed(1);
+
             energyMetric.textContent =
                 `${Math.min(
                     100,
                     Math.round(state.energy * 1.8)
                 )}%`;
         }
-        function drawCity() {
-            const roadTop = roadY();
-            const skyGradient =
-                ctx.createLinearGradient(
+
+        function drawSky() {
+            const sky =
+                context.createLinearGradient(
                     0,
                     0,
                     0,
-                    roadTop
+                    roadTop()
                 );
-            skyGradient.addColorStop(
+
+            sky.addColorStop(
                 0,
-                "#081021"
+                "#07101f"
             );
-            skyGradient.addColorStop(
+
+            sky.addColorStop(
                 1,
-                "#111a2c"
+                "#101b2c"
             );
-            ctx.fillStyle =
-                skyGradient;
-            ctx.fillRect(
+
+            context.fillStyle = sky;
+
+            context.fillRect(
                 0,
                 0,
-                width,
-                roadTop
+                canvasWidth,
+                roadTop()
             );
+
             const moonX =
-                width * 0.78;
+                canvasWidth * 0.80;
+
             const moonY =
-                height * 0.16;
+                canvasHeight * 0.20;
+
             const moonGlow =
-                ctx.createRadialGradient(
+                context.createRadialGradient(
                     moonX,
                     moonY,
                     0,
                     moonX,
                     moonY,
-                    95
+                    100
                 );
+
             moonGlow.addColorStop(
                 0,
-                "rgba(196, 244, 255, 0.44)"
+                "rgba(188, 235, 255, 0.40)"
             );
+
             moonGlow.addColorStop(
                 1,
-                "rgba(196, 244, 255, 0)"
+                "rgba(188, 235, 255, 0)"
             );
-            ctx.fillStyle =
+
+            context.fillStyle =
                 moonGlow;
-            ctx.beginPath();
-            ctx.arc(
+
+            context.beginPath();
+
+            context.arc(
                 moonX,
                 moonY,
-                95,
+                100,
                 0,
                 Math.PI * 2
             );
-            ctx.fill();
-            for (
-                let index = 0;
-                index < 72;
-                index++
-            ) {
-                const starX =
-                    (index * 83.21)
-                    % width;
-                const starY =
-                    (
-                        (
-                            index * 47.73
-                        )
-                        % (
-                            roadTop * 0.46
-                        )
-                    ) + 18;
-                const alpha =
-                    0.18
-                    + (
-                        index % 5
-                    ) / 12;
-                ctx.fillStyle =
-                    `rgba(
-                        220,
-                        238,
-                        255,
-                        ${alpha}
-                    )`;
-                ctx.fillRect(
-                    starX,
-                    starY,
-                    1.2,
-                    1.2
-                );
-            }
-            let buildingX = -20;
-            let buildingIndex = 0;
-            while (
-                buildingX < width + 50
-            ) {
-                const buildingWidth =
-                    34
-                    + (
-                        buildingIndex * 17
-                    ) % 58;
-                const buildingHeight =
-                    55
-                    + (
-                        buildingIndex * 29
-                    ) % 155;
-                ctx.fillStyle =
-                    "#0b1324";
-                ctx.fillRect(
-                    buildingX,
-                    roadTop - buildingHeight,
-                    buildingWidth,
-                    buildingHeight
-                );
-                for (
-                    let windowY =
-                        roadTop
-                        - buildingHeight
-                        + 14;
-                    windowY < roadTop - 12;
-                    windowY += 18
-                ) {
-                    for (
-                        let windowX =
-                            buildingX + 8;
-                        windowX
-                        < buildingX
-                        + buildingWidth
-                        - 7;
-                        windowX += 14
-                    ) {
-                        if (
-                            (
-                                windowX
-                                + windowY
-                                + buildingIndex
-                            ) % 4 < 1.6
-                        ) {
-                            ctx.fillStyle =
-                                "rgba(101, 215, 255, 0.20)";
-                            ctx.fillRect(
-                                windowX,
-                                windowY,
-                                4,
-                                6
-                            );
-                        }
-                    }
-                }
-                buildingX +=
-                    buildingWidth + 8;
-                buildingIndex++;
-            }
-            const roadGradient =
-                ctx.createLinearGradient(
-                    0,
-                    roadTop,
-                    0,
-                    height
-                );
-            roadGradient.addColorStop(
-                0,
-                "#151b28"
-            );
-            roadGradient.addColorStop(
-                1,
-                "#070a10"
-            );
-            ctx.fillStyle =
-                roadGradient;
-            ctx.fillRect(
-                0,
-                roadTop,
-                width,
-                height - roadTop
-            );
-            ctx.setLineDash([
-                18,
-                18
-            ]);
-            ctx.strokeStyle =
-                "rgba(255, 255, 255, 0.23)";
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(
-                0,
-                roadTop + 68
-            );
-            ctx.lineTo(
-                width,
-                roadTop + 68
-            );
-            ctx.stroke();
-            ctx.setLineDash([]);
-        }
-        function drawTarget() {
-            const x =
-                mapX(state.targetX);
-            const y =
-                roadY() + 42;
-            const targetGlow =
-                ctx.createRadialGradient(
-                    x,
-                    y,
-                    0,
-                    x,
-                    y,
-                    45
-                );
-            targetGlow.addColorStop(
-                0,
-                "rgba(126, 240, 182, 0.55)"
-            );
-            targetGlow.addColorStop(
-                1,
-                "rgba(126, 240, 182, 0)"
-            );
-            ctx.fillStyle =
-                targetGlow;
-            ctx.beginPath();
-            ctx.arc(
-                x,
-                y,
-                45,
-                0,
-                Math.PI * 2
-            );
-            ctx.fill();
-            ctx.strokeStyle =
-                "#7ef0b6";
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.arc(
-                x,
-                y,
-                13,
-                0,
-                Math.PI * 2
-            );
-            ctx.stroke();
-            ctx.fillStyle =
-                "rgba(255, 255, 255, 0.84)";
-            ctx.font =
-                "12px Arial, sans-serif";
-            ctx.textAlign =
-                "center";
-            ctx.fillText(
-                "TARGET",
-                x,
-                y - 28
-            );
-        }
-        function drawCar(
-            xValue,
-            alpha = 1,
-            color = "101, 215, 255"
-        ) {
-            const x =
-                mapX(xValue);
-            const y =
-                roadY() + 42;
-            ctx.save();
-            ctx.globalAlpha =
-                alpha;
-            ctx.translate(
-                x,
-                y
-            );
-            const carGlow =
-                ctx.createRadialGradient(
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    46
-                );
-            carGlow.addColorStop(
-                0,
-                `rgba(${color}, 0.32)`
-            );
-            carGlow.addColorStop(
-                1,
-                `rgba(${color}, 0)`
-            );
-            ctx.fillStyle =
-                carGlow;
-            ctx.beginPath();
-            ctx.arc(
-                0,
-                0,
-                46,
-                0,
-                Math.PI * 2
-            );
-            ctx.fill();
-            ctx.fillStyle =
-                `rgba(${color}, 0.96)`;
-            ctx.beginPath();
-            if (ctx.roundRect) {
-                ctx.roundRect(
-                    -22,
-                    -8,
-                    44,
-                    16,
-                    6
-                );
-            } else {
-                ctx.rect(
-                    -22,
-                    -8,
-                    44,
-                    16
-                );
-            }
-            ctx.fill();
-            ctx.fillStyle =
-                "rgba(230, 248, 255, 0.84)";
-            ctx.beginPath();
-            ctx.moveTo(
-                -11,
-                -8
-            );
-            ctx.lineTo(
-                -4,
-                -15
-            );
-            ctx.lineTo(
-                10,
-                -15
-            );
-            ctx.lineTo(
-                17,
-                -8
-            );
-            ctx.closePath();
-            ctx.fill();
-            ctx.fillStyle =
-                "#050810";
-            ctx.beginPath();
-            ctx.arc(
-                -13,
-                8,
-                5,
-                0,
-                Math.PI * 2
-            );
-            ctx.arc(
-                14,
-                8,
-                5,
-                0,
-                Math.PI * 2
-            );
-            ctx.fill();
-            ctx.restore();
-        }
-        function predictGhostTrajectory() {
-            let x = state.x;
-            let velocity = state.v;
-            const control =
-                Number(slider.value);
-            const prediction = [];
-            const timeStep =
-                0.055;
+
+            context.fill();
+
             for (
                 let index = 0;
                 index < 78;
                 index++
             ) {
+                const starX =
+                    (index * 89.37)
+                    % canvasWidth;
+
+                const starY =
+                    (
+                        (
+                            index * 51.41
+                        )
+                        % (
+                            roadTop() * 0.60
+                        )
+                    ) + 15;
+
+                const alpha =
+                    0.15
+                    + (
+                        index % 6
+                    ) / 14;
+
+                context.fillStyle =
+                    `rgba(220, 238, 255, ${alpha})`;
+
+                context.fillRect(
+                    starX,
+                    starY,
+                    1.3,
+                    1.3
+                );
+            }
+        }
+
+        function drawCity() {
+            const baseY =
+                roadTop();
+
+            let buildingX = -20;
+            let buildingIndex = 0;
+
+            while (
+                buildingX < canvasWidth + 60
+            ) {
+                const buildingWidth =
+                    42
+                    + (
+                        buildingIndex * 19
+                    ) % 65;
+
+                const buildingHeight =
+                    70
+                    + (
+                        buildingIndex * 31
+                    ) % 165;
+
+                context.fillStyle =
+                    buildingIndex % 3 === 0
+                        ? "#0a1323"
+                        : "#0b1527";
+
+                context.fillRect(
+                    buildingX,
+                    baseY - buildingHeight,
+                    buildingWidth,
+                    buildingHeight
+                );
+
+                for (
+                    let windowY =
+                        baseY
+                        - buildingHeight
+                        + 17;
+                    windowY < baseY - 14;
+                    windowY += 20
+                ) {
+                    for (
+                        let windowX =
+                            buildingX + 10;
+                        windowX
+                        < buildingX
+                        + buildingWidth
+                        - 8;
+                        windowX += 16
+                    ) {
+                        const lit =
+                            (
+                                windowX
+                                + windowY
+                                + buildingIndex
+                            ) % 5 < 1.8;
+
+                        if (lit) {
+                            context.fillStyle =
+                                "rgba(101, 215, 255, 0.22)";
+
+                            context.fillRect(
+                                windowX,
+                                windowY,
+                                4,
+                                7
+                            );
+                        }
+                    }
+                }
+
+                buildingX +=
+                    buildingWidth + 9;
+
+                buildingIndex++;
+            }
+        }
+
+        function drawRoad() {
+            const top =
+                roadTop();
+
+            const roadGradient =
+                context.createLinearGradient(
+                    0,
+                    top,
+                    0,
+                    canvasHeight
+                );
+
+            roadGradient.addColorStop(
+                0,
+                "#1a202b"
+            );
+
+            roadGradient.addColorStop(
+                1,
+                "#080a0f"
+            );
+
+            context.fillStyle =
+                roadGradient;
+
+            context.fillRect(
+                0,
+                top,
+                canvasWidth,
+                canvasHeight - top
+            );
+
+            const reflection =
+                context.createLinearGradient(
+                    0,
+                    top,
+                    0,
+                    canvasHeight
+                );
+
+            reflection.addColorStop(
+                0,
+                "rgba(101, 215, 255, 0.05)"
+            );
+
+            reflection.addColorStop(
+                1,
+                "rgba(101, 215, 255, 0)"
+            );
+
+            context.fillStyle =
+                reflection;
+
+            context.fillRect(
+                0,
+                top,
+                canvasWidth,
+                canvasHeight - top
+            );
+
+            context.strokeStyle =
+                "rgba(255, 255, 255, 0.12)";
+
+            context.lineWidth = 2;
+
+            context.beginPath();
+
+            context.moveTo(
+                0,
+                top + 14
+            );
+
+            context.lineTo(
+                canvasWidth,
+                top + 14
+            );
+
+            context.stroke();
+
+            context.setLineDash([
+                28,
+                24
+            ]);
+
+            context.strokeStyle =
+                "rgba(255, 255, 255, 0.34)";
+
+            context.lineWidth = 3;
+
+            context.beginPath();
+
+            context.moveTo(
+                0,
+                roadCenter()
+            );
+
+            context.lineTo(
+                canvasWidth,
+                roadCenter()
+            );
+
+            context.stroke();
+
+            context.setLineDash([]);
+
+            const lowerLine =
+                canvasHeight - 45;
+
+            context.strokeStyle =
+                "rgba(255, 255, 255, 0.13)";
+
+            context.lineWidth = 2;
+
+            context.beginPath();
+
+            context.moveTo(
+                0,
+                lowerLine
+            );
+
+            context.lineTo(
+                canvasWidth,
+                lowerLine
+            );
+
+            context.stroke();
+        }
+
+        function drawTargetZone() {
+            const startX =
+                mapPosition(
+                    state.targetStart
+                );
+
+            const endX =
+                mapPosition(
+                    state.targetEnd
+                );
+
+            const top =
+                roadTop() + 18;
+
+            const bottom =
+                canvasHeight - 28;
+
+            const glow =
+                context.createLinearGradient(
+                    startX,
+                    0,
+                    endX,
+                    0
+                );
+
+            glow.addColorStop(
+                0,
+                "rgba(126, 240, 182, 0)"
+            );
+
+            glow.addColorStop(
+                0.5,
+                "rgba(126, 240, 182, 0.22)"
+            );
+
+            glow.addColorStop(
+                1,
+                "rgba(126, 240, 182, 0)"
+            );
+
+            context.fillStyle = glow;
+
+            context.fillRect(
+                startX - 28,
+                top,
+                endX - startX + 56,
+                bottom - top
+            );
+
+            context.strokeStyle =
+                "rgba(126, 240, 182, 0.9)";
+
+            context.lineWidth = 2;
+
+            context.strokeRect(
+                startX,
+                top + 12,
+                endX - startX,
+                bottom - top - 24
+            );
+
+            context.fillStyle =
+                "rgba(220, 255, 237, 0.9)";
+
+            context.font =
+                "700 12px Arial, sans-serif";
+
+            context.textAlign =
+                "center";
+
+            context.fillText(
+                "TARGET ZONE",
+                (startX + endX) / 2,
+                top + 3
+            );
+        }
+
+        function drawCar(
+            position,
+            alpha = 1,
+            color = "101, 215, 255",
+            verticalOffset = 0
+        ) {
+            const x =
+                mapPosition(position);
+
+            const y =
+                roadCenter()
+                - 24
+                + verticalOffset;
+
+            context.save();
+
+            context.globalAlpha =
+                alpha;
+
+            context.translate(
+                x,
+                y
+            );
+
+            const carGlow =
+                context.createRadialGradient(
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    64
+                );
+
+            carGlow.addColorStop(
+                0,
+                `rgba(${color}, 0.28)`
+            );
+
+            carGlow.addColorStop(
+                1,
+                `rgba(${color}, 0)`
+            );
+
+            context.fillStyle =
+                carGlow;
+
+            context.beginPath();
+
+            context.arc(
+                0,
+                4,
+                64,
+                0,
+                Math.PI * 2
+            );
+
+            context.fill();
+
+            context.fillStyle =
+                `rgba(${color}, 0.96)`;
+
+            context.beginPath();
+
+            if (context.roundRect) {
+                context.roundRect(
+                    -34,
+                    -11,
+                    68,
+                    23,
+                    7
+                );
+            } else {
+                context.rect(
+                    -34,
+                    -11,
+                    68,
+                    23
+                );
+            }
+
+            context.fill();
+
+            context.beginPath();
+
+            context.moveTo(
+                -19,
+                -11
+            );
+
+            context.lineTo(
+                -7,
+                -27
+            );
+
+            context.lineTo(
+                17,
+                -27
+            );
+
+            context.lineTo(
+                29,
+                -11
+            );
+
+            context.closePath();
+
+            context.fill();
+
+            context.fillStyle =
+                "rgba(9, 18, 31, 0.80)";
+
+            context.beginPath();
+
+            context.moveTo(
+                -11,
+                -12
+            );
+
+            context.lineTo(
+                -4,
+                -22
+            );
+
+            context.lineTo(
+                6,
+                -22
+            );
+
+            context.lineTo(
+                6,
+                -12
+            );
+
+            context.closePath();
+
+            context.fill();
+
+            context.beginPath();
+
+            context.moveTo(
+                9,
+                -22
+            );
+
+            context.lineTo(
+                16,
+                -22
+            );
+
+            context.lineTo(
+                24,
+                -12
+            );
+
+            context.lineTo(
+                9,
+                -12
+            );
+
+            context.closePath();
+
+            context.fill();
+
+            context.fillStyle =
+                "#05070c";
+
+            context.beginPath();
+
+            context.arc(
+                -22,
+                13,
+                8,
+                0,
+                Math.PI * 2
+            );
+
+            context.arc(
+                23,
+                13,
+                8,
+                0,
+                Math.PI * 2
+            );
+
+            context.fill();
+
+            context.strokeStyle =
+                "rgba(255, 255, 255, 0.42)";
+
+            context.lineWidth = 2;
+
+            context.beginPath();
+
+            context.arc(
+                -22,
+                13,
+                4,
+                0,
+                Math.PI * 2
+            );
+
+            context.arc(
+                23,
+                13,
+                4,
+                0,
+                Math.PI * 2
+            );
+
+            context.stroke();
+
+            context.fillStyle =
+                "rgba(255, 244, 191, 0.95)";
+
+            context.fillRect(
+                30,
+                -5,
+                5,
+                5
+            );
+
+            const headlight =
+                context.createLinearGradient(
+                    32,
+                    0,
+                    95,
+                    0
+                );
+
+            headlight.addColorStop(
+                0,
+                "rgba(255, 239, 177, 0.20)"
+            );
+
+            headlight.addColorStop(
+                1,
+                "rgba(255, 239, 177, 0)"
+            );
+
+            context.fillStyle =
+                headlight;
+
+            context.beginPath();
+
+            context.moveTo(
+                33,
+                -8
+            );
+
+            context.lineTo(
+                96,
+                -24
+            );
+
+            context.lineTo(
+                96,
+                22
+            );
+
+            context.lineTo(
+                33,
+                5
+            );
+
+            context.closePath();
+
+            context.fill();
+
+            context.restore();
+        }
+
+        function predictGhostTrajectory() {
+            let position =
+                state.position;
+
+            let velocity =
+                state.velocity;
+
+            const control =
+                Number(slider.value);
+
+            const prediction = [];
+
+            const timeStep =
+                0.06;
+
+            for (
+                let index = 0;
+                index < 65;
+                index++
+            ) {
                 const acceleration =
-                    control * 7.2
-                    - 0.13
-                    * Math.sign(velocity || 1)
+                    control * 7.3
+                    - (
+                        velocity > 0
+                            ? 0.16
+                            : 0
+                    )
                     - 0.018
                     * velocity
                     * Math.abs(velocity);
+
                 velocity +=
                     acceleration * timeStep;
+
                 velocity = clamp(
                     velocity,
-                    -5,
-                    26
+                    0,
+                    25
                 );
-                x +=
+
+                position +=
                     velocity
                     * timeStep
-                    * 0.58;
+                    * 0.60;
+
                 prediction.push({
-                    x,
+                    position,
                     index
                 });
             }
+
             return prediction;
         }
-        function drawGhostTrajectory() {
+
+        function drawGhostPrediction() {
             if (!state.running) {
                 return;
             }
+
             const points =
                 predictGhostTrajectory();
-            const baseY =
-                roadY() + 40;
-            ctx.save();
-            ctx.setLineDash([
+
+            context.save();
+
+            context.setLineDash([
                 5,
-                9
+                8
             ]);
-            ctx.strokeStyle =
-                "rgba(156, 145, 255, 0.55)";
-            ctx.lineWidth = 2;
-            ctx.beginPath();
+
+            context.strokeStyle =
+                "rgba(156, 145, 255, 0.68)";
+
+            context.lineWidth = 2;
+
+            context.beginPath();
+
             points.forEach(
                 (point, index) => {
                     const x =
-                        mapX(point.x);
+                        mapPosition(
+                            point.position
+                        );
+
                     const y =
-                        baseY
+                        roadCenter()
+                        - 29
                         - Math.sin(
-                            index * 0.12
-                        ) * 5
-                        - index * 0.06;
+                            index * 0.16
+                        ) * 3;
+
                     if (index === 0) {
-                        ctx.moveTo(
+                        context.moveTo(
                             x,
                             y
                         );
                     } else {
-                        ctx.lineTo(
+                        context.lineTo(
                             x,
                             y
                         );
                     }
                 }
             );
-            ctx.stroke();
-            ctx.setLineDash([]);
-            ctx.restore();
+
+            context.stroke();
+
+            context.restore();
+
             const finalPoint =
                 points[
                     points.length - 1
                 ];
+
             if (finalPoint) {
                 drawCar(
-                    finalPoint.x,
-                    0.30,
-                    "156, 145, 255"
+                    finalPoint.position,
+                    0.28,
+                    "156, 145, 255",
+                    -4
                 );
             }
         }
+
         function drawTrajectory(
             points,
             color,
-            alpha = 0.9,
-            progress = 1,
-            verticalOffset = 0
+            alpha,
+            progress,
+            verticalOffset
         ) {
             if (
                 !points
@@ -1809,7 +2796,8 @@
             ) {
                 return;
             }
-            const pointCount =
+
+            const count =
                 Math.max(
                     2,
                     Math.floor(
@@ -1817,44 +2805,59 @@
                         * progress
                     )
                 );
-            ctx.save();
-            ctx.strokeStyle =
+
+            context.save();
+
+            context.strokeStyle =
                 color;
-            ctx.globalAlpha =
+
+            context.globalAlpha =
                 alpha;
-            ctx.lineWidth = 3;
-            ctx.beginPath();
+
+            context.lineWidth = 3;
+
+            context.beginPath();
+
             for (
                 let index = 0;
-                index < pointCount;
+                index < count;
                 index++
             ) {
                 const point =
                     points[index];
+
+                const position =
+                    point.position;
+
                 const x =
-                    mapX(point.x);
+                    mapPosition(position);
+
                 const y =
-                    roadY()
-                    + 42
+                    roadCenter()
+                    - 28
                     + verticalOffset
                     - Math.sin(
-                        index * 0.11
-                    ) * 7;
+                        index * 0.09
+                    ) * 4;
+
                 if (index === 0) {
-                    ctx.moveTo(
+                    context.moveTo(
                         x,
                         y
                     );
                 } else {
-                    ctx.lineTo(
+                    context.lineTo(
                         x,
                         y
                     );
                 }
             }
-            ctx.stroke();
-            ctx.restore();
+
+            context.stroke();
+
+            context.restore();
         }
+
         function drawOptimalReplay(time) {
             if (
                 !state.replaying
@@ -1862,31 +2865,36 @@
             ) {
                 return;
             }
+
             const elapsed =
                 (
                     time
                     - state.replayStart
                 ) / 1000;
+
             const progress =
                 clamp(
-                    elapsed / 4.4,
+                    elapsed / 4.9,
                     0,
                     1
                 );
+
             drawTrajectory(
-                state.history,
-                "rgba(190, 198, 220, 0.55)",
-                0.8,
+                state.userTrajectory,
+                "rgba(197, 204, 224, 0.60)",
+                0.75,
                 1,
                 18
             );
+
             drawTrajectory(
                 state.optimalTrajectory,
                 "#ffd166",
                 0.98,
                 progress,
-                -12
+                -13
             );
+
             const pointIndex =
                 Math.min(
                     state.optimalTrajectory.length - 1,
@@ -1897,20 +2905,28 @@
                         ) * progress
                     )
                 );
-            drawCar(
+
+            const currentPoint =
                 state.optimalTrajectory[
                     pointIndex
-                ].x,
+                ];
+
+            drawCar(
+                currentPoint.position,
                 1,
-                "255, 209, 102"
+                "255, 209, 102",
+                -8
             );
         }
+
         function drawFamily(time) {
             if (!state.showingFamily) {
                 return;
             }
+
             const elapsed =
                 time - state.familyStart;
+
             state.familyTrajectories.forEach(
                 (trajectory, index) => {
                     const progress =
@@ -1918,82 +2934,69 @@
                             (
                                 elapsed
                                 - trajectory.delay
-                            ) / 2200,
+                            ) / 2400,
                             0,
                             1
                         );
+
                     drawTrajectory(
                         trajectory.points,
                         index % 2 === 0
                             ? "#ffd166"
                             : "#65d7ff",
-                        0.25
+                        0.22
                         + (
                             index % 4
-                        ) * 0.06,
+                        ) * 0.07,
                         progress,
-                        -30 + index * 6
+                        -34 + index * 7
                     );
                 }
             );
-            if (elapsed > 2700) {
-                ctx.save();
-                ctx.textAlign =
-                    "center";
-                ctx.fillStyle =
-                    "rgba(245, 247, 255, 0.96)";
-                ctx.font =
-                    "700 24px Arial, sans-serif";
-                ctx.fillText(
-                    "Different initial conditions. Different optimal controls.",
-                    width / 2,
-                    height * 0.20
-                );
-                ctx.fillStyle =
-                    "rgba(183, 189, 206, 0.92)";
-                ctx.font =
-                    "15px Arial, sans-serif";
-                ctx.fillText(
-                    "One computational framework can reveal the entire family.",
-                    width / 2,
-                    height * 0.20 + 31
-                );
-                ctx.restore();
-            }
         }
+
         function drawScene(time) {
-            ctx.clearRect(
+            context.clearRect(
                 0,
                 0,
-                width,
-                height
+                canvasWidth,
+                canvasHeight
             );
+
+            drawSky();
             drawCity();
-            drawTarget();
+            drawRoad();
+            drawTargetZone();
+
             if (
-                state.history.length > 1
+                state.userTrajectory.length > 1
                 && !state.showingFamily
             ) {
                 drawTrajectory(
-                    state.history,
-                    "rgba(101, 215, 255, 0.64)",
-                    0.8,
+                    state.userTrajectory,
+                    "rgba(101, 215, 255, 0.56)",
+                    0.68,
                     1,
                     14
                 );
             }
-            drawGhostTrajectory();
+
+            drawGhostPrediction();
+
             if (state.replaying) {
                 drawOptimalReplay(time);
             } else if (!state.showingFamily) {
                 drawCar(
-                    state.x,
+                    state.position,
                     1,
-                    "101, 215, 255"
+                    "101, 215, 255",
+                    0
                 );
             }
+
             drawFamily(time);
         }
+
         function animate(time) {
             const deltaTime =
                 Math.min(
@@ -2006,57 +3009,73 @@
                         ) / 1000 || 0
                     )
                 );
+
             state.lastTime =
                 time;
+
             if (state.running) {
                 updateSystem(
                     deltaTime
                 );
+
                 updateInterface();
             }
+
             drawScene(time);
+
             requestAnimationFrame(
                 animate
             );
         }
+
         slider.addEventListener(
             "input",
             updateInterface
         );
+
         startButton.addEventListener(
             "click",
             startGame
         );
+
         resetButton.addEventListener(
             "click",
             () => resetGame(false)
         );
+
         overlayStart.addEventListener(
             "click",
             startGame
         );
+
         showOptimal.addEventListener(
             "click",
             beginOptimalReplay
         );
+
         showFamily.addEventListener(
             "click",
             revealFamily
         );
+
         window.addEventListener(
             "resize",
             () => {
                 resizeCanvas();
+
                 drawScene(
                     performance.now()
                 );
             }
         );
+
         resizeCanvas();
         resetGame(true);
+
         requestAnimationFrame(
             animate
         );
     </script>
+
 </body>
-</html> 
+</html>
