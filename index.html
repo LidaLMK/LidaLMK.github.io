@@ -3,1010 +3,242 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lida Lamakani | Continuous-Time Multiparametric Optimal Control</title>
+<meta name="description" content="Research portfolio of Lida Lamakani: continuous-time multiparametric optimal control, explicit MPC, and model-based control via Pontryagin's Maximum Principle.">
 
-<title>Lida Lamakani | Optimization, Control and Intelligent Systems</title>
-
-<meta
-  name="description"
-  content="Research portfolio of Lida Lamakani across optimization, control, modeling, scientific computing, and machine learning."
->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg: #070a12;
-  --panel: rgba(255,255,255,.04);
-  --text: #f5f7ff;
-  --muted: #b6bed0;
-  --sub: #8e97ab;
-  --violet: #9c91ff;
-  --cyan: #65d7ff;
-  --green: #7ef0b6;
-  --gold: #ffd166;
-  --red: #ff6f87;
-  --line: rgba(255,255,255,.1);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  overflow-x: hidden;
-  font-family: Arial, Helvetica, sans-serif;
-  color: var(--text);
-  line-height: 1.6;
-  background:
-    radial-gradient(
-      circle at 84% 4%,
-      rgba(110,84,255,.17),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 7% 42%,
-      rgba(101,215,255,.06),
-      transparent 26%
-    ),
-    var(--bg);
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font: inherit;
-  color: inherit;
-}
-
-.container {
-  width: min(1120px, 90%);
-  margin: auto;
-}
-
-.wide {
-  width: min(1320px, 96%);
-  margin: auto;
-}
-
-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(7,10,18,.85);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
-
-nav {
-  min-height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-}
-
-.logo {
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: .5px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 25px;
-  color: #c7ccdc;
-  font-size: 15px;
-}
-
-.nav-links a:hover {
-  color: #fff;
-}
-
-section {
-  padding: 100px 0;
-}
-
-.hero {
-  min-height: 88vh;
-  display: flex;
-  align-items: center;
-  padding: 90px 0;
-}
-
-.hero-content {
-  max-width: 950px;
-}
-
-.eyebrow,
-.label {
-  color: var(--violet);
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.eyebrow {
-  margin: 0 0 18px;
-}
-
-h1 {
-  margin: 0;
-  font-size: clamp(52px, 9vw, 105px);
-  line-height: .95;
-  letter-spacing: -5px;
-}
-
-h2 {
-  margin: 12px 0 28px;
-  font-size: clamp(36px, 5vw, 58px);
-  line-height: 1.08;
-  letter-spacing: -2px;
-}
-
-.gradient {
-  color: transparent;
-  background: linear-gradient(
-    90deg,
-    #fff,
-    var(--violet),
-    var(--cyan)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-.hero-copy,
-.section-copy {
-  color: var(--muted);
-}
-
-.hero-copy {
-  max-width: 830px;
-  margin: 30px 0 0;
-  font-size: clamp(19px, 2vw, 25px);
-}
-
-.section-copy {
-  max-width: 900px;
-  font-size: clamp(18px, 2vw, 22px);
-}
-
-.about-copy {
-  max-width: 960px;
-  color: #c7ccda;
-  font-size: clamp(21px, 3vw, 31px);
-}
-
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 38px;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 52px;
-  padding: 0 24px;
-  border: 0;
-  border-radius: 999px;
-  cursor: pointer;
-  font-weight: 800;
-  transition: .2s;
-}
-
-.btn:hover {
-  transform: translateY(-3px);
-}
-
-.primary {
-  background: #fff;
-  color: var(--bg);
-}
-
-.secondary {
-  border: 1px solid rgba(255,255,255,.2);
-  background: rgba(255,255,255,.04);
-}
-
-.gold {
-  background: var(--gold);
-  color: #18130a;
-}
-
-.fade {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: .8s;
-}
-
-.fade.show {
-  opacity: 1;
-  transform: none;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.spectrum {
-  margin-top: 34px;
-  padding: 34px;
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(156,145,255,.06),
-      rgba(101,215,255,.025)
-    ),
-    rgba(255,255,255,.025);
-}
-
-.spectrum p {
-  max-width: 980px;
-  margin: 0;
-  color: #c7ccda;
-  font-size: clamp(19px, 2.4vw, 27px);
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 24px;
-}
-
-.tag {
-  padding: 9px 14px;
-  border: 1px solid rgba(255,255,255,.11);
-  border-radius: 999px;
-  background: rgba(255,255,255,.025);
-  color: #bec5d7;
-  font-size: 14px;
-}
-
-/* =====================================================
-   EXPERIENCE
-   ===================================================== */
-
-.experience {
-  padding-top: 55px;
-}
-
-.experience-head {
-  max-width: 930px;
-  margin-bottom: 36px;
-}
-
-.shell {
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 30px;
-  background: #080d19;
-  box-shadow: 0 34px 90px rgba(0,0,0,.44);
-}
-
-.scene {
-  position: relative;
-  height: 700px;
-  overflow: hidden;
-  background: #07101e;
-  touch-action: none;
-  user-select: none;
-}
-
-.scene canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  cursor: crosshair;
-  touch-action: none;
-}
-
-.scene-head {
-  position: absolute;
-  z-index: 30;
-  top: 22px;
-  left: 24px;
-  right: 24px;
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  pointer-events: none;
-}
-
-.scene-title strong {
-  display: block;
-  font-size: 20px;
-}
-
-.scene-title span {
-  display: block;
-  margin-top: 3px;
-  color: #9ba3b7;
-  font-size: 14px;
-}
-
-.hud {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(88px, auto));
-  gap: 8px;
-}
-
-.hud div {
-  padding: 9px 12px;
-  border: 1px solid rgba(255,255,255,.11);
-  border-radius: 13px;
-  background: rgba(7,10,18,.76);
-  backdrop-filter: blur(10px);
-}
-
-.hud small {
-  display: block;
-  color: var(--sub);
-  font-size: 10px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.hud strong {
-  display: block;
-  margin-top: 2px;
-  font-size: 14px;
-}
-
-.safe {
-  color: var(--green);
-}
-
-.warn {
-  color: var(--gold);
-}
-
-.danger {
-  color: var(--red);
-}
-
-/* Step-by-step message shown during gameplay */
-
-.stage {
-  position: absolute;
-  z-index: 28;
-  top: 118px;
-  left: 50%;
-  width: min(760px, calc(100% - 40px));
-  transform: translateX(-50%);
-  padding: 15px 20px 13px;
-  text-align: center;
-  pointer-events: none;
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 20px;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(8,12,23,.86),
-      rgba(7,10,18,.66)
-    );
-  backdrop-filter: blur(14px);
-  box-shadow: 0 18px 44px rgba(0,0,0,.28);
-}
-
-.stage.flash {
-  animation: pop .45s;
-}
-
-@keyframes pop {
-  0% {
-    transform: translateX(-50%) scale(.96);
-    opacity: .55;
-  }
-
-  60% {
-    transform: translateX(-50%) scale(1.015);
-  }
-
-  100% {
-    transform: translateX(-50%) scale(1);
-  }
-}
-
-.step {
-  display: inline-flex;
-  padding: 5px 10px;
-  border: 1px solid rgba(156,145,255,.24);
-  border-radius: 999px;
-  background: rgba(156,145,255,.12);
-  color: #bfb8ff;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-}
-
-.stage strong {
-  display: block;
-  font-size: clamp(22px, 2.8vw, 36px);
-  line-height: 1.08;
-}
-
-.stage > span:not(.step) {
-  display: block;
-  margin-top: 7px;
-  color: #b7bdce;
-  font-size: 15px;
-}
-
-.dots {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 11px;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.18);
-}
-
-.dot.done {
-  background: rgba(126,240,182,.68);
-}
-
-.dot.active {
-  transform: scale(1.45);
-  background: #fff;
-  box-shadow: 0 0 15px rgba(101,215,255,.72);
-}
-
-/* Detailed SVG car */
-
-.car {
-  position: absolute;
-  z-index: 20;
-  left: 0;
-  top: 0;
-  width: clamp(150px, 13vw, 205px);
-  pointer-events: none;
-  will-change: transform;
-  filter: drop-shadow(0 20px 24px rgba(0,0,0,.52));
-}
-
-.car svg {
-  display: block;
-  width: 100%;
-  overflow: visible;
-}
-
-.car.braking .brake {
-  filter:
-    drop-shadow(0 0 10px #ff3450)
-    drop-shadow(0 0 18px #ff3450);
-}
-
-.overlay {
-  position: absolute;
-  z-index: 60;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 28px;
-  background: rgba(4,7,14,.78);
-  backdrop-filter: blur(13px);
-  transition: .3s;
-}
-
-.overlay.off {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.overlay-card {
-  width: min(640px, 100%);
-  padding: 38px;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: 26px;
-  background: rgba(9,14,27,.96);
-  box-shadow: 0 30px 75px rgba(0,0,0,.45);
-}
-
-.overlay-card h3 {
-  margin: 8px 0 15px;
-  font-size: clamp(30px, 5vw, 50px);
-  line-height: 1.05;
-}
-
-.overlay-card p {
-  margin: 0 auto 24px;
-  color: var(--muted);
-}
-
-.instruction,
-.results {
-  display: grid;
-  gap: 10px;
-  margin: 22px 0;
-}
-
-.instruction {
-  grid-template-columns: repeat(2, 1fr);
-  text-align: left;
-}
-
-.results {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.instruction div,
-.results div {
-  padding: 13px;
-  border-radius: 14px;
-  background: rgba(255,255,255,.045);
-}
-
-.instruction strong {
-  display: block;
-}
-
-.instruction span {
-  color: #aeb5c7;
-  font-size: 13px;
-}
-
-.results small {
-  display: block;
-  color: var(--sub);
-}
-
-.toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 18px 22px;
-  border-top: 1px solid rgba(255,255,255,.08);
-  background:
-    linear-gradient(
-      180deg,
-      rgba(8,11,20,.99),
-      rgba(5,8,15,1)
-    );
-}
-
-.toolbar-copy {
-  max-width: 760px;
-  color: #aeb5c7;
-  font-size: 14px;
-}
-
-.toolbar-copy strong {
-  color: #fff;
-}
-
-.toolbar-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.toolbar-actions .btn {
-  min-height: 46px;
-  padding: 0 20px;
-}
-
-.timeline {
-  padding: 18px 24px 25px;
-  border-top: 1px solid rgba(255,255,255,.08);
-  background: #070a12;
-}
-
-.timeline-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 13px;
-  color: #969eb1;
-  font-size: 12px;
-}
-
-.track {
-  position: relative;
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.08);
-}
-
-.progress {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 0;
-  border-radius: 999px;
-  background:
-    linear-gradient(
-      90deg,
-      var(--cyan),
-      var(--violet)
-    );
-}
-
-.mark {
-  position: absolute;
-  top: 50%;
-  width: 11px;
-  height: 11px;
-  transform: translate(-50%,-50%);
-  border: 2px solid #0b0e17;
-  border-radius: 50%;
-  background: var(--red);
-}
-
-.mark.zone {
-  background: var(--gold);
-}
-
-.mark.finish {
-  background: var(--green);
-}
-
-.timeline-labels {
-  position: relative;
-  height: 27px;
-  margin-top: 9px;
-  color: #7f8799;
-  font-size: 10px;
-}
-
-.timeline-labels span {
-  position: absolute;
-  transform: translateX(-50%);
-  white-space: nowrap;
-}
-
-.explain {
-  margin-top: 30px;
-  padding: 38px;
-  border: 1px solid var(--line);
-  border-radius: 26px;
-  background:
-    radial-gradient(
-      circle at 88% 20%,
-      rgba(156,145,255,.15),
-      transparent 28%
-    ),
-    rgba(255,255,255,.035);
-}
-
-.explain strong {
-  display: block;
-  max-width: 980px;
-  margin-bottom: 16px;
-  font-size: clamp(30px, 4vw, 50px);
-  line-height: 1.12;
-}
-
-.explain p {
-  max-width: 940px;
-  margin: 0;
-  color: var(--muted);
-  font-size: 19px;
-}
-
-.note {
-  margin-top: 15px !important;
-  color: var(--sub) !important;
-  font-size: 14px !important;
-}
-
-/* =====================================================
-   ANALYSIS AND MULTIPARAMETRIC REVEAL
-   ===================================================== */
-
-.analysis {
-  margin-top: 30px;
-  padding: 30px;
-  border: 1px solid var(--line);
-  border-radius: 26px;
-  background: rgba(255,255,255,.025);
-}
-
-.analysis-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 24px;
-}
-
-.analysis-head h3 {
-  margin: 5px 0 0;
-  font-size: clamp(28px, 4vw, 42px);
-}
-
-.legend {
-  display: flex;
-  gap: 14px;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.legend span {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.legend i {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.player {
-  background: var(--cyan);
-}
-
-.reference {
-  background: var(--gold);
-}
-
-.metrics {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.metric {
-  padding: 16px;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 16px;
-  background: rgba(255,255,255,.03);
-}
-
-.metric small {
-  display: block;
-  color: var(--sub);
-}
-
-.metric strong {
-  display: block;
-  margin-top: 5px;
-  font-size: 19px;
-}
-
-.canvas-box {
-  display: block;
-  width: 100%;
-  height: 350px;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 18px;
-  background: #060a12;
-}
-
-.mp {
-  margin-top: 28px;
-  padding-top: 28px;
-  border-top: 1px solid rgba(255,255,255,.09);
-}
-
-.mp h3 {
-  margin: 0 0 8px;
-  font-size: clamp(28px, 4vw, 42px);
-}
-
-.mp > p {
-  max-width: 940px;
-  color: var(--muted);
-}
-
-.mp-grid {
-  display: grid;
-  grid-template-columns: .8fr 1.2fr;
-  gap: 16px;
-}
-
-.mp-card {
-  padding: 15px;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 18px;
-  background: rgba(255,255,255,.025);
-}
-
-.mp-card strong {
-  display: block;
-  margin-bottom: 10px;
-}
-
-.mp-card canvas {
-  display: block;
-  width: 100%;
-  height: 370px;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 18px;
-  background: #060a12;
-  cursor: crosshair;
-}
-
-.selected {
-  margin-top: 12px;
-  padding: 13px;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 14px;
-  background: rgba(255,255,255,.03);
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.analysis-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-/* =====================================================
-   PORTFOLIO
-   ===================================================== */
-
-.portal-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-top: 42px;
-}
-
-.portal {
-  position: relative;
-  min-height: 270px;
-  overflow: hidden;
-  padding: 30px;
-  border: 1px solid var(--line);
-  border-radius: 25px;
-  background: rgba(255,255,255,.035);
-  transition: .3s;
-}
-
-.portal:hover {
-  transform: translateY(-7px);
-  border-color: rgba(156,145,255,.58);
-  background: rgba(255,255,255,.05);
-}
-
-.portal-top {
-  display: flex;
-  justify-content: space-between;
-}
-
-.portal-label {
-  color: var(--violet);
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-
-.portal-arrow {
-  font-size: 27px;
-}
-
-.portal h3 {
-  margin: 54px 0 12px;
-  font-size: clamp(25px, 3vw, 34px);
-}
-
-.portal p {
-  margin: 0;
-  color: #aeb4c5;
-}
-
-footer {
-  padding: 50px 0;
-  border-top: 1px solid rgba(255,255,255,.08);
-  color: var(--sub);
-}
-
-@media (max-width: 1000px) {
-  .hud {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  .metrics {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  .mp-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 800px) {
-  .nav-links {
-    display: none;
-  }
-
-  h1 {
-    letter-spacing: -3px;
-  }
-
-  .scene {
-    height: 650px;
-  }
-
-  .scene-head {
-    flex-direction: column;
-  }
-
-  .stage {
-    top: 205px;
-  }
-
-  .portal-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .analysis-head {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 600px) {
-  section {
-    padding: 78px 0;
-  }
-
-  .wide {
-    width: 97%;
-  }
-
-  .scene {
-    height: 610px;
-  }
-
-  .hud {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  .stage {
-    top: 232px;
-    width: calc(100% - 20px);
-    padding: 12px 13px;
-  }
-
-  .instruction,
-  .results,
-  .metrics {
-    grid-template-columns: 1fr;
-  }
-
-  .toolbar {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .toolbar-actions {
-    width: 100%;
-  }
-
-  .toolbar-actions .btn {
-    flex: 1;
-  }
-
-  .timeline-labels span {
-    font-size: 9px;
-  }
-}
+:root{
+  --ink:#0c0f14;
+  --paper:#f3efe6;
+  --paper-2:#e9e3d5;
+  --line:#c9c1ad;
+  --sub:#6b6656;
+  --amber:#c8622b;      /* control / action */
+  --teal:#1f6f6b;       /* state / trajectory */
+  --violet:#5b4ea8;     /* costate / boundary */
+  --gold:#b8892b;
+  --red:#b23a48;
+  --ok:#2f7d52;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Space Grotesk",system-ui,sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+.container{width:min(1180px,92%);margin:auto}
+.mono{font-family:"JetBrains Mono",monospace}
+
+/* ---- fine grid backdrop ---- */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px;
+  opacity:.14;
+}
+
+/* ================= HEADER ================= */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(243,239,230,.82);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+nav{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{font-family:"Fraunces",serif;font-weight:600;font-size:20px;letter-spacing:.2px}
+.logo b{color:var(--amber)}
+.nav-links{display:flex;gap:26px;font-size:14px;font-weight:500}
+.nav-links a{color:var(--sub);transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+
+/* ================= HERO ================= */
+.hero{padding:88px 0 64px}
+.eyebrow{
+  font-family:"JetBrains Mono",monospace;
+  font-size:12px;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--amber);margin:0 0 22px;
+}
+h1{
+  font-family:"Fraunces",serif;
+  font-weight:600;
+  font-size:clamp(42px,7vw,86px);
+  line-height:1.02;
+  letter-spacing:-1.5px;
+  margin:0;
+  max-width:16ch;
+}
+h1 em{font-style:italic;color:var(--teal)}
+.hero-copy{
+  max-width:60ch;margin:30px 0 0;
+  font-size:clamp(17px,1.6vw,20px);color:#3c3a32;
+}
+.hero-eq{
+  margin-top:34px;padding:22px 26px;
+  border:1px solid var(--line);
+  border-left:4px solid var(--amber);
+  background:var(--paper-2);
+  border-radius:4px;
+  max-width:640px;
+}
+.hero-eq .lbl{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.5px;color:var(--sub);text-transform:uppercase}
+.hero-eq .exp{font-family:"JetBrains Mono",monospace;font-size:clamp(15px,2vw,19px);margin-top:8px;color:var(--ink)}
+.buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:50px;padding:0 26px;border-radius:3px;font-weight:600;font-size:15px;
+  border:1px solid var(--ink);transition:transform .15s,background .2s,color .2s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.amber{background:var(--amber);border-color:var(--amber);color:#fff}
+.btn.small{min-height:42px;padding:0 18px;font-size:14px}
+
+/* ================= SECTION SHELL ================= */
+section{padding:78px 0}
+.label{
+  font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--amber);margin:0 0 14px;
+}
+h2{
+  font-family:"Fraunces",serif;font-weight:600;
+  font-size:clamp(30px,4.4vw,50px);line-height:1.08;letter-spacing:-1px;margin:0 0 22px;
+}
+.section-copy{max-width:64ch;font-size:clamp(16px,1.5vw,19px);color:#3c3a32}
+
+/* ================= CONCEPT STRIP ================= */
+.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:40px}
+.concept{background:var(--paper);padding:28px 26px}
+.concept .n{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--amber);letter-spacing:1.5px}
+.concept h3{font-family:"Fraunces",serif;font-weight:600;font-size:22px;margin:12px 0 8px}
+.concept p{margin:0;color:var(--sub);font-size:15px}
+
+/* ================= GAME ================= */
+.lab{background:var(--ink);color:var(--paper);border-radius:14px;overflow:hidden;border:1px solid #1c222c;box-shadow:0 30px 80px rgba(0,0,0,.28)}
+.lab-head{padding:30px 32px 22px;border-bottom:1px solid #1b212b}
+.lab-head .label{color:var(--gold);margin-bottom:10px}
+.lab-head h2{color:var(--paper);margin:0 0 12px}
+.lab-head p{margin:0;color:#b9b3a3;max-width:70ch;font-size:16px}
+
+.stage-wrap{position:relative;background:#080b10}
+#viz{display:block;width:100%;height:520px;touch-action:none;cursor:crosshair}
+
+.hud{
+  position:absolute;top:18px;left:18px;right:18px;z-index:20;
+  display:flex;gap:10px;flex-wrap:wrap;pointer-events:none;
+}
+.chip{
+  padding:8px 13px;border:1px solid #232a35;border-radius:9px;
+  background:rgba(8,11,16,.72);backdrop-filter:blur(6px);min-width:92px;
+}
+.chip small{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:1.3px;color:#7f8798;text-transform:uppercase}
+.chip strong{display:block;margin-top:3px;font-size:15px;font-weight:600}
+.chip.arc strong{color:var(--gold)}
+.g-ok{color:#57c98a}.g-warn{color:#e0b64e}.g-bad{color:#e0687a}
+
+.coach{
+  position:absolute;left:50%;bottom:18px;transform:translateX(-50%);
+  z-index:20;width:min(680px,calc(100% - 36px));
+  padding:13px 18px;border-radius:12px;text-align:center;pointer-events:none;
+  border:1px solid #262d38;background:rgba(10,13,19,.82);backdrop-filter:blur(8px);
+}
+.coach .step{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1.5px;color:var(--gold)}
+.coach strong{display:block;font-family:"Fraunces",serif;font-size:clamp(17px,2.4vw,23px);font-weight:600;margin:4px 0 2px}
+.coach span.txt{display:block;color:#b9b3a3;font-size:13.5px}
+
+.overlay{position:absolute;inset:0;z-index:40;display:grid;place-items:center;padding:24px;background:rgba(6,9,13,.8);backdrop-filter:blur(6px);transition:opacity .25s}
+.overlay.off{opacity:0;visibility:hidden;pointer-events:none}
+.ocard{width:min(560px,100%);background:#0e131b;border:1px solid #232a35;border-radius:14px;padding:32px;text-align:center}
+.ocard .label{color:var(--gold)}
+.ocard h3{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(24px,4vw,34px);margin:6px 0 14px;color:var(--paper)}
+.ocard p{color:#b9b3a3;margin:0 0 20px;font-size:15px}
+.keys{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 8px}
+.keys div{font-family:"JetBrains Mono",monospace;font-size:12px;color:#cfc9b9;border:1px solid #2a3240;border-radius:7px;padding:9px 12px;background:#11171f}
+.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0 22px}
+.result-grid div{background:#11171f;border:1px solid #232a35;border-radius:10px;padding:13px;text-align:left}
+.result-grid small{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1px;color:#7f8798;text-transform:uppercase}
+.result-grid strong{display:block;margin-top:4px;font-size:18px}
+
+.lab-foot{padding:18px 32px;border-top:1px solid #1b212b;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.lab-foot .note{color:#8b93a3;font-size:13px;max-width:60ch}
+.lab-foot .acts{display:flex;gap:10px}
+.lab-foot .btn{border-color:#39414f;color:var(--paper)}
+.lab-foot .btn.amber{border-color:var(--amber)}
+
+/* ================= ANALYSIS ================= */
+.analysis{margin-top:26px;border:1px solid var(--line);border-radius:14px;background:var(--paper);overflow:hidden}
+.analysis.hidden{display:none}
+.an-head{padding:26px 30px 8px}
+.an-head h3{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(22px,3vw,30px);margin:6px 0 6px}
+.an-head p{color:var(--sub);margin:0;max-width:70ch;font-size:15px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:22px 0 0}
+.metric{background:var(--paper);padding:16px 18px}
+.metric small{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1px;color:var(--sub);text-transform:uppercase}
+.metric strong{display:block;margin-top:5px;font-size:17px}
+.metric strong .ref{color:var(--gold)}
+
+.an-body{padding:24px 30px 30px}
+.plot-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+.plot-card{border:1px solid var(--line);border-radius:10px;background:#fbf9f3;padding:14px 16px}
+.plot-card h4{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sub);margin:0 0 4px;font-weight:600}
+.plot-card .cap{font-size:12.5px;color:var(--sub);margin:0 0 10px}
+canvas.plot{display:block;width:100%;height:260px;border-radius:6px;background:#fff;border:1px solid var(--line)}
+
+.mp{margin-top:22px;border-top:1px solid var(--line);padding-top:22px}
+.mp h3{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(22px,3vw,30px);margin:0 0 6px}
+.mp .lede{color:var(--sub);max-width:72ch;margin:0 0 18px;font-size:15px}
+.mp-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+.mp-card{border:1px solid var(--line);border-radius:10px;background:#fbf9f3;padding:14px 16px}
+.mp-card h4{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sub);margin:0 0 4px;font-weight:600}
+.mp-card .cap{font-size:12.5px;color:var(--sub);margin:0 0 10px}
+canvas#crMap{display:block;width:100%;height:340px;border-radius:6px;background:#fff;border:1px solid var(--line);cursor:crosshair}
+canvas#phase{display:block;width:100%;height:340px;border-radius:6px;background:#fff;border:1px solid var(--line)}
+.sel{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--paper-2);font-size:13.5px}
+.sel b{color:var(--ink)}
+.dt-note{margin-top:14px;font-size:13px;color:var(--sub);border-left:3px solid var(--violet);padding-left:12px}
+.an-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+
+/* ================= PORTFOLIO ================= */
+.pf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:36px}
+.pf{position:relative;border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:26px;transition:transform .2s,border-color .2s,background .2s;min-height:190px;display:flex;flex-direction:column;justify-content:space-between}
+.pf:hover{transform:translateY(-4px);border-color:var(--amber);background:#fbf9f3}
+.pf-top{display:flex;justify-content:space-between;align-items:flex-start}
+.pf-tag{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber)}
+.pf h3{font-family:"Fraunces",serif;font-weight:600;font-size:22px;margin:14px 0 8px}
+.pf p{margin:0;color:var(--sub);font-size:14.5px}
+
+/* ================= CONTACT / FOOTER ================= */
+.contact h2{max-width:16ch}
+footer{border-top:1px solid var(--line);padding:34px 0;color:var(--sub);font-size:13px;font-family:"JetBrains Mono",monospace}
+
+@media(max-width:900px){
+  .concept-grid{grid-template-columns:1fr}
+  .plot-row{grid-template-columns:1fr}
+  .mp-grid{grid-template-columns:1fr}
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .pf-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  #viz{height:440px}
+}
+@media(max-width:520px){
+  .result-grid{grid-template-columns:1fr}
+  .metrics{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}.btn:hover{transform:none}.pf:hover{transform:none}}
 </style>
 </head>
 
@@ -1014,14 +246,11 @@ footer {
 
 <header>
   <nav class="container">
-    <a class="logo" href="#home">
-      LIDA LAMAKANI
-    </a>
-
+    <a class="logo" href="#home">Lida <b>Lamakani</b></a>
     <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#experience">Experience</a>
-      <a href="#portfolio">Portfolio</a>
+      <a href="#idea">The idea</a>
+      <a href="#lab">Interactive demo</a>
+      <a href="#work">Work</a>
       <a href="#contact">Contact</a>
     </div>
   </nav>
@@ -1029,4426 +258,851 @@ footer {
 
 <main>
 
+<!-- ============ HERO ============ -->
 <section class="hero" id="home">
-  <div class="container hero-content fade">
-
-    <p class="eyebrow">
-      Optimization · Control · Modeling · Machine Learning
-    </p>
-
-    <h1>
-      Engineering
-      <span class="gradient">
-        intelligent systems.
-      </span>
-    </h1>
-
+  <div class="container">
+    <p class="eyebrow">Continuous-time optimal control · Explicit MPC · Chemical engineering</p>
+    <h1>I compute the <em>best</em> decision for a system — before it ever has to make one.</h1>
     <p class="hero-copy">
-      I develop mathematical and computational methods for complex
-      engineering systems, connecting optimization, dynamics, control,
-      modeling, scientific computing, and data-driven intelligence.
+      I'm a chemical engineering PhD researcher working on multiparametric continuous-time
+      optimal control. My work solves the control problem once, offline, as a map: given
+      any starting condition, the optimal strategy is already known. No re-solving at runtime.
     </p>
+
+    <div class="hero-eq">
+      <div class="lbl">The optimal control law, from Pontryagin's Maximum Principle</div>
+      <div class="exp">u*(t) = arg min<sub>u</sub> H(x, λ, u) &nbsp;→&nbsp; u* = −sign(λ<sub>v</sub>)</div>
+    </div>
 
     <div class="buttons">
-      <a class="btn primary" href="#experience">
-        Experience my research
-      </a>
-
-      <a
-        class="btn secondary"
-        href="https://github.com/LidaLMK"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        GitHub
-      </a>
+      <a class="btn amber" href="#lab">Play the demo</a>
+      <a class="btn ghost" href="#idea">See the idea first</a>
+      <a class="btn ghost" href="https://github.com/LidaLMK" target="_blank" rel="noopener">GitHub</a>
     </div>
-
   </div>
 </section>
 
-<section id="about">
-  <div class="container fade">
-
-    <p class="label">
-      About
+<!-- ============ THE IDEA ============ -->
+<section id="idea">
+  <div class="container">
+    <p class="label">The one idea to take away</p>
+    <h2>An optimal trajectory isn't a guess. It has a structure you can prove.</h2>
+    <p class="section-copy">
+      For a system that has to reach a target as fast as possible, the best control is not smooth
+      and gradual. It is decisive: push hard, then brake hard, switching at exactly the right instant.
+      That switch is dictated by a hidden quantity called the costate. My research computes where those
+      switches happen — and how the whole strategy changes as the starting point changes.
     </p>
 
-    <h2>
-      Research across connected disciplines.
-    </h2>
+    <div class="concept-grid">
+      <div class="concept">
+        <div class="n">01 / STATE</div>
+        <h3>Where the system is</h3>
+        <p>Position and velocity. In the demo, how far the car is from its target and how fast it's going.</p>
+      </div>
+      <div class="concept">
+        <div class="n">02 / CONTROL</div>
+        <h3>What you can push</h3>
+        <p>Accelerate or brake, bounded. The optimal choice is almost always all-the-way one direction, then the other — this is "bang-bang" control.</p>
+      </div>
+      <div class="concept">
+        <div class="n">03 / THE MAP</div>
+        <h3>Every start, pre-solved</h3>
+        <p>Split the space of starting conditions into regions. Each region has one optimal strategy. That partition is the explicit solution.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <p class="about-copy">
-      My work is centered on understanding, computing, and improving
-      decisions in dynamic engineering systems. I move between
-      mathematical theory, system modeling, algorithm development,
-      numerical computation, control, and machine learning depending
-      on the problem. Rather than being defined by one technique, my
-      research is driven by the structure of the system and the
-      decisions it requires.
-    </p>
-
-    <div class="spectrum">
-
-      <p>
-        My research has included continuous-time and discrete-time
-        systems, dynamic optimization, optimal control, model
-        predictive control, multiparametric methods, mathematical
-        modeling, scientific computing, numerical algorithms,
-        data-driven modeling, and machine learning.
-      </p>
-
-      <div class="tags">
-        <span class="tag">Dynamic systems</span>
-        <span class="tag">Optimization</span>
-        <span class="tag">Optimal control</span>
-        <span class="tag">Model predictive control</span>
-        <span class="tag">Continuous time</span>
-        <span class="tag">Discrete time</span>
-        <span class="tag">Multiparametric methods</span>
-        <span class="tag">Mathematical modeling</span>
-        <span class="tag">Scientific computing</span>
-        <span class="tag">Machine learning</span>
+<!-- ============ INTERACTIVE LAB ============ -->
+<section id="lab">
+  <div class="container">
+    <div class="lab">
+      <div class="lab-head">
+        <p class="label">Interactive research demo</p>
+        <h2>Drive to the target. Then watch the math beat you.</h2>
+        <p>
+          You control acceleration and braking to stop exactly on the target line, as fast as possible
+          without overshooting or exceeding the speed limit. Then reveal the true time-optimal solution,
+          computed live from Pontryagin's Maximum Principle — and the full map of strategies behind it.
+        </p>
       </div>
 
-    </div>
+      <div class="stage-wrap">
+        <canvas id="viz"></canvas>
 
-  </div>
-</section>
-
-<section class="experience" id="experience">
-  <div class="wide fade">
-
-    <div class="experience-head">
-
-      <p class="label">
-        Interactive research experience
-      </p>
-
-      <h2>
-        Control the road directly.
-      </h2>
-
-      <p class="section-copy">
-        Press and hold directly on the road. Almost the entire road
-        accelerates; horizontal position controls steering. The narrow
-        bottom strip brakes. Instructions appear step by step while
-        you drive.
-      </p>
-
-    </div>
-
-    <div class="shell">
-
-      <div class="scene">
-
-        <canvas id="game"></canvas>
-
-        <div
-          class="car"
-          id="car"
-          aria-hidden="true"
-        >
-          <svg viewBox="0 0 260 150">
-
-            <defs>
-
-              <linearGradient
-                id="body"
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="1"
-              >
-                <stop offset="0" stop-color="#d7fbff"/>
-                <stop offset=".16" stop-color="#78e8ff"/>
-                <stop offset=".52" stop-color="#18b9e8"/>
-                <stop offset="1" stop-color="#056b9a"/>
-              </linearGradient>
-
-              <linearGradient
-                id="glass"
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="1"
-              >
-                <stop offset="0" stop-color="#102a42"/>
-                <stop offset="1" stop-color="#030914"/>
-              </linearGradient>
-
-              <filter
-                id="glow"
-                x="-100%"
-                y="-100%"
-                width="300%"
-                height="300%"
-              >
-                <feGaussianBlur
-                  stdDeviation="6"
-                  result="b"
-                />
-
-                <feMerge>
-                  <feMergeNode in="b"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-
-            </defs>
-
-            <ellipse
-              cx="130"
-              cy="126"
-              rx="94"
-              ry="16"
-              fill="#000"
-              opacity=".48"
-            />
-
-            <path
-              d="M35 95C39 67 58 45 84 34C101 26 116 22 130 22C145 22 160 26 177 34C203 45 221 67 225 95L214 118C194 130 67 130 46 118Z"
-              fill="url(#body)"
-              stroke="#baf7ff"
-              stroke-opacity=".45"
-              stroke-width="2"
-            />
-
-            <path
-              d="M77 53C92 36 107 31 130 31C153 31 168 36 183 53L173 73C151 67 109 67 87 73Z"
-              fill="url(#glass)"
-            />
-
-            <path
-              d="M53 89C67 78 88 72 130 72C172 72 193 78 207 89L198 103C175 108 85 108 62 103Z"
-              fill="#087eaa"
-            />
-
-            <path
-              d="M61 105C83 111 177 111 199 105L207 121C184 135 76 135 53 121Z"
-              fill="#071018"
-            />
-
-            <path
-              class="brake"
-              d="M52 91C67 82 84 80 103 82L96 96C77 97 64 96 52 93Z"
-              fill="#ff2648"
-              filter="url(#glow)"
-            />
-
-            <path
-              class="brake"
-              d="M208 91C193 82 176 80 157 82L164 96C183 97 196 96 208 93Z"
-              fill="#ff2648"
-              filter="url(#glow)"
-            />
-
-            <rect
-              class="brake"
-              x="102"
-              y="83"
-              width="56"
-              height="5"
-              rx="2.5"
-              fill="#ff3654"
-            />
-
-            <ellipse
-              cx="61"
-              cy="116"
-              rx="15"
-              ry="19"
-              fill="#020305"
-            />
-
-            <ellipse
-              cx="199"
-              cy="116"
-              rx="15"
-              ry="19"
-              fill="#020305"
-            />
-
-            <ellipse
-              cx="61"
-              cy="116"
-              rx="7"
-              ry="10"
-              fill="#2c3947"
-            />
-
-            <ellipse
-              cx="199"
-              cy="116"
-              rx="7"
-              ry="10"
-              fill="#2c3947"
-            />
-
-            <rect
-              x="105"
-              y="101"
-              width="50"
-              height="18"
-              rx="4"
-              fill="#eaf9ff"
-            />
-
-            <text
-              x="130"
-              y="114"
-              text-anchor="middle"
-              font-family="Arial"
-              font-size="10"
-              font-weight="800"
-              fill="#0a1822"
-            >
-              LIDA
-            </text>
-
-            <path
-              d="M87 43C108 30 152 30 173 43"
-              fill="none"
-              stroke="#fff"
-              stroke-opacity=".45"
-              stroke-width="3"
-              stroke-linecap="round"
-            />
-
-          </svg>
+        <div class="hud">
+          <div class="chip"><small>Time</small><strong id="hTime">0.00 s</strong></div>
+          <div class="chip"><small>Distance to target</small><strong id="hDist">1.00</strong></div>
+          <div class="chip"><small>Speed</small><strong id="hSpeed">0.00</strong></div>
+          <div class="chip arc"><small>Your arc</small><strong id="hArc">coast</strong></div>
+          <div class="chip"><small>Status</small><strong id="hStat" class="g-ok">ready</strong></div>
         </div>
 
-        <div class="scene-head">
-
-          <div class="scene-title">
-            <strong>
-              Predictive Night Drive
-            </strong>
-
-            <span>
-              Direct road control · timed constraints · explicit policy reveal
-            </span>
-          </div>
-
-          <div class="hud">
-
-            <div>
-              <small>Time left</small>
-              <strong id="time">34.0 s</strong>
-            </div>
-
-            <div>
-              <small>Speed</small>
-              <strong id="speed">0 km/h</strong>
-            </div>
-
-            <div>
-              <small>Energy</small>
-              <strong id="energy">0%</strong>
-            </div>
-
-            <div>
-              <small>Risk</small>
-              <strong id="risk" class="safe">
-                Safe
-              </strong>
-            </div>
-
-          </div>
-
+        <div class="coach">
+          <span class="step" id="cStep">STEP 1 OF 4</span>
+          <strong id="cTitle">Accelerate off the line</strong>
+          <span class="txt" id="cText">Hold the accelerator. Watch the speed climb toward the limit.</span>
         </div>
 
-        <div class="stage" id="stage">
-
-          <span class="step" id="step">
-            STEP 1 OF 8
-          </span>
-
-          <strong id="stageTitle">
-            Build speed.
-          </strong>
-
-          <span id="stageText">
-            Hold the upper center of the road to accelerate immediately.
-          </span>
-
-          <div class="dots" id="dots"></div>
-
-        </div>
-
+        <!-- intro -->
         <div class="overlay" id="intro">
-
-          <div class="overlay-card">
-
-            <p class="label">
-              Direct control on the road
-            </p>
-
-            <h3>
-              Drive by touching the future.
-            </h3>
-
+          <div class="ocard">
+            <p class="label">How to drive</p>
+            <h3>Stop exactly on the line — as fast as you can.</h3>
             <p>
-              Hold almost anywhere on the road to accelerate.
-              Horizontal touch position controls steering. Use only
-              the narrow bottom strip to brake. W, A, S, D and arrow
-              keys also work.
+              One control: accelerate or brake. The catch is the same one every optimal-control
+              problem has — brake too late and you overshoot, too early and you waste time.
+              There is exactly one perfect switch point.
             </p>
-
-            <div class="instruction">
-
-              <div>
-                <strong>Left road</strong>
-                <span>Accelerate and steer left</span>
-              </div>
-
-              <div>
-                <strong>Right road</strong>
-                <span>Accelerate and steer right</span>
-              </div>
-
-              <div>
-                <strong>Center road</strong>
-                <span>Accelerate straight ahead</span>
-              </div>
-
-              <div>
-                <strong>Bottom strip</strong>
-                <span>Strong braking</span>
-              </div>
-
+            <div class="keys">
+              <div>↑ / W&nbsp;&nbsp;accelerate</div>
+              <div>↓ / S&nbsp;&nbsp;brake</div>
+              <div>hold top half of canvas = accelerate</div>
+              <div>hold bottom = brake</div>
             </div>
-
-            <button
-              class="btn primary"
-              id="begin"
-              type="button"
-            >
-              Begin the scenario
-            </button>
-
+            <button class="btn amber" id="begin">Start driving</button>
           </div>
-
         </div>
 
+        <!-- result -->
         <div class="overlay off" id="result">
-
-          <div class="overlay-card">
-
-            <p class="label">
-              Your run
-            </p>
-
-            <h3 id="resultTitle">
-              Scenario complete.
-            </h3>
-
-            <div class="results">
-
-              <div>
-                <small>Arrival</small>
-                <strong id="rArrival">—</strong>
-              </div>
-
-              <div>
-                <small>Safety</small>
-                <strong id="rSafety">—</strong>
-              </div>
-
-              <div>
-                <small>Energy</small>
-                <strong id="rEnergy">—</strong>
-              </div>
-
-              <div>
-                <small>Smoothness</small>
-                <strong id="rSmooth">—</strong>
-              </div>
-
+          <div class="ocard">
+            <p class="label">Your run</p>
+            <h3 id="rTitle">Run complete</h3>
+            <div class="result-grid">
+              <div><small>Your time</small><strong id="rTime">—</strong></div>
+              <div><small>Optimal time</small><strong id="rOpt">—</strong></div>
+              <div><small>Stopped at</small><strong id="rStop">—</strong></div>
+              <div><small>Efficiency</small><strong id="rEff">—</strong></div>
             </div>
-
-            <p>
-              Compare your run with a computed reference and reveal
-              how different initial states select different strategy
-              structures.
-            </p>
-
-            <button
-              class="btn gold"
-              id="compare"
-              type="button"
-            >
-              Compare and reveal the policy map
-            </button>
-
+            <p>See exactly where the optimal controller switched — and why your run differs.</p>
+            <button class="btn amber" id="reveal">Reveal the optimal solution</button>
           </div>
-
         </div>
-
       </div>
 
-      <div class="toolbar">
-
-        <div class="toolbar-copy">
-          <strong>Direct road control:</strong>
-          hold to keep applying control; release to coast.
-          There are no separate steering buttons.
+      <div class="lab-foot">
+        <div class="note">
+          <strong>What you're driving:</strong> a double integrator — the textbook system where
+          time-optimal control is provably bang-bang. The reference isn't scripted; it's solved each time.
         </div>
-
-        <div class="toolbar-actions">
-
-          <button
-            class="btn primary"
-            id="start"
-            type="button"
-          >
-            Start
-          </button>
-
-          <button
-            class="btn secondary"
-            id="reset"
-            type="button"
-          >
-            Reset
-          </button>
-
+        <div class="acts">
+          <button class="btn small" id="start">Start</button>
+          <button class="btn small" id="resetBtn">Reset</button>
         </div>
-
       </div>
-
-      <div class="timeline">
-
-        <div class="timeline-head">
-          <span>
-            Scenario timeline
-          </span>
-
-          <span id="eta">
-            Estimated arrival: accelerate to calculate
-          </span>
-        </div>
-
-        <div class="track">
-
-          <div class="progress" id="progress"></div>
-
-          <i class="mark" style="left:18%"></i>
-          <i class="mark" style="left:36%"></i>
-          <i class="mark zone" style="left:48%"></i>
-          <i class="mark" style="left:60%"></i>
-          <i class="mark" style="left:78%"></i>
-          <i class="mark finish" style="left:100%"></i>
-
-        </div>
-
-        <div class="timeline-labels">
-
-          <span style="left:18%">
-            Barrier
-          </span>
-
-          <span style="left:36%">
-            Curve
-          </span>
-
-          <span style="left:48%">
-            55 km/h
-          </span>
-
-          <span style="left:60%">
-            Traffic
-          </span>
-
-          <span style="left:78%">
-            Roadwork
-          </span>
-
-          <span style="left:100%">
-            Finish
-          </span>
-
-        </div>
-
-      </div>
-
     </div>
 
-    <div class="explain">
-
-      <strong>
-        A multiparametric solution is not merely a family of similar curves.
-      </strong>
-
-      <p>
-        The initial state acts as a parameter. Different parts of
-        parameter space can activate different constraints and produce
-        different control structures, such as passing left, passing
-        right, braking before a maneuver, or accelerating before a merge.
-      </p>
-
-      <p class="note">
-        The browser controller is illustrative. It is not a certified
-        solution from the continuous-time multiparametric algorithms
-        used in my research.
-      </p>
-
-    </div>
-
+    <!-- ANALYSIS -->
     <div class="analysis hidden" id="analysis">
-
-      <div class="analysis-head">
-
-        <div>
-          <p class="label">
-            Trajectory analysis
-          </p>
-
-          <h3>
-            Your run versus the computed reference
-          </h3>
-        </div>
-
-        <div class="legend">
-
-          <span>
-            <i class="player"></i>
-            Your trajectory
-          </span>
-
-          <span>
-            <i class="reference"></i>
-            Computed reference
-          </span>
-
-        </div>
-
+      <div class="an-head">
+        <p class="label">Analysis</p>
+        <h3>Your trajectory vs. the computed optimum</h3>
+        <p>
+          The gold curve is the true minimum-time solution for the same start, integrated from the
+          PMP switching law. The switch point is where the costate λ<sub>v</sub> changes sign — the car
+          flips from full acceleration to full braking at exactly the right instant.
+        </p>
       </div>
 
       <div class="metrics">
-
-        <div class="metric">
-          <small>Arrival time</small>
-          <strong id="mArrival">—</strong>
-        </div>
-
-        <div class="metric">
-          <small>Energy use</small>
-          <strong id="mEnergy">—</strong>
-        </div>
-
-        <div class="metric">
-          <small>Control variation</small>
-          <strong id="mSmooth">—</strong>
-        </div>
-
-        <div class="metric">
-          <small>Constraint events</small>
-          <strong id="mSafety">—</strong>
-        </div>
-
+        <div class="metric"><small>Arrival time</small><strong><span id="mYourT">—</span> / <span class="ref" id="mOptT">—</span></strong></div>
+        <div class="metric"><small>Control switches</small><strong><span id="mYourS">—</span> / <span class="ref" id="mOptS">1</span></strong></div>
+        <div class="metric"><small>Overshoot</small><strong id="mOver">—</strong></div>
+        <div class="metric"><small>Optimal arc sequence</small><strong class="ref" id="mArcs">—</strong></div>
       </div>
 
-      <canvas
-        class="canvas-box"
-        id="courseMap"
-      ></canvas>
+      <div class="an-body">
+        <div class="plot-row">
+          <div class="plot-card">
+            <h4>Position &amp; speed over time</h4>
+            <p class="cap">Your run (teal) against the time-optimal reference (gold). The dashed line is the target.</p>
+            <canvas class="plot" id="pTime"></canvas>
+          </div>
+          <div class="plot-card">
+            <h4>Control input u(t)</h4>
+            <p class="cap">The optimal input is bang-bang: +1, then −1, with a single switch. Yours is whatever you held.</p>
+            <canvas class="plot" id="pCtrl"></canvas>
+          </div>
+        </div>
 
-      <div class="mp">
+        <div class="mp">
+          <p class="label">The multiparametric result</p>
+          <h3>Every starting point, solved at once.</h3>
+          <p class="lede">
+            This is the actual contribution. Instead of solving one problem, solve them all: scan every
+            initial position and speed, record which optimal arc sequence wins, and color the space by it.
+            Click anywhere on the map to pick a start — the phase portrait on the right shows its exact
+            optimal path to the target.
+          </p>
 
-        <p class="label">
-          Multiparametric reveal
-        </p>
-
-        <h3>
-          Initial-state space is partitioned into different strategies.
-        </h3>
-
-        <p>
-          Click the parameter map. The selected point
-          θ = (initial lateral position, initial speed) belongs to
-          one region. Each region produces a visibly different
-          maneuver structure.
-        </p>
-
-        <div class="mp-grid">
-
-          <div class="mp-card">
-
-            <strong>
-              Illustrative explicit policy map
-            </strong>
-
-            <canvas id="policyMap"></canvas>
-
-            <div class="selected" id="selected">
-              Selected θ: x₀ = 0.00, v₀ = 0 km/h · CR4
+          <div class="mp-grid">
+            <div class="mp-card">
+              <h4>Critical-region map — computed, not drawn</h4>
+              <p class="cap">Axes: initial position x₀ and initial speed v₀. Each color is a distinct optimal control structure. Boundaries are the switching surfaces.</p>
+              <canvas id="crMap"></canvas>
+              <div class="sel" id="sel">Selected θ = (x₀, v₀) — click the map to choose a start.</div>
             </div>
-
+            <div class="mp-card">
+              <h4>Phase portrait: state space (x, v)</h4>
+              <p class="cap">The optimal trajectory for the selected start, following the switching curve down to the target at the origin.</p>
+              <canvas id="phase"></canvas>
+              <div class="dt-note" id="dtNote">
+                In discrete time, this same problem fragments into many more regions — one per active-set
+                combination at each step. The continuous-time formulation keeps it to a handful, because each
+                region is one arc sequence. That structural reduction is the point of the work.
+              </div>
+            </div>
           </div>
 
-          <div class="mp-card">
-
-            <strong>
-              Distinct reference trajectories
-            </strong>
-
-            <canvas id="familyMap"></canvas>
-
+          <div class="an-acts">
+            <button class="btn amber small" id="driveSel">Drive from the selected start</button>
+            <button class="btn ghost small" id="again">Reset to center</button>
           </div>
-
         </div>
-
-        <div class="analysis-actions">
-
-          <button
-            class="btn primary"
-            id="driveSelected"
-            type="button"
-          >
-            Drive from the selected initial state
-          </button>
-
-          <button
-            class="btn secondary"
-            id="again"
-            type="button"
-          >
-            Play again from zero
-          </button>
-
-        </div>
-
       </div>
-
     </div>
-
   </div>
 </section>
 
-<section id="portfolio">
-  <div class="container fade">
-
-    <p class="label">
-      Portfolio
-    </p>
-
-    <h2>
-      Explore an evolving body of work.
-    </h2>
-
+<!-- ============ WORK ============ -->
+<section id="work">
+  <div class="container">
+    <p class="label">Selected work</p>
+    <h2>Theory, algorithms, and real chemical process systems.</h2>
     <p class="section-copy">
-      My work continues to evolve across projects, methods,
-      applications, and collaborations. These sections are designed
-      to grow with it.
+      My research spans the proof side — costate continuity, switching-surface geometry — and the
+      computational side, applied to large nonlinear process models such as distillation columns.
     </p>
 
-    <div class="portal-grid">
-
-      <a class="portal" href="#">
-
-        <div class="portal-top">
-          <span class="portal-label">Research</span>
-          <span class="portal-arrow">↗</span>
-        </div>
-
-        <h3>
-          Research directions
-        </h3>
-
-        <p>
-          Questions, methods, theoretical developments,
-          computational frameworks, and ongoing research.
-        </p>
-
+    <div class="pf-grid">
+      <a class="pf" href="#">
+        <div class="pf-top"><span class="pf-tag">Journal · under review</span><span>↗</span></div>
+        <div><h3>Explicit CT optimal control via PMP</h3>
+        <p>Continuous-time multiparametric solutions with structurally fewer critical regions than their discrete-time counterparts.</p></div>
       </a>
-
-      <a class="portal" href="#">
-
-        <div class="portal-top">
-          <span class="portal-label">Publications</span>
-          <span class="portal-arrow">↗</span>
-        </div>
-
-        <h3>
-          Papers and scholarly work
-        </h3>
-
-        <p>
-          Journal articles, conference contributions, manuscripts,
-          presentations, and research outputs.
-        </p>
-
+      <a class="pf" href="#">
+        <div class="pf-top"><span class="pf-tag">Conference · CDC 2026</span><span>↗</span></div>
+        <div><h3>Critical-region boundary geometry</h3>
+        <p>The geometry of the surfaces that separate one optimal strategy from another in parameter space.</p></div>
       </a>
-
-      <a class="portal" href="#">
-
-        <div class="portal-top">
-          <span class="portal-label">Projects</span>
-          <span class="portal-arrow">↗</span>
-        </div>
-
-        <h3>
-          Selected projects
-        </h3>
-
-        <p>
-          Research projects, computational studies, engineering
-          applications, and collaborative work.
-        </p>
-
+      <a class="pf" href="#">
+        <div class="pf-top"><span class="pf-tag">In preparation</span><span>↗</span></div>
+        <div><h3>Curved boundaries &amp; nonlinear regions</h3>
+        <p>A computational framework for critical regions whose boundaries are genuinely nonlinear, not piecewise-affine.</p></div>
       </a>
-
-      <a
-        class="portal"
-        href="https://github.com/LidaLMK"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-
-        <div class="portal-top">
-          <span class="portal-label">Software</span>
-          <span class="portal-arrow">↗</span>
-        </div>
-
-        <h3>
-          Code and computational tools
-        </h3>
-
-        <p>
-          Numerical implementations, visualization tools,
-          research software, and reproducible workflows.
-        </p>
-
+      <a class="pf" href="#">
+        <div class="pf-top"><span class="pf-tag">Applied · process systems</span><span>↗</span></div>
+        <div><h3>Model reduction on a distillation column</h3>
+        <p>Surrogate modeling and multiparametric MPC on a 32-state nonlinear column within the PAROC framework.</p></div>
       </a>
-
     </div>
-
   </div>
 </section>
 
-<section id="contact">
-  <div class="container fade">
-
-    <p class="label">
-      Contact
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="contact">
+  <div class="container">
+    <p class="label">Contact</p>
+    <h2>Open to research and industry roles in control and optimization.</h2>
+    <p class="section-copy">
+      I build methods that connect rigorous optimal-control theory with real engineering systems.
+      If that's useful to your team, let's talk.
     </p>
-
-    <h2>
-      Let’s build something meaningful.
-    </h2>
-
-    <p class="about-copy">
-      I am interested in research collaborations, technical projects,
-      and opportunities that connect mathematics, computation,
-      intelligent systems, and real engineering problems.
-    </p>
-
     <div class="buttons">
-
-      <a
-        class="btn primary"
-        href="https://github.com/LidaLMK"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View GitHub
-      </a>
-
+      <a class="btn primary" href="https://github.com/LidaLMK" target="_blank" rel="noopener">View GitHub</a>
+      <a class="btn ghost" href="#lab">Replay the demo</a>
     </div>
-
   </div>
 </section>
 
 </main>
 
 <footer>
-  <div class="container">
-    © <span id="year"></span> Lida Lamakani
-  </div>
+  <div class="container">© <span id="yr"></span> Lida Lamakani · Continuous-time multiparametric optimal control</div>
 </footer>
 
 <script>
-const $ = id =>
-  document.getElementById(id);
+"use strict";
+const $ = id => document.getElementById(id);
+$("yr").textContent = new Date().getFullYear();
 
-$("year").textContent =
-  new Date().getFullYear();
+/* ============================================================
+   TRUE OPTIMAL CONTROL CORE
+   System: double integrator.  state = [x (position), v (velocity)]
+           x' = v ,  v' = u ,  u in [-1, +1]
+   Goal:  reach x = TARGET with v = 0, minimum time,
+          subject to speed cap v <= VMAX.
+   PMP:   H = 1 + λx·v + λv·u ;  u* = -sign(λv)  (bang-bang)
+          For the double integrator this is the classic
+          time-optimal law: accelerate, then brake, ONE switch,
+          with a saturated (constant-velocity) arc if VMAX binds.
+   Everything below is SOLVED, never hand-drawn.
+   ============================================================ */
 
-const observer =
-  new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        }
-      });
-    },
-    {
-      threshold: 0.12
-    }
-  );
+const TARGET = 1.0;      // target position (start x measured 0..TARGET region)
+const VMAX   = 0.62;     // speed cap
+const UMAX   = 1.0;
 
-document
-  .querySelectorAll(".fade")
-  .forEach(element => {
-    observer.observe(element);
-  });
+/* Time-optimal control law evaluated at a state.
+   Returns u in {-1,0,+1}. Uses the switching curve for the
+   double integrator plus velocity saturation. */
+function optimalControl(x, v){
+  const rem = TARGET - x;                 // distance still to cover
+  const stopDist = (v*v)/(2*UMAX);        // distance needed to brake to rest
+  // If braking now would still overshoot (or just reach), brake.
+  if (stopDist >= rem - 1e-4) return -1;
+  // Otherwise accelerate — unless we're at the speed cap, then cruise.
+  if (v >= VMAX - 1e-4) return 0;
+  return +1;
+}
 
-const canvas =
-  $("game");
-
-const context =
-  canvas.getContext("2d");
-
-const car =
-  $("car");
-
-const deviceScale =
-  Math.min(
-    window.devicePixelRatio || 1,
-    2
-  );
-
-let canvasWidth = 0;
-let canvasHeight = 0;
-
-const ROAD_LENGTH = 820;
-const VIEW_DISTANCE = 305;
-const TOTAL_TIME = 34;
-const COURSE_SPEED_SCALE = 1.42;
-const MAX_SPEED = 42;
-
-const obstacles = [
-  {
-    s: 145,
-    lateral: 0,
-    type: "barrier"
-  },
-  {
-    s: 300,
-    lateral: -0.74,
-    type: "car"
-  },
-  {
-    s: 495,
-    lateral: 0.74,
-    type: "truck"
-  },
-  {
-    s: 640,
-    lateral: 0,
-    type: "roadwork"
+/* Integrate the optimal solution from a start state. Returns
+   full log + summary (arrival time, switch times, arc sequence). */
+function solveOptimal(x0, v0, dt=0.004, Tmax=12){
+  let x=x0, v=v0, t=0;
+  const log=[{t,x,v,u:0}];
+  let prevU=null, switches=0;
+  const arcs=[];
+  const n=Math.round(Tmax/dt);
+  for(let i=0;i<n;i++){
+    let u=optimalControl(x,v);
+    if(prevU!==null && u!==prevU) switches++;
+    if(arcs.length===0 || arcs[arcs.length-1]!==u) arcs.push(u);
+    prevU=u;
+    let v2=v+u*dt;
+    if(v2<0) v2=0;
+    if(v2>VMAX) v2=VMAX;
+    const x2=x+(v+v2)/2*dt;
+    x=x2; v=v2; t+=dt;
+    log.push({t,x,v,u});
+    if(x>=TARGET-1e-3 && v<1.5e-2){ x=TARGET; v=0; log[log.length-1]={t,x,v,u}; break; }
   }
+  return {log, time:t, switches, arcs, x0, v0};
+}
+
+/* Human-readable arc sequence label */
+function arcLabel(arcs){
+  const map={ "1":"accelerate", "0":"cruise", "-1":"brake" };
+  const compact = arcs.filter(a=>a!==null);
+  return compact.map(a=>map[String(a)]).join(" → ") || "—";
+}
+
+/* Classify a start into a critical region by its optimal arc sequence.
+   This is DERIVED from the solve — the regions are whatever the math says. */
+function regionOf(x0,v0){
+  const s=solveOptimal(x0,v0);
+  const key=s.arcs.join(",");
+  // Map arc-sequence signatures to named regions + colors.
+  if(key.startsWith("-1")) return {id:"R-BRAKE", color:"#b23a48", label:"brake only", arcs:s.arcs, sol:s};
+  if(key.includes("0"))    return {id:"R-CRUISE",color:"#5b4ea8", label:"accelerate → cruise → brake", arcs:s.arcs, sol:s};
+  if(key.startsWith("1,-1"))return {id:"R-BANG",  color:"#1f6f6b", label:"accelerate → brake", arcs:s.arcs, sol:s};
+  return {id:"R-OTHER", color:"#c8622b", label:arcLabel(s.arcs), arcs:s.arcs, sol:s};
+}
+
+/* ============================================================
+   GAME STATE (player drives the SAME system, manually)
+   ============================================================ */
+const dpr = Math.min(window.devicePixelRatio||1, 2);
+const viz = $("viz"); const vx = viz.getContext("2d");
+let VW=0, VH=0;
+
+const input = { accel:false, brake:false, pointer:0 }; // pointer: +1 accel, -1 brake, 0 none
+
+const start0 = {x0:0.0, v0:0.0};
+let selStart = {x0:0.0, v0:0.0};
+
+const G = {
+  running:false, done:false,
+  x:0, v:0, t:0,
+  prevU:0, switches:0,
+  overshoot:0, stoppedAt:null,
+  log:[]
+};
+
+const coachSteps=[
+  {title:"Accelerate off the line", text:"Hold accelerate. Speed climbs until it hits the cap."},
+  {title:"Approaching the target", text:"Now the question: when do you brake? Too late and you overshoot."},
+  {title:"Brake to stop", text:"Full brake. Try to bring the speed to zero exactly on the line."},
+  {title:"Settle on target", text:"Stop as close to the line as you can, then it locks in."}
 ];
 
-const stageDefinitions = [
-  {
-    title: "Build speed.",
-    text:
-      "Hold the upper center of the road. Acceleration is immediate while you hold."
-  },
-  {
-    title: "Barrier ahead — choose a side now.",
-    text:
-      "Hold the left or right half until the car is clearly past the barrier."
-  },
-  {
-    title: "Recenter and accelerate.",
-    text:
-      "Move toward the middle, then build speed before the bend."
-  },
-  {
-    title: "Curve ahead — steer smoothly.",
-    text:
-      "Follow the bend steadily. Release briefly to coast if needed."
-  },
-  {
-    title: "55 km/h zone — brake now.",
-    text:
-      "Hold the narrow bottom strip. Braking is strong and immediate."
-  },
-  {
-    title: "Traffic occupies the right lane.",
-    text:
-      "Move left early. Late steering creates a harder maneuver."
-  },
-  {
-    title: "Roadwork blocks the center.",
-    text:
-      "Choose a clear side before reaching it, then stabilize."
-  },
-  {
-    title: "Final gate — straighten and accelerate.",
-    text:
-      "Return toward center and carry stable speed through the destination."
-  }
-];
+function clamp(a,lo,hi){return Math.max(lo,Math.min(hi,a));}
 
-const policies = {
-  CR1: {
-    color: "#65d7ff",
-    description:
-      "left start · right pass · center recovery",
-    representative: {
-      lateral: -0.78,
-      speed: 24
-    },
-    waypoints: [
-      [0, -0.78],
-      [85, -0.78],
-      [170, 0.78],
-      [290, 0.78],
-      [410, 0],
-      [530, -0.78],
-      [690, 0.48],
-      [820, 0]
-    ]
-  },
-
-  CR2: {
-    color: "#9c91ff",
-    description:
-      "right start · left pass · wide recovery",
-    representative: {
-      lateral: 0.78,
-      speed: 28
-    },
-    waypoints: [
-      [0, 0.78],
-      [85, 0.78],
-      [170, -0.78],
-      [300, -0.78],
-      [430, 0.78],
-      [580, -0.78],
-      [720, -0.35],
-      [820, 0]
-    ]
-  },
-
-  CR3: {
-    color: "#ff7185",
-    description:
-      "high speed · brake first · alternating passes",
-    representative: {
-      lateral: 0,
-      speed: 66
-    },
-    waypoints: [
-      [0, 0],
-      [55, 0],
-      [135, -0.82],
-      [270, -0.82],
-      [345, 0.82],
-      [520, 0.82],
-      [595, -0.82],
-      [720, 0.55],
-      [820, 0]
-    ]
-  },
-
-  CR4: {
-    color: "#7ef0b6",
-    description:
-      "low speed · accelerate first · right maneuver",
-    representative: {
-      lateral: 0,
-      speed: 8
-    },
-    waypoints: [
-      [0, 0],
-      [65, 0],
-      [150, 0.82],
-      [300, 0.82],
-      [430, -0.82],
-      [570, -0.82],
-      [690, 0.7],
-      [820, 0]
-    ]
-  }
-};
-
-const pointerInput = {
-  steering: 0,
-  throttle: 0,
-  active: false
-};
-
-const keyboardInput = {
-  left: false,
-  right: false,
-  accelerate: false,
-  brake: false
-};
-
-let selectedInitialState = {
-  lateral: 0,
-  speed: 0
-};
-
-let selectedCriticalRegion =
-  "CR4";
-
-let referenceResult =
-  null;
-
-const game = {
-  running: false,
-  finished: false,
-  success: false,
-
-  position: 0,
-  lateral: 0,
-  heading: 0,
-  speed: 0,
-
-  energy: 0,
-  elapsed: 0,
-  timeLeft: TOTAL_TIME,
-
-  controlVariation: 0,
-  previousSteering: 0,
-  previousThrottle: 0,
-
-  collisionCount: 0,
-  roadViolationCount: 0,
-  speedViolationTime: 0,
-
-  stage: -1,
-  log: [],
-
-  lastTime: performance.now()
-};
-
-function clamp(
-  value,
-  minimum,
-  maximum
-) {
-  return Math.max(
-    minimum,
-    Math.min(
-      maximum,
-      value
-    )
-  );
+function resizeViz(){
+  const r=viz.getBoundingClientRect();
+  VW=Math.max(320,r.width); VH=Math.max(360,r.height);
+  viz.width=VW*dpr; viz.height=VH*dpr;
+  vx.setTransform(dpr,0,0,dpr,0,0);
 }
 
-function roadCenter(position) {
-  return (
-    0.34
-    * Math.sin(position / 88)
-    +
-    0.2
-    * Math.sin(
-      (position + 120) / 46
-    )
-  );
+function effU(){
+  let u=0;
+  if(input.pointer!==0) u=input.pointer;
+  if(input.accel) u=1;
+  if(input.brake) u=-1;
+  return u;
 }
 
-function roadCurve(position) {
-  return (
-    0.48
-    * Math.cos(position / 88)
-    +
-    0.37
-    * Math.cos(
-      (position + 120) / 46
-    )
-  );
+function resetGame(showIntro, s=selStart){
+  input.accel=input.brake=false; input.pointer=0;
+  G.running=false; G.done=false;
+  G.x=s.x0; G.v=s.v0; G.t=0;
+  G.prevU=0; G.switches=0; G.overshoot=0; G.stoppedAt=null;
+  G.log=[{t:0,x:G.x,v:G.v,u:0}];
+  $("intro").classList.toggle("off",!showIntro);
+  $("result").classList.add("off");
+  $("analysis").classList.add("hidden");
+  setCoach(0,true);
+  hud("ready","g-ok");
+  drawViz();
 }
 
-function currentSpeedLimit(position) {
-  if (
-    position >= 395
-    && position <= 555
-  ) {
-    return 55;
-  }
-
-  return 96;
+function startGame(s=selStart){
+  resetGame(false,s);
+  G.running=true;
+  G.last=performance.now();
 }
 
-function policyForInitialState(
-  lateral,
-  speed
-) {
-  if (lateral < -0.28) {
-    return "CR1";
-  }
-
-  if (lateral > 0.28) {
-    return "CR2";
-  }
-
-  if (speed >= 38) {
-    return "CR3";
-  }
-
-  return "CR4";
+function coachIndex(){
+  const rem=TARGET-G.x;
+  if(G.v<VMAX*0.6 && G.x<0.25) return 0;
+  if(rem>0.28) return 1;
+  if(G.v>0.03) return 2;
+  return 3;
+}
+function setCoach(i,force){
+  $("cStep").textContent=`STEP ${i+1} OF ${coachSteps.length}`;
+  $("cTitle").textContent=coachSteps[i].title;
+  $("cText").textContent=coachSteps[i].text;
 }
 
-function resizeGameCanvas() {
-  const rectangle =
-    canvas.getBoundingClientRect();
-
-  canvasWidth =
-    Math.max(
-      320,
-      rectangle.width
-    );
-
-  canvasHeight =
-    Math.max(
-      520,
-      rectangle.height
-    );
-
-  canvas.width =
-    canvasWidth
-    * deviceScale;
-
-  canvas.height =
-    canvasHeight
-    * deviceScale;
-
-  context.setTransform(
-    deviceScale,
-    0,
-    0,
-    deviceScale,
-    0,
-    0
-  );
+function hud(stat,cls){
+  $("hTime").textContent=G.t.toFixed(2)+" s";
+  $("hDist").textContent=Math.max(0,TARGET-G.x).toFixed(2);
+  $("hSpeed").textContent=G.v.toFixed(2);
+  const u=effU();
+  $("hArc").textContent = u>0?"accelerate":u<0?"brake":"coast";
+  if(stat){ $("hStat").textContent=stat; $("hStat").className="g "+cls; }
 }
 
-function effectiveControl() {
-  let steering =
-    pointerInput.active
-      ? pointerInput.steering
-      : 0;
+function stepGame(dt){
+  const u=effU();
+  if(u!==G.prevU && u!==0 && G.prevU!==0) G.switches++;
+  G.prevU=u;
+  let v2=G.v+u*dt;
+  if(v2<0) v2=0;
+  if(v2>VMAX+0.05) v2=VMAX+0.05; // player can nudge slightly over cap (penalized)
+  const x2=G.x+(G.v+v2)/2*dt;
+  G.x=x2; G.v=v2; G.t+=dt;
+  G.log.push({t:G.t,x:G.x,v:G.v,u});
 
-  let throttle =
-    pointerInput.active
-      ? pointerInput.throttle
-      : 0;
+  setCoach(coachIndex());
 
-  if (keyboardInput.left) {
-    steering -= 1;
-  }
+  // overspeed status
+  let stat="on track", cls="g-ok";
+  if(G.v>VMAX+0.01){ stat="over speed limit"; cls="g-warn"; }
 
-  if (keyboardInput.right) {
-    steering += 1;
-  }
+  // finish conditions
+  if(G.x>=TARGET && G.v<0.02){ G.stoppedAt=G.x; finish(true,"Stopped on target"); return; }
+  if(G.x>TARGET+0.001 && G.v<0.02){ G.overshoot=G.x-TARGET; G.stoppedAt=G.x; finish(false,"Overshot the target"); return; }
+  if(G.x>TARGET+0.35){ G.overshoot=G.x-TARGET; G.stoppedAt=G.x; finish(false,"Ran past the target"); return; }
+  if(G.t>14){ finish(false,"Time ran out"); return; }
 
-  if (keyboardInput.accelerate) {
-    throttle += 1;
-  }
-
-  if (keyboardInput.brake) {
-    throttle -= 1;
-  }
-
-  return {
-    steering:
-      clamp(
-        steering,
-        -1,
-        1
-      ),
-
-    throttle:
-      clamp(
-        throttle,
-        -1,
-        1
-      )
-  };
+  hud(stat,cls);
 }
 
-function stepVehicle(
-  state,
-  control,
-  deltaTime
-) {
-  const accelerationInput =
-    Math.max(
-      control.throttle,
-      0
-    );
+function finish(success,msg){
+  if(G.done) return;
+  G.done=true; G.running=false;
+  input.accel=input.brake=false; input.pointer=0;
 
-  const brakingInput =
-    Math.max(
-      -control.throttle,
-      0
-    );
+  const opt=solveOptimal(G.x0!==undefined?G.x0:selStart.x0, selStart.v0);
+  // recompute optimal from the ACTUAL start used this run:
+  const optRun=solveOptimal(G.log[0].x, G.log[0].v);
+  const eff = optRun.time>0 ? clamp(Math.round(optRun.time/Math.max(G.t,1e-3)*100),0,100) : 0;
 
-  const motorAcceleration =
-    accelerationInput
-    * 18;
-
-  const brakeAcceleration =
-    brakingInput
-    * 26;
-
-  const rollingDrag =
-    state.speed > 0
-      ? 0.06
-      : 0;
-
-  const aerodynamicDrag =
-    0.0036
-    * state.speed
-    * state.speed;
-
-  const acceleration =
-    motorAcceleration
-    - brakeAcceleration
-    - rollingDrag
-    - aerodynamicDrag;
-
-  state.speed =
-    clamp(
-      state.speed
-      + acceleration
-      * deltaTime,
-      0,
-      MAX_SPEED
-    );
-
-  const curvatureEffect =
-    roadCurve(state.position)
-    * state.speed
-    / 31;
-
-  const steeringResponse =
-    control.steering
-    * 5.4;
-
-  state.heading += (
-    steeringResponse
-    - curvatureEffect
-    - state.heading
-    * 4.2
-  ) * deltaTime;
-
-  state.heading =
-    clamp(
-      state.heading,
-      -1.25,
-      1.25
-    );
-
-  state.lateral +=
-    state.heading
-    * Math.max(
-      state.speed,
-      7
-    )
-    * 0.155
-    * deltaTime;
-
-  state.position +=
-    state.speed
-    * COURSE_SPEED_SCALE
-    * deltaTime;
-
-  state.energy += (
-    accelerationInput
-    * 0.58
-    +
-    brakingInput
-    * 0.06
-    +
-    Math.abs(
-      control.steering
-    )
-    * 0.1
-  ) * deltaTime;
+  $("rTitle").textContent=msg;
+  $("rTime").textContent=G.t.toFixed(2)+" s";
+  $("rOpt").textContent=optRun.time.toFixed(2)+" s";
+  $("rStop").textContent=(G.stoppedAt??G.x).toFixed(3);
+  $("rEff").textContent=eff+"%";
+  hud(success?"reached target":"missed","g-"+(success?"ok":"bad"));
+  setTimeout(()=>$("result").classList.remove("off"),260);
 }
 
-function currentStageIndex() {
-  const speed =
-    game.speed * 3.6;
+/* ============================================================
+   GAME RENDER — a clean side-on track (position axis)
+   ============================================================ */
+function drawViz(){
+  vx.clearRect(0,0,VW,VH);
+  // background
+  vx.fillStyle="#080b10"; vx.fillRect(0,0,VW,VH);
 
-  if (
-    game.position < 42
-    && speed < 28
-  ) {
-    return 0;
+  const marginL=60, marginR=60;
+  const trackY=VH*0.60;
+  const x0px=marginL, x1px=VW-marginR;
+  const px = x => x0px + clamp(x,0,TARGET+0.35)/(TARGET+0.35)*(x1px-x0px);
+
+  // speed-limit ribbon (a subtle band showing VMAX zone context)
+  // road base
+  vx.strokeStyle="#1c2430"; vx.lineWidth=2;
+  vx.beginPath(); vx.moveTo(x0px,trackY); vx.lineTo(x1px,trackY); vx.stroke();
+
+  // tick marks
+  vx.fillStyle="#5c657a"; vx.font='11px "JetBrains Mono",monospace'; vx.textAlign="center";
+  for(let xx=0; xx<=1.0+1e-6; xx+=0.25){
+    const X=px(xx);
+    vx.strokeStyle="#182029"; vx.beginPath(); vx.moveTo(X,trackY-8); vx.lineTo(X,trackY+8); vx.stroke();
+    vx.fillText(xx.toFixed(2), X, trackY+26);
   }
 
-  if (game.position < 155) {
-    return 1;
+  // start line
+  const sX=px(G.log.length?G.log[0].x:0);
+  // target line
+  const tX=px(TARGET);
+  vx.strokeStyle="#2f7d52"; vx.lineWidth=3;
+  vx.beginPath(); vx.moveTo(tX,trackY-46); vx.lineTo(tX,trackY+30); vx.stroke();
+  vx.fillStyle="#57c98a"; vx.font='700 12px "JetBrains Mono",monospace';
+  vx.fillText("TARGET", tX, trackY-56);
+
+  // trailing path already driven
+  if(G.log.length>1){
+    vx.strokeStyle="rgba(31,111,107,.5)"; vx.lineWidth=3;
+    vx.beginPath();
+    G.log.forEach((p,i)=>{ const X=px(p.x); const Y=trackY - Math.min(p.v/VMAX,1.3)*70;
+      i?vx.lineTo(X,Y):vx.moveTo(X,Y); });
+    vx.stroke();
+    vx.fillStyle="#7f8798"; vx.font='10px "JetBrains Mono",monospace'; vx.textAlign="left";
+    vx.fillText("speed profile", x0px+4, trackY-78);
   }
 
-  if (game.position < 255) {
-    return 2;
-  }
+  // the car
+  const carX=px(G.x); const u=effU();
+  drawCar(carX, trackY, u, G.v);
 
-  if (game.position < 395) {
-    return 3;
-  }
-
-  if (game.position < 555) {
-    return 4;
-  }
-
-  if (game.position < 635) {
-    return 5;
-  }
-
-  if (game.position < 735) {
-    return 6;
-  }
-
-  return 7;
+  // labels
+  vx.fillStyle="#5c657a"; vx.textAlign="left"; vx.font='11px "JetBrains Mono",monospace';
+  vx.fillText("position x  →", x0px, trackY+44);
 }
 
-function updateStageMessage(
-  force = false
-) {
-  const index =
-    currentStageIndex();
-
-  const speed =
-    game.speed * 3.6;
-
-  let title =
-    stageDefinitions[index].title;
-
-  let text =
-    stageDefinitions[index].text;
-
-  if (
-    index === 0
-    && speed > 18
-  ) {
-    title =
-      "Good — keep building speed.";
-
-    text =
-      "Continue holding the upper road. Move horizontally only when you need to steer.";
+function drawCar(cx,cy,u,v){
+  vx.save();
+  vx.translate(cx,cy);
+  // shadow
+  vx.fillStyle="rgba(0,0,0,.45)";
+  vx.beginPath(); vx.ellipse(0,16,26,7,0,0,Math.PI*2); vx.fill();
+  // body
+  const grad=vx.createLinearGradient(0,-18,0,14);
+  grad.addColorStop(0,"#7fe0e6"); grad.addColorStop(1,"#12787a");
+  vx.fillStyle=grad;
+  vx.beginPath();
+  vx.moveTo(-26,10); vx.quadraticCurveTo(-30,-6,-14,-12);
+  vx.quadraticCurveTo(0,-20,14,-12); vx.quadraticCurveTo(30,-6,26,10);
+  vx.closePath(); vx.fill();
+  // cabin
+  vx.fillStyle="#08303a";
+  vx.beginPath(); vx.moveTo(-11,-11); vx.quadraticCurveTo(0,-17,11,-11);
+  vx.lineTo(8,-2); vx.lineTo(-8,-2); vx.closePath(); vx.fill();
+  // wheels
+  vx.fillStyle="#05070a";
+  vx.beginPath(); vx.ellipse(-15,11,6,6,0,0,Math.PI*2); vx.fill();
+  vx.beginPath(); vx.ellipse(15,11,6,6,0,0,Math.PI*2); vx.fill();
+  // thrust / brake glow
+  if(u>0){
+    vx.fillStyle="rgba(200,98,43,.9)";
+    vx.beginPath(); vx.moveTo(-26,4); vx.lineTo(-40,0); vx.lineTo(-26,-4); vx.closePath(); vx.fill();
+  } else if(u<0){
+    vx.fillStyle="rgba(178,58,72,.95)";
+    vx.fillRect(20,-8,7,16);
   }
+  vx.restore();
+}
 
-  if (index === 4) {
-    if (speed > 62) {
-      title =
-        "Brake now — speed is above the limit.";
+/* ============================================================
+   ANALYSIS PLOTS
+   ============================================================ */
+function fitCanvas(cv, minH){
+  const r=cv.getBoundingClientRect();
+  const w=Math.max(280,r.width), h=Math.max(minH,r.height);
+  cv.width=w*dpr; cv.height=h*dpr;
+  const c=cv.getContext("2d"); c.setTransform(dpr,0,0,dpr,0,0);
+  return {w,h,c};
+}
 
-      text =
-        "Hold the bottom strip until speed falls below 55 km/h.";
-    } else {
-      title =
-        "Good speed — stay controlled.";
+let lastOpt=null;
 
-      text =
-        "Keep the car below 55 km/h through the restricted zone.";
+function drawTimePlot(){
+  const {w,h,c}=fitCanvas($("pTime"),220);
+  c.clearRect(0,0,w,h); c.fillStyle="#fff"; c.fillRect(0,0,w,h);
+  const pad={l:42,r:14,t:16,b:30};
+  const player=G.log, ref=lastOpt.log;
+  const Tmax=Math.max(player[player.length-1].t, ref[ref.length-1].t, 0.5);
+  const px=t=>pad.l+t/Tmax*(w-pad.l-pad.r);
+  const pyX=x=>pad.t+(1-clamp(x/(TARGET+0.2),0,1))*(h-pad.t-pad.b);
+  // axes
+  c.strokeStyle="#e3ddce"; c.lineWidth=1;
+  c.beginPath(); c.moveTo(pad.l,pad.t); c.lineTo(pad.l,h-pad.b); c.lineTo(w-pad.r,h-pad.b); c.stroke();
+  // target line
+  c.strokeStyle="#9dbfa8"; c.setLineDash([5,5]);
+  c.beginPath(); c.moveTo(pad.l,pyX(TARGET)); c.lineTo(w-pad.r,pyX(TARGET)); c.stroke();
+  c.setLineDash([]);
+  c.fillStyle="#6b6656"; c.font='10px "JetBrains Mono",monospace';
+  c.fillText("position", pad.l+4, pad.t+10);
+  c.fillText("t (s)", w-pad.r-26, h-pad.b+22);
+  // reference position
+  line(c,ref,px,pyX,"#b8892b",2.4,p=>p.t,p=>p.x);
+  // player position
+  line(c,player,px,pyX,"#1f6f6b",2.4,p=>p.t,p=>p.x);
+}
+
+function drawCtrlPlot(){
+  const {w,h,c}=fitCanvas($("pCtrl"),220);
+  c.clearRect(0,0,w,h); c.fillStyle="#fff"; c.fillRect(0,0,w,h);
+  const pad={l:42,r:14,t:16,b:30};
+  const player=G.log, ref=lastOpt.log;
+  const Tmax=Math.max(player[player.length-1].t, ref[ref.length-1].t, 0.5);
+  const px=t=>pad.l+t/Tmax*(w-pad.l-pad.r);
+  const py=u=>pad.t+(1-(u+1.2)/2.4)*(h-pad.t-pad.b);
+  c.strokeStyle="#e3ddce"; c.lineWidth=1;
+  c.beginPath(); c.moveTo(pad.l,pad.t); c.lineTo(pad.l,h-pad.b); c.lineTo(w-pad.r,h-pad.b); c.stroke();
+  // zero line
+  c.strokeStyle="#eee6d6"; c.beginPath(); c.moveTo(pad.l,py(0)); c.lineTo(w-pad.r,py(0)); c.stroke();
+  c.fillStyle="#6b6656"; c.font='10px "JetBrains Mono",monospace';
+  c.fillText("+1 accel", pad.l+4, py(1)-4);
+  c.fillText("-1 brake", pad.l+4, py(-1)+12);
+  // step-style plot
+  stepLine(c,ref,px,py,"#b8892b",2.6);
+  stepLine(c,player,px,py,"#1f6f6b",1.8);
+}
+
+function line(c,arr,px,py,color,lw,fx,fy){
+  c.strokeStyle=color; c.lineWidth=lw; c.beginPath();
+  arr.forEach((p,i)=>{ const X=px(fx(p)),Y=py(fy(p)); i?c.lineTo(X,Y):c.moveTo(X,Y); });
+  c.stroke();
+}
+function stepLine(c,arr,px,py,color,lw){
+  c.strokeStyle=color; c.lineWidth=lw; c.beginPath();
+  let started=false;
+  for(let i=0;i<arr.length;i++){
+    const X=px(arr[i].t), Y=py(arr[i].u);
+    if(!started){c.moveTo(X,Y);started=true;}
+    else{ c.lineTo(px(arr[i].t),py(arr[i-1].u)); c.lineTo(X,Y); }
+  }
+  c.stroke();
+}
+
+/* ---- critical-region map: computed by scanning the state space ---- */
+let crCache=null;
+function computeCRField(nx=110, nv=90){
+  // scan x0 in [0, 0.95], v0 in [0, VMAX*1.35]
+  const field=[];
+  const xLo=0, xHi=0.95, vLo=0, vHi=VMAX*1.35;
+  for(let j=0;j<nv;j++){
+    const row=[];
+    const v0=vLo+(vHi-vLo)*(j/(nv-1));
+    for(let i=0;i<nx;i++){
+      const x0=xLo+(xHi-xLo)*(i/(nx-1));
+      row.push(regionOf(x0,v0));
+    }
+    field.push(row);
+  }
+  crCache={field,nx,nv,xLo,xHi,vLo,vHi};
+  return crCache;
+}
+
+function drawCRMap(){
+  const cv=$("crMap"); const {w,h,c}=fitCanvas(cv,300);
+  if(!crCache) computeCRField();
+  const {field,nx,nv,xLo,xHi,vLo,vHi}=crCache;
+  const pad={l:48,r:14,t:14,b:40};
+  const pw=w-pad.l-pad.r, ph=h-pad.t-pad.b;
+  const cw=pw/nx, ch=ph/nv;
+  c.clearRect(0,0,w,h); c.fillStyle="#fff"; c.fillRect(0,0,w,h);
+  for(let j=0;j<nv;j++){
+    for(let i=0;i<nx;i++){
+      c.fillStyle=field[j][i].color;
+      // note: v axis drawn increasing upward
+      c.fillRect(pad.l+i*cw, pad.t+(nv-1-j)*ch, cw+1, ch+1);
     }
   }
-
-  if (
-    force
-    || index !== game.stage
-  ) {
-    game.stage =
-      index;
-
-    $("stage").classList.remove(
-      "flash"
-    );
-
-    void $("stage").offsetWidth;
-
-    $("stage").classList.add(
-      "flash"
-    );
-
-    [
-      ...$("dots").children
-    ].forEach(
-      (
-        dot,
-        dotIndex
-      ) => {
-        dot.classList.toggle(
-          "done",
-          dotIndex < index
-        );
-
-        dot.classList.toggle(
-          "active",
-          dotIndex === index
-        );
-      }
-    );
+  // boundary emphasis: where neighbor region id changes, darken
+  c.fillStyle="rgba(12,15,20,.55)";
+  for(let j=0;j<nv;j++)for(let i=0;i<nx-1;i++){
+    if(field[j][i].id!==field[j][i+1].id)
+      c.fillRect(pad.l+(i+1)*cw-0.5, pad.t+(nv-1-j)*ch, 1.4, ch+1);
   }
+  for(let j=0;j<nv-1;j++)for(let i=0;i<nx;i++){
+    if(field[j][i].id!==field[j+1][i].id)
+      c.fillRect(pad.l+i*cw, pad.t+(nv-1-j)*ch-0.5, cw+1, 1.4);
+  }
+  // axes labels
+  c.fillStyle="#3c3a32"; c.font='11px "JetBrains Mono",monospace'; c.textAlign="center";
+  c.fillText("initial position  x₀", pad.l+pw/2, h-8);
+  c.save(); c.translate(14,pad.t+ph/2); c.rotate(-Math.PI/2);
+  c.fillText("initial speed  v₀", 0,0); c.restore();
+  c.textAlign="left";
+  // ticks
+  c.fillStyle="#6b6656"; c.font='9px "JetBrains Mono",monospace';
+  c.fillText(xLo.toFixed(1), pad.l-4, h-pad.b+14);
+  c.fillText(xHi.toFixed(2), pad.l+pw-16, h-pad.b+14);
+  c.fillText(vLo.toFixed(1), pad.l-24, pad.t+ph);
+  c.fillText(vHi.toFixed(2), pad.l-30, pad.t+8);
 
-  $("step").textContent =
-    `STEP ${index + 1} OF ${stageDefinitions.length}`;
+  // selected marker
+  const mx=pad.l+(selStart.x0-xLo)/(xHi-xLo)*pw;
+  const my=pad.t+(1-(selStart.v0-vLo)/(vHi-vLo))*ph;
+  c.strokeStyle="#0c0f14"; c.lineWidth=2.5; c.fillStyle="#fff";
+  c.beginPath(); c.arc(mx,my,7,0,Math.PI*2); c.fill(); c.stroke();
 
-  $("stageTitle").textContent =
-    title;
-
-  $("stageText").textContent =
-    text;
-}
-
-function clearInputs() {
-  pointerInput.steering = 0;
-  pointerInput.throttle = 0;
-  pointerInput.active = false;
-
-  keyboardInput.left = false;
-  keyboardInput.right = false;
-  keyboardInput.accelerate = false;
-  keyboardInput.brake = false;
-}
-
-function resetGame(
-  showIntroduction = false,
-  initialState = selectedInitialState
-) {
-  clearInputs();
-
-  game.running = false;
-  game.finished = false;
-  game.success = false;
-
-  game.position = 0;
-  game.lateral =
-    initialState.lateral;
-  game.heading = 0;
-  game.speed =
-    initialState.speed / 3.6;
-
-  game.energy = 0;
-  game.elapsed = 0;
-  game.timeLeft = TOTAL_TIME;
-
-  game.controlVariation = 0;
-  game.previousSteering = 0;
-  game.previousThrottle = 0;
-
-  game.collisionCount = 0;
-  game.roadViolationCount = 0;
-  game.speedViolationTime = 0;
-
-  game.stage = -1;
-
-  game.log = [
-    {
-      time: 0,
-      position: 0,
-      lateral: game.lateral,
-      speed: game.speed,
-      steering: 0,
-      throttle: 0,
-      energy: 0
-    }
+  // legend
+  const legend=[
+    {c:"#1f6f6b",t:"accel → brake"},
+    {c:"#5b4ea8",t:"accel → cruise → brake"},
+    {c:"#b23a48",t:"brake only"},
   ];
-
-  game.lastTime =
-    performance.now();
-
-  $("intro").classList.toggle(
-    "off",
-    !showIntroduction
-  );
-
-  $("result").classList.add(
-    "off"
-  );
-
-  $("analysis").classList.add(
-    "hidden"
-  );
-
-  updateStageMessage(true);
-  updateInterface("safe");
-  updateCarPosition();
-}
-
-function startGame(
-  initialState = selectedInitialState
-) {
-  resetGame(
-    false,
-    initialState
-  );
-
-  game.running = true;
-
-  game.lastTime =
-    performance.now();
-}
-
-function updateGame(
-  deltaTime
-) {
-  const control =
-    effectiveControl();
-
-  game.controlVariation +=
-    Math.abs(
-      control.steering
-      - game.previousSteering
-    )
-    +
-    0.65
-    * Math.abs(
-      control.throttle
-      - game.previousThrottle
-    );
-
-  game.previousSteering =
-    control.steering;
-
-  game.previousThrottle =
-    control.throttle;
-
-  stepVehicle(
-    game,
-    control,
-    deltaTime
-  );
-
-  game.elapsed +=
-    deltaTime;
-
-  game.timeLeft =
-    Math.max(
-      0,
-      TOTAL_TIME
-      - game.elapsed
-    );
-
-  updateStageMessage();
-
-  if (
-    game.speed * 3.6
-    >
-    currentSpeedLimit(
-      game.position
-    ) + 3
-  ) {
-    game.speedViolationTime +=
-      deltaTime;
-  }
-
-  if (
-    Math.abs(
-      game.lateral
-    ) > 1.28
-  ) {
-    game.roadViolationCount += 1;
-
-    finishGame(
-      false,
-      "You left the road."
-    );
-
-    return;
-  }
-
-  for (
-    const obstacle
-    of obstacles
-  ) {
-    if (
-      Math.abs(
-        obstacle.s
-        - game.position
-      ) < 8.5
-      &&
-      Math.abs(
-        obstacle.lateral
-        - game.lateral
-      ) < 0.31
-    ) {
-      game.collisionCount += 1;
-
-      finishGame(
-        false,
-        "The vehicle collided with an obstacle."
-      );
-
-      return;
-    }
-  }
-
-  game.log.push({
-    time: game.elapsed,
-    position: game.position,
-    lateral: game.lateral,
-    speed: game.speed,
-    steering: control.steering,
-    throttle: control.throttle,
-    energy: game.energy
+  let ly=pad.t+6;
+  legend.forEach(L=>{
+    c.fillStyle=L.c; c.fillRect(pad.l+6,ly,12,12);
+    c.fillStyle="#0c0f14"; c.font='10px "JetBrains Mono",monospace';
+    c.fillText(L.t, pad.l+22, ly+10); ly+=17;
   });
-
-  if (
-    game.position >= ROAD_LENGTH
-  ) {
-    finishGame(
-      true,
-      "Destination reached."
-    );
-
-    return;
-  }
-
-  if (
-    game.timeLeft <= 0
-  ) {
-    finishGame(
-      false,
-      "The destination was not reached before the deadline."
-    );
-  }
 }
 
-function finishGame(
-  success,
-  message
-) {
-  if (game.finished) {
-    return;
+function drawPhase(){
+  const cv=$("phase"); const {w,h,c}=fitCanvas(cv,300);
+  c.clearRect(0,0,w,h); c.fillStyle="#fff"; c.fillRect(0,0,w,h);
+  const pad={l:48,r:16,t:16,b:40};
+  const pw=w-pad.l-pad.r, ph=h-pad.t-pad.b;
+  const xLo=0,xHi=TARGET+0.05, vLo=0, vHi=VMAX*1.35;
+  const px=x=>pad.l+(x-xLo)/(xHi-xLo)*pw;
+  const py=v=>pad.t+(1-(v-vLo)/(vHi-vLo))*ph;
+  // axes
+  c.strokeStyle="#e3ddce"; c.lineWidth=1;
+  c.beginPath(); c.moveTo(pad.l,pad.t); c.lineTo(pad.l,h-pad.b); c.lineTo(w-pad.r,h-pad.b); c.stroke();
+  // switching curve v = sqrt(2*(TARGET - x))  (brake locus to the origin/target)
+  c.strokeStyle="#b8892b"; c.lineWidth=1.6; c.setLineDash([5,4]);
+  c.beginPath();
+  for(let x=0;x<=TARGET;x+=0.01){
+    const v=Math.sqrt(Math.max(0,2*(TARGET-x)));
+    const X=px(x),Y=py(Math.min(v,vHi)); x===0?c.moveTo(X,Y):c.lineTo(X,Y);
   }
-
-  game.running = false;
-  game.finished = true;
-  game.success = success;
-
-  clearInputs();
-
-  const arrivalScore =
-    success
-      ? Math.round(
-          clamp(
-            60
-            + game.timeLeft
-            / TOTAL_TIME
-            * 40,
-            0,
-            100
-          )
-        )
-      : Math.round(
-          clamp(
-            game.position
-            / ROAD_LENGTH
-            * 70,
-            0,
-            70
-          )
-        );
-
-  const safetyScore =
-    Math.round(
-      clamp(
-        100
-        - game.collisionCount
-        * 100
-        - game.roadViolationCount
-        * 100
-        - game.speedViolationTime
-        * 3,
-        0,
-        100
-      )
-    );
-
-  const energyScore =
-    Math.round(
-      clamp(
-        100
-        - game.energy
-        * 3.9,
-        0,
-        100
-      )
-    );
-
-  const smoothnessScore =
-    Math.round(
-      clamp(
-        100
-        - game.controlVariation
-        * 2.5,
-        0,
-        100
-      )
-    );
-
-  $("resultTitle").textContent =
-    success
-      ? "You reached the destination."
-      : message;
-
-  $("rArrival").textContent =
-    `${arrivalScore}%`;
-
-  $("rSafety").textContent =
-    `${safetyScore}%`;
-
-  $("rEnergy").textContent =
-    `${energyScore}%`;
-
-  $("rSmooth").textContent =
-    `${smoothnessScore}%`;
-
-  setTimeout(
-    () => {
-      $("result").classList.remove(
-        "off"
-      );
-    },
-    250
-  );
+  c.stroke(); c.setLineDash([]);
+  c.fillStyle="#b8892b"; c.font='10px "JetBrains Mono",monospace';
+  c.fillText("switching curve", px(0.35), py(Math.sqrt(2*(TARGET-0.35)))-6);
+  // target point
+  c.fillStyle="#2f7d52"; c.beginPath(); c.arc(px(TARGET),py(0),5,0,Math.PI*2); c.fill();
+  c.fillText("target", px(TARGET)-30, py(0)+16);
+  // optimal trajectory for selected start
+  const sol=solveOptimal(selStart.x0,selStart.v0);
+  c.strokeStyle="#1f6f6b"; c.lineWidth=2.6; c.beginPath();
+  sol.log.forEach((p,i)=>{ const X=px(p.x),Y=py(p.v); i?c.lineTo(X,Y):c.moveTo(X,Y); });
+  c.stroke();
+  // start dot
+  c.fillStyle="#0c0f14"; c.beginPath(); c.arc(px(selStart.x0),py(selStart.v0),5,0,Math.PI*2); c.fill();
+  // labels
+  c.fillStyle="#3c3a32"; c.font='11px "JetBrains Mono",monospace'; c.textAlign="center";
+  c.fillText("position x", pad.l+pw/2, h-8);
+  c.save(); c.translate(14,pad.t+ph/2); c.rotate(-Math.PI/2); c.fillText("speed v",0,0); c.restore();
+  c.textAlign="left";
 }
 
-function predictedRisk() {
-  const control =
-    effectiveControl();
-
-  const predicted = {
-    position: game.position,
-    lateral: game.lateral,
-    heading: game.heading,
-    speed: game.speed,
-    energy: game.energy
-  };
-
-  let risk =
-    "safe";
-
-  for (
-    let time = 0;
-    time < 2.2;
-    time += 0.1
-  ) {
-    stepVehicle(
-      predicted,
-      control,
-      0.1
-    );
-
-    if (
-      Math.abs(
-        predicted.lateral
-      ) > 1.2
-    ) {
-      risk =
-        "danger";
-    }
-
-    if (
-      predicted.speed * 3.6
-      >
-      currentSpeedLimit(
-        predicted.position
-      ) + 5
-      &&
-      risk !== "danger"
-    ) {
-      risk =
-        "warn";
-    }
-
-    for (
-      const obstacle
-      of obstacles
-    ) {
-      if (
-        Math.abs(
-          obstacle.s
-          - predicted.position
-        ) < 9
-        &&
-        Math.abs(
-          obstacle.lateral
-          - predicted.lateral
-        ) < 0.33
-      ) {
-        risk =
-          "danger";
-      }
-    }
-  }
-
-  const remainingDistance =
-    ROAD_LENGTH
-    - game.position;
-
-  const estimatedArrival =
-    remainingDistance
-    / Math.max(
-      game.speed,
-      1
-    );
-
-  if (
-    estimatedArrival
-    > game.timeLeft + 3
-    &&
-    risk === "safe"
-  ) {
-    risk =
-      "warn";
-  }
-
-  return risk;
+function updateSelection(){
+  const r=regionOf(selStart.x0,selStart.v0);
+  $("sel").innerHTML=`<b>Selected θ = (${selStart.x0.toFixed(2)}, ${selStart.v0.toFixed(2)})</b> · region <b style="color:${r.color}">${r.id}</b> · optimal: <b>${arcLabel(r.arcs)}</b> · arrival <b>${r.sol.time.toFixed(2)} s</b>`;
+  drawCRMap();
+  drawPhase();
 }
 
-function updateInterface(
-  risk
-) {
-  $("time").textContent =
-    `${game.timeLeft.toFixed(1)} s`;
+function showAnalysis(){
+  lastOpt=solveOptimal(G.log[0].x, G.log[0].v);
+  selStart={x0:G.log[0].x, v0:G.log[0].v};
+  $("result").classList.add("off");
+  $("analysis").classList.remove("hidden");
 
-  $("speed").textContent =
-    `${Math.round(game.speed * 3.6)} km/h`;
+  $("mYourT").textContent=G.t.toFixed(2)+" s";
+  $("mOptT").textContent=lastOpt.time.toFixed(2)+" s";
+  $("mYourS").textContent=G.switches;
+  $("mOver").textContent=(G.overshoot>0? "+"+G.overshoot.toFixed(3):"0.000");
+  $("mArcs").textContent=arcLabel(lastOpt.arcs);
 
-  $("energy").textContent =
-    `${Math.min(
-      100,
-      Math.round(
-        game.energy * 3.9
-      )
-    )}%`;
+  drawTimePlot();
+  drawCtrlPlot();
+  computeCRField();
+  updateSelection();
 
-  $("risk").className =
-    risk === "danger"
-      ? "danger"
-      : risk === "warn"
-        ? "warn"
-        : "safe";
-
-  $("risk").textContent =
-    risk === "danger"
-      ? "Constraint risk"
-      : risk === "warn"
-        ? "Caution"
-        : "Safe";
-
-  $("progress").style.width =
-    `${clamp(
-      game.position
-      / ROAD_LENGTH,
-      0,
-      1
-    ) * 100}%`;
-
-  const remainingDistance =
-    Math.max(
-      0,
-      ROAD_LENGTH
-      - game.position
-    );
-
-  if (game.speed > 1) {
-    const estimatedTime =
-      remainingDistance
-      / game.speed;
-
-    const difference =
-      game.timeLeft
-      - estimatedTime;
-
-    $("eta").textContent =
-      difference >= 0
-        ? `Estimated arrival: ${difference.toFixed(1)} s early`
-        : `Estimated arrival: ${Math.abs(difference).toFixed(1)} s late`;
-  } else {
-    $("eta").textContent =
-      "Estimated arrival: accelerate to calculate";
-  }
+  setTimeout(()=>$("analysis").scrollIntoView({behavior:"smooth",block:"start"}),120);
 }
 
-function roadProjection(
-  worldPosition,
-  lateral,
-  cameraPosition = game.position
-) {
-  const distance =
-    worldPosition
-    - cameraPosition;
+/* ============================================================
+   INPUT
+   ============================================================ */
+function pointerFromEvent(e){
+  const r=viz.getBoundingClientRect();
+  const y=clamp(e.clientY-r.top,0,r.height)/r.height;
+  input.pointer = y<0.5 ? 1 : -1;   // top half accelerate, bottom brake
+}
+viz.addEventListener("pointerdown",e=>{ if(!G.running)return; viz.setPointerCapture(e.pointerId); pointerFromEvent(e); });
+viz.addEventListener("pointermove",e=>{ if(G.running && input.pointer!==0) pointerFromEvent(e); });
+function relPtr(e){ if(e&&viz.hasPointerCapture?.(e.pointerId)) viz.releasePointerCapture(e.pointerId); input.pointer=0; }
+viz.addEventListener("pointerup",relPtr);
+viz.addEventListener("pointercancel",relPtr);
 
-  if (
-    distance < 0
-    || distance > VIEW_DISTANCE
-  ) {
-    return null;
+window.addEventListener("keydown",e=>{
+  const k=e.key.toLowerCase();
+  if(["arrowup","arrowdown","w","s"].includes(k)) e.preventDefault();
+  if(k==="arrowup"||k==="w") input.accel=true;
+  if(k==="arrowdown"||k==="s") input.brake=true;
+});
+window.addEventListener("keyup",e=>{
+  const k=e.key.toLowerCase();
+  if(k==="arrowup"||k==="w") input.accel=false;
+  if(k==="arrowdown"||k==="s") input.brake=false;
+});
+
+$("crMap").addEventListener("pointerdown",e=>{
+  const cv=e.currentTarget, r=cv.getBoundingClientRect();
+  const pad={l:48,r:14,t:14,b:40};
+  const pw=r.width-pad.l-pad.r, ph=r.height-pad.t-pad.b;
+  const xLo=0,xHi=0.95,vLo=0,vHi=VMAX*1.35;
+  const fx=clamp((e.clientX-r.left-pad.l)/pw,0,1);
+  const fy=clamp((e.clientY-r.top-pad.t)/ph,0,1);
+  selStart={ x0:xLo+fx*(xHi-xLo), v0:vLo+(1-fy)*(vHi-vLo) };
+  updateSelection();
+});
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+$("begin").addEventListener("click",()=>startGame(selStart));
+$("start").addEventListener("click",()=>startGame(selStart));
+$("resetBtn").addEventListener("click",()=>resetGame(false,selStart));
+$("reveal").addEventListener("click",showAnalysis);
+$("driveSel").addEventListener("click",()=>{ startGame(selStart); $("lab").scrollIntoView({behavior:"smooth"}); });
+$("again").addEventListener("click",()=>{ selStart={x0:0,v0:0}; updateSelection(); });
+
+window.addEventListener("resize",()=>{
+  resizeViz(); drawViz();
+  if(!$("analysis").classList.contains("hidden")){
+    drawTimePlot(); drawCtrlPlot(); drawCRMap(); drawPhase();
   }
+});
 
-  const normalized =
-    1
-    - distance
-    / VIEW_DISTANCE;
-
-  const perspective =
-    Math.pow(
-      normalized,
-      1.62
-    );
-
-  const horizonY =
-    canvasHeight * 0.3;
-
-  const bottomY =
-    canvasHeight * 0.98;
-
-  const y =
-    horizonY
-    + perspective
-    * (
-      bottomY
-      - horizonY
-    );
-
-  const halfWidth =
-    46
-    + perspective
-    * (
-      canvasWidth * 0.47
-      - 46
-    );
-
-  const centerDifference =
-    roadCenter(worldPosition)
-    - roadCenter(cameraPosition);
-
-  const centerX =
-    canvasWidth / 2
-    + centerDifference
-    * halfWidth
-    * 0.95;
-
-  return {
-    x:
-      centerX
-      + lateral
-      / 1.35
-      * halfWidth,
-
-    y,
-    halfWidth,
-    perspective,
-    centerX
-  };
+/* ============================================================
+   LOOP
+   ============================================================ */
+function loop(now){
+  const dt=Math.min(0.02,Math.max(0,(now-(G.last||now))/1000||0));
+  G.last=now;
+  if(G.running) stepGame(dt);
+  drawViz();
+  requestAnimationFrame(loop);
 }
 
-function drawSky() {
-  const gradient =
-    context.createLinearGradient(
-      0,
-      0,
-      0,
-      canvasHeight
-    );
-
-  gradient.addColorStop(
-    0,
-    "#030714"
-  );
-
-  gradient.addColorStop(
-    0.58,
-    "#101a30"
-  );
-
-  gradient.addColorStop(
-    1,
-    "#0d121c"
-  );
-
-  context.fillStyle =
-    gradient;
-
-  context.fillRect(
-    0,
-    0,
-    canvasWidth,
-    canvasHeight
-  );
-
-  const moonX =
-    canvasWidth * 0.82;
-
-  const moonY =
-    canvasHeight * 0.15;
-
-  const moonGlow =
-    context.createRadialGradient(
-      moonX,
-      moonY,
-      0,
-      moonX,
-      moonY,
-      120
-    );
-
-  moonGlow.addColorStop(
-    0,
-    "rgba(190,237,255,.42)"
-  );
-
-  moonGlow.addColorStop(
-    1,
-    "rgba(190,237,255,0)"
-  );
-
-  context.fillStyle =
-    moonGlow;
-
-  context.beginPath();
-
-  context.arc(
-    moonX,
-    moonY,
-    120,
-    0,
-    Math.PI * 2
-  );
-
-  context.fill();
-
-  for (
-    let index = 0;
-    index < 90;
-    index++
-  ) {
-    context.fillStyle =
-      `rgba(220,238,255,${0.14 + index % 6 / 14})`;
-
-    context.fillRect(
-      index * 97.31
-      % canvasWidth,
-
-      (
-        index * 43.17
-        % (
-          canvasHeight * 0.34
-        )
-      ) + 9,
-
-      1.2,
-      1.2
-    );
-  }
-}
-
-function drawCity() {
-  const baseY =
-    canvasHeight * 0.43;
-
-  let x = -20;
-  let index = 0;
-
-  while (
-    x < canvasWidth + 60
-  ) {
-    const width =
-      40
-      + index * 19
-      % 66;
-
-    const height =
-      52
-      + index * 31
-      % 150;
-
-    context.fillStyle =
-      index % 2
-        ? "#0a1528"
-        : "#081122";
-
-    context.fillRect(
-      x,
-      baseY - height,
-      width,
-      height
-    );
-
-    for (
-      let windowY =
-        baseY
-        - height
-        + 14;
-      windowY < baseY - 12;
-      windowY += 18
-    ) {
-      for (
-        let windowX = x + 8;
-        windowX < x + width - 7;
-        windowX += 14
-      ) {
-        if (
-          (
-            windowX
-            + windowY
-            + index
-          ) % 5 < 1.65
-        ) {
-          context.fillStyle =
-            index % 3
-              ? "rgba(101,215,255,.20)"
-              : "rgba(156,145,255,.22)";
-
-          context.fillRect(
-            windowX,
-            windowY,
-            4,
-            6
-          );
-        }
-      }
-    }
-
-    x +=
-      width + 8;
-
-    index++;
-  }
-}
-
-function drawRoad() {
-  for (
-    let distance = VIEW_DISTANCE;
-    distance > 0;
-    distance -= 7
-  ) {
-    const far =
-      roadProjection(
-        game.position
-        + distance,
-        0
-      );
-
-    const near =
-      roadProjection(
-        game.position
-        + Math.max(
-          0,
-          distance - 7
-        ),
-        0
-      );
-
-    if (
-      !far
-      || !near
-    ) {
-      continue;
-    }
-
-    const nearPosition =
-      game.position
-      + distance
-      - 7;
-
-    const inSpeedZone =
-      nearPosition >= 395
-      && nearPosition <= 555;
-
-    context.fillStyle =
-      inSpeedZone
-        ? (
-            Math.floor(
-              nearPosition / 14
-            ) % 2
-              ? "#1e1e18"
-              : "#232218"
-          )
-        : (
-            Math.floor(
-              nearPosition / 14
-            ) % 2
-              ? "#131a25"
-              : "#171e2a"
-          );
-
-    context.beginPath();
-
-    context.moveTo(
-      far.centerX
-      - far.halfWidth,
-      far.y
-    );
-
-    context.lineTo(
-      far.centerX
-      + far.halfWidth,
-      far.y
-    );
-
-    context.lineTo(
-      near.centerX
-      + near.halfWidth,
-      near.y
-    );
-
-    context.lineTo(
-      near.centerX
-      - near.halfWidth,
-      near.y
-    );
-
-    context.closePath();
-    context.fill();
-
-    context.strokeStyle =
-      "rgba(145,167,205,.28)";
-
-    context.lineWidth =
-      1
-      + near.perspective
-      * 2.5;
-
-    context.beginPath();
-
-    context.moveTo(
-      far.centerX
-      - far.halfWidth,
-      far.y
-    );
-
-    context.lineTo(
-      near.centerX
-      - near.halfWidth,
-      near.y
-    );
-
-    context.moveTo(
-      far.centerX
-      + far.halfWidth,
-      far.y
-    );
-
-    context.lineTo(
-      near.centerX
-      + near.halfWidth,
-      near.y
-    );
-
-    context.stroke();
-
-    [
-      -0.33,
-      0.33
-    ].forEach(
-      fraction => {
-        context.strokeStyle =
-          "rgba(255,255,255,.34)";
-
-        context.lineWidth =
-          1
-          + near.perspective
-          * 2;
-
-        context.setLineDash([
-          8
-          + near.perspective
-          * 11,
-
-          10
-          + near.perspective
-          * 13
-        ]);
-
-        context.beginPath();
-
-        context.moveTo(
-          far.centerX
-          + far.halfWidth
-          * fraction,
-          far.y
-        );
-
-        context.lineTo(
-          near.centerX
-          + near.halfWidth
-          * fraction,
-          near.y
-        );
-
-        context.stroke();
-
-        context.setLineDash([]);
-      }
-    );
-  }
-}
-
-function drawSpeedStreaks() {
-  const intensity =
-    clamp(
-      game.speed / MAX_SPEED,
-      0,
-      1
-    );
-
-  if (intensity < 0.2) {
-    return;
-  }
-
-  context.save();
-
-  context.globalAlpha =
-    0.12
-    + intensity
-    * 0.28;
-
-  context.lineWidth =
-    1
-    + intensity
-    * 2.2;
-
-  context.strokeStyle =
-    "rgba(146,222,255,.86)";
-
-  for (
-    let index = 0;
-    index < 18;
-    index++
-  ) {
-    const phase =
-      (
-        index * 71.3
-        + game.position * 3.8
-      ) % 1000;
-
-    const side =
-      index % 2
-        ? -1
-        : 1;
-
-    const normalized =
-      (
-        phase % 500
-      ) / 500;
-
-    const y =
-      canvasHeight
-      * (
-        0.46
-        + normalized
-        * 0.48
-      );
-
-    const roadHalfWidth =
-      canvasWidth
-      * (
-        0.1
-        + normalized
-        * 0.4
-      );
-
-    const x =
-      canvasWidth / 2
-      + side
-      * roadHalfWidth
-      * (
-        1.02
-        + index % 3
-        * 0.1
-      );
-
-    const length =
-      8
-      + intensity
-      * 34
-      * normalized;
-
-    context.beginPath();
-
-    context.moveTo(
-      x,
-      y
-    );
-
-    context.lineTo(
-      x
-      + side
-      * length,
-
-      y
-      + length
-      * 0.62
-    );
-
-    context.stroke();
-  }
-
-  context.restore();
-}
-
-function drawObstacle(
-  obstacle
-) {
-  const projection =
-    roadProjection(
-      obstacle.s,
-      obstacle.lateral
-    );
-
-  if (!projection) {
-    return;
-  }
-
-  const scale =
-    0.25
-    + projection.perspective
-    * 1.25;
-
-  const width =
-    (
-      obstacle.type === "truck"
-        ? 58
-        : 48
-    ) * scale;
-
-  const height =
-    (
-      obstacle.type === "car"
-        ? 34
-        : 43
-    ) * scale;
-
-  context.save();
-
-  context.translate(
-    projection.x,
-    projection.y
-    - height * 0.45
-  );
-
-  const glow =
-    context.createRadialGradient(
-      0,
-      0,
-      0,
-      0,
-      0,
-      width * 1.2
-    );
-
-  glow.addColorStop(
-    0,
-    "rgba(255,111,135,.33)"
-  );
-
-  glow.addColorStop(
-    1,
-    "rgba(255,111,135,0)"
-  );
-
-  context.fillStyle =
-    glow;
-
-  context.beginPath();
-
-  context.arc(
-    0,
-    0,
-    width * 1.2,
-    0,
-    Math.PI * 2
-  );
-
-  context.fill();
-
-  if (
-    obstacle.type === "car"
-    || obstacle.type === "truck"
-  ) {
-    context.fillStyle =
-      obstacle.type === "truck"
-        ? "#f88b4a"
-        : "#ff7890";
-
-    context.fillRect(
-      -width / 2,
-      -height / 2,
-      width,
-      height
-    );
-
-    context.fillStyle =
-      "#111827";
-
-    context.fillRect(
-      -width * 0.28,
-      -height * 0.3,
-      width * 0.56,
-      height * 0.28
-    );
-
-    context.fillStyle =
-      "#ffe39d";
-
-    context.fillRect(
-      -width * 0.43,
-      height * 0.15,
-      width * 0.14,
-      height * 0.11
-    );
-
-    context.fillRect(
-      width * 0.29,
-      height * 0.15,
-      width * 0.14,
-      height * 0.11
-    );
-  } else {
-    context.fillStyle =
-      "#f05e6e";
-
-    context.fillRect(
-      -width / 2,
-      -height / 2,
-      width,
-      height
-    );
-
-    context.fillStyle =
-      "#fff0be";
-
-    for (
-      let index = 0;
-      index < 4;
-      index++
-    ) {
-      context.fillRect(
-        -width / 2
-        + index
-        * width / 4,
-
-        -height / 2,
-
-        width / 8,
-        height
-      );
-    }
-  }
-
-  context.restore();
-}
-
-function drawDestination() {
-  const projection =
-    roadProjection(
-      ROAD_LENGTH,
-      0
-    );
-
-  if (!projection) {
-    return;
-  }
-
-  const width =
-    projection.halfWidth
-    * 1.8;
-
-  const height =
-    36
-    + projection.perspective
-    * 62;
-
-  context.save();
-
-  context.translate(
-    projection.centerX,
-    projection.y
-  );
-
-  context.strokeStyle =
-    "#7ef0b6";
-
-  context.lineWidth =
-    Math.max(
-      2,
-      projection.perspective
-      * 7
-    );
-
-  context.beginPath();
-
-  context.moveTo(
-    -width / 2,
-    0
-  );
-
-  context.lineTo(
-    -width / 2,
-    -height
-  );
-
-  context.lineTo(
-    width / 2,
-    -height
-  );
-
-  context.lineTo(
-    width / 2,
-    0
-  );
-
-  context.stroke();
-
-  context.fillStyle =
-    "#7ef0b6";
-
-  context.textAlign =
-    "center";
-
-  context.font =
-    `700 ${Math.max(
-      11,
-      13
-      + projection.perspective
-      * 12
-    )}px Arial`;
-
-  context.fillText(
-    "DESTINATION",
-    0,
-    -height - 9
-  );
-
-  context.restore();
-}
-
-/*
-  Cyan guidance gates replace the old
-  red/yellow prediction traces.
-*/
-
-function drawGuidanceGate() {
-  if (!game.running) {
-    return;
-  }
-
-  const stage =
-    currentStageIndex();
-
-  let target;
-
-  if (stage === 0) {
-    target = {
-      position:
-        game.position + 85,
-      lanes: [0]
-    };
-  } else if (stage === 1) {
-    target = {
-      position: 150,
-      lanes: [
-        -0.78,
-        0.78
-      ]
-    };
-  } else if (stage === 2) {
-    target = {
-      position: 260,
-      lanes: [0]
-    };
-  } else if (stage === 3) {
-    target = {
-      position: 370,
-      lanes: [0]
-    };
-  } else if (stage === 4) {
-    target = {
-      position: 500,
-      lanes: [0]
-    };
-  } else if (stage === 5) {
-    target = {
-      position: 575,
-      lanes: [-0.78]
-    };
-  } else if (stage === 6) {
-    target = {
-      position: 700,
-      lanes: [
-        game.lateral <= 0
-          ? -0.78
-          : 0.78
-      ]
-    };
-  } else {
-    target = {
-      position: ROAD_LENGTH,
-      lanes: [0]
-    };
-  }
-
-  target.lanes.forEach(
-    lane => {
-      const projection =
-        roadProjection(
-          target.position,
-          lane
-        );
-
-      if (!projection) {
-        return;
-      }
-
-      const radius =
-        9
-        + projection.perspective
-        * 30;
-
-      const pulse =
-        1
-        + Math.sin(
-          performance.now() / 180
-        ) * 0.08;
-
-      context.save();
-
-      context.translate(
-        projection.x,
-        projection.y
-        - radius * 0.4
-      );
-
-      context.scale(
-        pulse,
-        pulse
-      );
-
-      const glow =
-        context.createRadialGradient(
-          0,
-          0,
-          0,
-          0,
-          0,
-          radius * 2.3
-        );
-
-      glow.addColorStop(
-        0,
-        "rgba(101,215,255,.34)"
-      );
-
-      glow.addColorStop(
-        1,
-        "rgba(101,215,255,0)"
-      );
-
-      context.fillStyle =
-        glow;
-
-      context.beginPath();
-
-      context.arc(
-        0,
-        0,
-        radius * 2.3,
-        0,
-        Math.PI * 2
-      );
-
-      context.fill();
-
-      context.strokeStyle =
-        "#85e5ff";
-
-      context.lineWidth =
-        Math.max(
-          2,
-          radius * 0.12
-        );
-
-      context.beginPath();
-
-      context.arc(
-        0,
-        0,
-        radius,
-        0,
-        Math.PI * 2
-      );
-
-      context.stroke();
-
-      context.fillStyle =
-        "#e0faff";
-
-      context.font =
-        `800 ${Math.max(
-          9,
-          radius * 0.45
-        )}px Arial`;
-
-      context.textAlign =
-        "center";
-
-      context.fillText(
-        "NEXT",
-        0,
-        -radius - 7
-      );
-
-      context.restore();
-    }
-  );
-}
-
-function updateCarPosition() {
-  const projection =
-    roadProjection(
-      game.position + 2,
-      game.lateral
-    );
-
-  const x =
-    projection
-      ? projection.x
-      : canvasWidth / 2;
-
-  const y =
-    canvasHeight * 0.855;
-
-  const control =
-    effectiveControl();
-
-  car.style.transform =
-    `translate3d(${x}px,${y}px,0) `
-    + `translate(-50%,-50%) `
-    + `rotate(${game.heading * 5.5}deg) `
-    + `scale(${1 + Math.min(game.speed / MAX_SPEED,1) * 0.035})`;
-
-  car.classList.toggle(
-    "braking",
-    control.throttle < -0.15
-  );
-}
-
-function drawGame() {
-  context.clearRect(
-    0,
-    0,
-    canvasWidth,
-    canvasHeight
-  );
-
-  drawSky();
-  drawCity();
-  drawRoad();
-  drawSpeedStreaks();
-  drawDestination();
-
-  obstacles
-    .slice()
-    .sort(
-      (
-        first,
-        second
-      ) =>
-        second.s - first.s
-    )
-    .forEach(
-      drawObstacle
-    );
-
-  drawGuidanceGate();
-  updateCarPosition();
-  updateInterface(
-    predictedRisk()
-  );
-}
-
-function targetLane(
-  criticalRegion,
-  position
-) {
-  const waypoints =
-    policies[
-      criticalRegion
-    ].waypoints;
-
-  if (
-    position <= waypoints[0][0]
-  ) {
-    return waypoints[0][1];
-  }
-
-  for (
-    let index = 0;
-    index < waypoints.length - 1;
-    index++
-  ) {
-    const [
-      startPosition,
-      startLane
-    ] = waypoints[index];
-
-    const [
-      endPosition,
-      endLane
-    ] = waypoints[index + 1];
-
-    if (
-      position >= startPosition
-      && position <= endPosition
-    ) {
-      const rawRatio =
-        clamp(
-          (
-            position
-            - startPosition
-          )
-          /
-          (
-            endPosition
-            - startPosition
-          ),
-          0,
-          1
-        );
-
-      const smoothRatio =
-        rawRatio
-        * rawRatio
-        * (
-          3
-          - 2
-          * rawRatio
-        );
-
-      return (
-        startLane
-        + (
-          endLane
-          - startLane
-        )
-        * smoothRatio
-      );
-    }
-  }
-
-  return waypoints[
-    waypoints.length - 1
-  ][1];
-}
-
-function referencePolicy(
-  state,
-  criticalRegion
-) {
-  const desiredLane =
-    targetLane(
-      criticalRegion,
-      state.position + 28
-    );
-
-  const laneError =
-    desiredLane
-    - state.lateral;
-
-  let desiredSpeed =
-    Math.min(
-      30,
-      currentSpeedLimit(
-        state.position
-      ) / 3.6
-    );
-
-  if (
-    Math.abs(
-      roadCurve(
-        state.position + 35
-      )
-    ) > 0.6
-  ) {
-    desiredSpeed =
-      Math.min(
-        desiredSpeed,
-        21
-      );
-  }
-
-  if (
-    criticalRegion === "CR3"
-    && state.position < 125
-  ) {
-    desiredSpeed =
-      Math.min(
-        desiredSpeed,
-        14
-      );
-  }
-
-  if (
-    criticalRegion === "CR4"
-    && state.position < 110
-  ) {
-    desiredSpeed =
-      Math.max(
-        desiredSpeed,
-        29
-      );
-  }
-
-  if (
-    ROAD_LENGTH
-    - state.position < 60
-  ) {
-    desiredSpeed =
-      Math.min(
-        desiredSpeed,
-        22
-      );
-  }
-
-  return {
-    steering:
-      clamp(
-        laneError * 2.6
-        + roadCurve(
-          state.position
-        ) * 0.98
-        - state.heading
-        * 1.25,
-        -1,
-        1
-      ),
-
-    throttle:
-      clamp(
-        (
-          desiredSpeed
-          - state.speed
-        ) * 0.4,
-        -1,
-        1
-      )
-  };
-}
-
-function simulateReference(
-  initialState = selectedInitialState,
-  forcedCriticalRegion = null
-) {
-  const criticalRegion =
-    forcedCriticalRegion
-    ||
-    policyForInitialState(
-      initialState.lateral,
-      initialState.speed
-    );
-
-  const state = {
-    position: 0,
-    lateral:
-      initialState.lateral,
-    heading: 0,
-    speed:
-      initialState.speed / 3.6,
-    energy: 0,
-    time: 0
-  };
-
-  const log = [
-    {
-      time: 0,
-      position: 0,
-      lateral: state.lateral,
-      speed: state.speed,
-      steering: 0,
-      throttle: 0,
-      energy: 0
-    }
-  ];
-
-  let previousSteering = 0;
-  let previousThrottle = 0;
-  let variation = 0;
-  let safetyEvents = 0;
-
-  while (
-    state.time < TOTAL_TIME
-    && state.position < ROAD_LENGTH
-  ) {
-    const control =
-      referencePolicy(
-        state,
-        criticalRegion
-      );
-
-    variation +=
-      Math.abs(
-        control.steering
-        - previousSteering
-      )
-      +
-      0.65
-      * Math.abs(
-        control.throttle
-        - previousThrottle
-      );
-
-    previousSteering =
-      control.steering;
-
-    previousThrottle =
-      control.throttle;
-
-    stepVehicle(
-      state,
-      control,
-      0.035
-    );
-
-    state.time +=
-      0.035;
-
-    if (
-      Math.abs(
-        state.lateral
-      ) > 1.28
-    ) {
-      safetyEvents++;
-    }
-
-    if (
-      state.speed * 3.6
-      >
-      currentSpeedLimit(
-        state.position
-      ) + 4
-    ) {
-      safetyEvents +=
-        0.0175;
-    }
-
-    for (
-      const obstacle
-      of obstacles
-    ) {
-      if (
-        Math.abs(
-          obstacle.s
-          - state.position
-        ) < 8.5
-        &&
-        Math.abs(
-          obstacle.lateral
-          - state.lateral
-        ) < 0.31
-      ) {
-        safetyEvents++;
-      }
-    }
-
-    log.push({
-      time: state.time,
-      position: state.position,
-      lateral: state.lateral,
-      speed: state.speed,
-      steering: control.steering,
-      throttle: control.throttle,
-      energy: state.energy
-    });
-  }
-
-  return {
-    criticalRegion,
-    log,
-    time: state.time,
-    energy: state.energy,
-    variation,
-    safetyEvents:
-      Math.round(
-        safetyEvents
-      )
-  };
-}
-
-function resizeAnalysisCanvas(
-  targetCanvas,
-  minimumHeight
-) {
-  const rectangle =
-    targetCanvas.getBoundingClientRect();
-
-  const width =
-    Math.max(
-      320,
-      rectangle.width
-    );
-
-  const height =
-    Math.max(
-      minimumHeight,
-      rectangle.height
-    );
-
-  const targetContext =
-    targetCanvas.getContext("2d");
-
-  targetCanvas.width =
-    width * deviceScale;
-
-  targetCanvas.height =
-    height * deviceScale;
-
-  targetContext.setTransform(
-    deviceScale,
-    0,
-    0,
-    deviceScale,
-    0,
-    0
-  );
-
-  return {
-    width,
-    height,
-    context: targetContext
-  };
-}
-
-function mapCoursePoint(
-  position,
-  lateral,
-  width,
-  height
-) {
-  return {
-    x:
-      44
-      + position
-      / ROAD_LENGTH
-      * (
-        width - 88
-      ),
-
-    y:
-      height / 2
-      + roadCenter(position)
-      * height
-      * 0.19
-      + lateral
-      * height
-      * 0.15
-  };
-}
-
-function drawCourseMap(
-  targetCanvas,
-  trajectories,
-  highlightedKey = null
-) {
-  const {
-    width,
-    height,
-    context: targetContext
-  } =
-    resizeAnalysisCanvas(
-      targetCanvas,
-      320
-    );
-
-  targetContext.fillStyle =
-    "#060a12";
-
-  targetContext.fillRect(
-    0,
-    0,
-    width,
-    height
-  );
-
-  targetContext.lineCap =
-    "round";
-
-  targetContext.lineJoin =
-    "round";
-
-  targetContext.strokeStyle =
-    "#202936";
-
-  targetContext.lineWidth =
-    78;
-
-  targetContext.beginPath();
-
-  for (
-    let position = 0;
-    position <= ROAD_LENGTH;
-    position += 5
-  ) {
-    const point =
-      mapCoursePoint(
-        position,
-        0,
-        width,
-        height
-      );
-
-    if (position === 0) {
-      targetContext.moveTo(
-        point.x,
-        point.y
-      );
-    } else {
-      targetContext.lineTo(
-        point.x,
-        point.y
-      );
-    }
-  }
-
-  targetContext.stroke();
-
-  targetContext.strokeStyle =
-    "rgba(255,255,255,.2)";
-
-  targetContext.lineWidth =
-    1.5;
-
-  [
-    -0.45,
-    0.45
-  ].forEach(
-    lateral => {
-      targetContext.setLineDash([
-        8,
-        8
-      ]);
-
-      targetContext.beginPath();
-
-      for (
-        let position = 0;
-        position <= ROAD_LENGTH;
-        position += 5
-      ) {
-        const point =
-          mapCoursePoint(
-            position,
-            lateral,
-            width,
-            height
-          );
-
-        if (position === 0) {
-          targetContext.moveTo(
-            point.x,
-            point.y
-          );
-        } else {
-          targetContext.lineTo(
-            point.x,
-            point.y
-          );
-        }
-      }
-
-      targetContext.stroke();
-    }
-  );
-
-  targetContext.setLineDash([]);
-
-  obstacles.forEach(
-    obstacle => {
-      const point =
-        mapCoursePoint(
-          obstacle.s,
-          obstacle.lateral,
-          width,
-          height
-        );
-
-      targetContext.fillStyle =
-        "#ff7185";
-
-      targetContext.beginPath();
-
-      targetContext.arc(
-        point.x,
-        point.y,
-        7,
-        0,
-        Math.PI * 2
-      );
-
-      targetContext.fill();
-    }
-  );
-
-  trajectories.forEach(
-    trajectory => {
-      const highlighted =
-        trajectory.key
-        === highlightedKey;
-
-      targetContext.strokeStyle =
-        trajectory.color;
-
-      targetContext.globalAlpha =
-        highlighted
-          ? 1
-          : trajectory.alpha ?? 0.8;
-
-      targetContext.lineWidth =
-        highlighted
-          ? 5.5
-          : trajectory.width ?? 3.5;
-
-      targetContext.beginPath();
-
-      trajectory.points.forEach(
-        (
-          point,
-          index
-        ) => {
-          const mapped =
-            mapCoursePoint(
-              point.position,
-              point.lateral,
-              width,
-              height
-            );
-
-          if (index === 0) {
-            targetContext.moveTo(
-              mapped.x,
-              mapped.y
-            );
-          } else {
-            targetContext.lineTo(
-              mapped.x,
-              mapped.y
-            );
-          }
-        }
-      );
-
-      targetContext.stroke();
-    }
-  );
-
-  targetContext.globalAlpha =
-    1;
-
-  const finish =
-    mapCoursePoint(
-      ROAD_LENGTH,
-      0,
-      width,
-      height
-    );
-
-  targetContext.strokeStyle =
-    "#7ef0b6";
-
-  targetContext.lineWidth =
-    4;
-
-  targetContext.beginPath();
-
-  targetContext.moveTo(
-    finish.x,
-    finish.y - 42
-  );
-
-  targetContext.lineTo(
-    finish.x,
-    finish.y + 42
-  );
-
-  targetContext.stroke();
-
-  targetContext.fillStyle =
-    "#dfe5f5";
-
-  targetContext.font =
-    "700 12px Arial";
-
-  targetContext.fillText(
-    "START",
-    16,
-    22
-  );
-
-  targetContext.textAlign =
-    "right";
-
-  targetContext.fillText(
-    "DESTINATION",
-    width - 15,
-    22
-  );
-
-  targetContext.textAlign =
-    "left";
-}
-
-function drawPolicyMap() {
-  const targetCanvas =
-    $("policyMap");
-
-  const {
-    width,
-    height,
-    context: targetContext
-  } =
-    resizeAnalysisCanvas(
-      targetCanvas,
-      330
-    );
-
-  const padding = {
-    left: 54,
-    right: 18,
-    top: 24,
-    bottom: 48
-  };
-
-  const plotWidth =
-    width
-    - padding.left
-    - padding.right;
-
-  const plotHeight =
-    height
-    - padding.top
-    - padding.bottom;
-
-  const xForLateral =
-    lateral =>
-      padding.left
-      + (
-        lateral + 1
-      ) / 2
-      * plotWidth;
-
-  const yForSpeed =
-    speed =>
-      padding.top
-      + (
-        1
-        - speed / 80
-      )
-      * plotHeight;
-
-  const leftBoundary =
-    xForLateral(-0.28);
-
-  const rightBoundary =
-    xForLateral(0.28);
-
-  const speedBoundary =
-    yForSpeed(38);
-
-  targetContext.fillStyle =
-    "#060a12";
-
-  targetContext.fillRect(
-    0,
-    0,
-    width,
-    height
-  );
-
-  targetContext.fillStyle =
-    "rgba(101,215,255,.22)";
-
-  targetContext.fillRect(
-    padding.left,
-    padding.top,
-    leftBoundary
-    - padding.left,
-    plotHeight
-  );
-
-  targetContext.fillStyle =
-    "rgba(156,145,255,.22)";
-
-  targetContext.fillRect(
-    rightBoundary,
-    padding.top,
-    padding.left
-    + plotWidth
-    - rightBoundary,
-    plotHeight
-  );
-
-  targetContext.fillStyle =
-    "rgba(255,113,133,.24)";
-
-  targetContext.fillRect(
-    leftBoundary,
-    padding.top,
-    rightBoundary
-    - leftBoundary,
-    speedBoundary
-    - padding.top
-  );
-
-  targetContext.fillStyle =
-    "rgba(126,240,182,.23)";
-
-  targetContext.fillRect(
-    leftBoundary,
-    speedBoundary,
-    rightBoundary
-    - leftBoundary,
-    padding.top
-    + plotHeight
-    - speedBoundary
-  );
-
-  targetContext.strokeStyle =
-    "rgba(255,255,255,.48)";
-
-  targetContext.lineWidth =
-    2;
-
-  targetContext.beginPath();
-
-  targetContext.moveTo(
-    leftBoundary,
-    padding.top
-  );
-
-  targetContext.lineTo(
-    leftBoundary,
-    padding.top
-    + plotHeight
-  );
-
-  targetContext.moveTo(
-    rightBoundary,
-    padding.top
-  );
-
-  targetContext.lineTo(
-    rightBoundary,
-    padding.top
-    + plotHeight
-  );
-
-  targetContext.moveTo(
-    leftBoundary,
-    speedBoundary
-  );
-
-  targetContext.lineTo(
-    rightBoundary,
-    speedBoundary
-  );
-
-  targetContext.stroke();
-
-  targetContext.fillStyle =
-    "#dfe5f5";
-
-  targetContext.font =
-    "700 14px Arial";
-
-  targetContext.textAlign =
-    "center";
-
-  targetContext.fillText(
-    "CR1",
-    (
-      padding.left
-      + leftBoundary
-    ) / 2,
-    padding.top + 30
-  );
-
-  targetContext.fillText(
-    "CR2",
-    (
-      rightBoundary
-      + padding.left
-      + plotWidth
-    ) / 2,
-    padding.top + 30
-  );
-
-  targetContext.fillText(
-    "CR3",
-    (
-      leftBoundary
-      + rightBoundary
-    ) / 2,
-    padding.top + 30
-  );
-
-  targetContext.fillText(
-    "CR4",
-    (
-      leftBoundary
-      + rightBoundary
-    ) / 2,
-    padding.top
-    + plotHeight
-    - 20
-  );
-
-  targetContext.fillStyle =
-    "#9ba4b8";
-
-  targetContext.font =
-    "12px Arial";
-
-  targetContext.fillText(
-    "initial lateral position x₀",
-    padding.left
-    + plotWidth / 2,
-    height - 10
-  );
-
-  targetContext.save();
-
-  targetContext.translate(
-    14,
-    padding.top
-    + plotHeight / 2
-  );
-
-  targetContext.rotate(
-    -Math.PI / 2
-  );
-
-  targetContext.fillText(
-    "initial speed v₀ (km/h)",
-    0,
-    0
-  );
-
-  targetContext.restore();
-
-  targetContext.fillStyle =
-    "#fff";
-
-  targetContext.strokeStyle =
-    policies[
-      selectedCriticalRegion
-    ].color;
-
-  targetContext.lineWidth =
-    5;
-
-  targetContext.beginPath();
-
-  targetContext.arc(
-    xForLateral(
-      selectedInitialState.lateral
-    ),
-    yForSpeed(
-      selectedInitialState.speed
-    ),
-    8,
-    0,
-    Math.PI * 2
-  );
-
-  targetContext.fill();
-  targetContext.stroke();
-}
-
-function familyTrajectories() {
-  return Object
-    .entries(policies)
-    .map(
-      (
-        [
-          key,
-          policy
-        ]
-      ) => {
-        const result =
-          simulateReference(
-            policy.representative,
-            key
-          );
-
-        return {
-          key,
-          points:
-            result.log,
-          color:
-            policy.color,
-          width: 3.7,
-          alpha: 0.78
-        };
-      }
-    );
-}
-
-function updateSelectedInitialState() {
-  selectedCriticalRegion =
-    policyForInitialState(
-      selectedInitialState.lateral,
-      selectedInitialState.speed
-    );
-
-  const policy =
-    policies[
-      selectedCriticalRegion
-    ];
-
-  $("selected").innerHTML =
-    `<strong>Selected θ:</strong> `
-    + `x₀ = ${selectedInitialState.lateral.toFixed(2)}, `
-    + `v₀ = ${Math.round(selectedInitialState.speed)} km/h · `
-    + `<strong style="color:${policy.color}">`
-    + `${selectedCriticalRegion}</strong> · `
-    + `${policy.description}`;
-
-  drawPolicyMap();
-
-  drawCourseMap(
-    $("familyMap"),
-    familyTrajectories(),
-    selectedCriticalRegion
-  );
-}
-
-function showAnalysis() {
-  referenceResult =
-    simulateReference(
-      selectedInitialState
-    );
-
-  $("result").classList.add(
-    "off"
-  );
-
-  $("analysis").classList.remove(
-    "hidden"
-  );
-
-  $("mArrival").textContent =
-    `${game.elapsed.toFixed(1)} s / `
-    + `${referenceResult.time.toFixed(1)} s`;
-
-  $("mEnergy").textContent =
-    `${game.energy.toFixed(1)} / `
-    + `${referenceResult.energy.toFixed(1)}`;
-
-  $("mSmooth").textContent =
-    `${game.controlVariation.toFixed(1)} / `
-    + `${referenceResult.variation.toFixed(1)}`;
-
-  $("mSafety").textContent =
-    `${
-      game.collisionCount
-      + game.roadViolationCount
-      + Math.round(
-        game.speedViolationTime / 2
-      )
-    } / ${referenceResult.safetyEvents}`;
-
-  drawCourseMap(
-    $("courseMap"),
-    [
-      {
-        key: "player",
-        points:
-          game.log,
-        color:
-          "#65d7ff",
-        width: 4.2,
-        alpha: 1
-      },
-      {
-        key:
-          referenceResult.criticalRegion,
-        points:
-          referenceResult.log,
-        color:
-          "#ffd166",
-        width: 4.2,
-        alpha: 1
-      }
-    ]
-  );
-
-  updateSelectedInitialState();
-
-  setTimeout(
-    () => {
-      $("analysis").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    },
-    100
-  );
-}
-
-function updatePointerControl(
-  event
-) {
-  const rectangle =
-    canvas.getBoundingClientRect();
-
-  const x =
-    clamp(
-      event.clientX
-      - rectangle.left,
-      0,
-      rectangle.width
-    );
-
-  const y =
-    clamp(
-      event.clientY
-      - rectangle.top,
-      0,
-      rectangle.height
-    );
-
-  const normalizedX =
-    x / rectangle.width;
-
-  const normalizedY =
-    y / rectangle.height;
-
-  pointerInput.active =
-    true;
-
-  pointerInput.steering =
-    clamp(
-      (
-        normalizedX
-        - 0.5
-      ) * 2.65,
-      -1,
-      1
-    );
-
-  /*
-    Almost the entire road accelerates.
-    Only the narrow bottom 9% brakes.
-  */
-
-  pointerInput.throttle =
-    normalizedY > 0.91
-      ? -1
-      : 1;
-}
-
-canvas.addEventListener(
-  "pointerdown",
-  event => {
-    if (!game.running) {
-      return;
-    }
-
-    canvas.setPointerCapture(
-      event.pointerId
-    );
-
-    updatePointerControl(
-      event
-    );
-  }
-);
-
-canvas.addEventListener(
-  "pointermove",
-  event => {
-    if (
-      game.running
-      && pointerInput.active
-    ) {
-      updatePointerControl(
-        event
-      );
-    }
-  }
-);
-
-function releasePointer(
-  event
-) {
-  if (
-    event
-    && canvas.hasPointerCapture?.(
-      event.pointerId
-    )
-  ) {
-    canvas.releasePointerCapture(
-      event.pointerId
-    );
-  }
-
-  pointerInput.active =
-    false;
-
-  pointerInput.steering =
-    0;
-
-  pointerInput.throttle =
-    0;
-}
-
-canvas.addEventListener(
-  "pointerup",
-  releasePointer
-);
-
-canvas.addEventListener(
-  "pointercancel",
-  releasePointer
-);
-
-canvas.addEventListener(
-  "pointerleave",
-  event => {
-    if (!event.buttons) {
-      releasePointer(event);
-    }
-  }
-);
-
-window.addEventListener(
-  "keydown",
-  event => {
-    const key =
-      event.key.toLowerCase();
-
-    if (
-      [
-        "arrowleft",
-        "arrowright",
-        "arrowup",
-        "arrowdown",
-        "a",
-        "d",
-        "w",
-        "s"
-      ].includes(key)
-    ) {
-      event.preventDefault();
-    }
-
-    if (
-      key === "arrowleft"
-      || key === "a"
-    ) {
-      keyboardInput.left =
-        true;
-    }
-
-    if (
-      key === "arrowright"
-      || key === "d"
-    ) {
-      keyboardInput.right =
-        true;
-    }
-
-    if (
-      key === "arrowup"
-      || key === "w"
-    ) {
-      keyboardInput.accelerate =
-        true;
-    }
-
-    if (
-      key === "arrowdown"
-      || key === "s"
-    ) {
-      keyboardInput.brake =
-        true;
-    }
-  }
-);
-
-window.addEventListener(
-  "keyup",
-  event => {
-    const key =
-      event.key.toLowerCase();
-
-    if (
-      key === "arrowleft"
-      || key === "a"
-    ) {
-      keyboardInput.left =
-        false;
-    }
-
-    if (
-      key === "arrowright"
-      || key === "d"
-    ) {
-      keyboardInput.right =
-        false;
-    }
-
-    if (
-      key === "arrowup"
-      || key === "w"
-    ) {
-      keyboardInput.accelerate =
-        false;
-    }
-
-    if (
-      key === "arrowdown"
-      || key === "s"
-    ) {
-      keyboardInput.brake =
-        false;
-    }
-  }
-);
-
-$("policyMap").addEventListener(
-  "pointerdown",
-  event => {
-    const rectangle =
-      event.currentTarget
-        .getBoundingClientRect();
-
-    const padding = {
-      left: 54,
-      right: 18,
-      top: 24,
-      bottom: 48
-    };
-
-    const plotWidth =
-      rectangle.width
-      - padding.left
-      - padding.right;
-
-    const plotHeight =
-      rectangle.height
-      - padding.top
-      - padding.bottom;
-
-    const x =
-      clamp(
-        event.clientX
-        - rectangle.left,
-        padding.left,
-        padding.left
-        + plotWidth
-      );
-
-    const y =
-      clamp(
-        event.clientY
-        - rectangle.top,
-        padding.top,
-        padding.top
-        + plotHeight
-      );
-
-    selectedInitialState = {
-      lateral:
-        clamp(
-          (
-            x - padding.left
-          )
-          / plotWidth
-          * 2
-          - 1,
-          -1,
-          1
-        ),
-
-      speed:
-        clamp(
-          (
-            1
-            - (
-              y - padding.top
-            ) / plotHeight
-          ) * 80,
-          0,
-          80
-        )
-    };
-
-    updateSelectedInitialState();
-  }
-);
-
-$("begin").addEventListener(
-  "click",
-  () => {
-    startGame(
-      selectedInitialState
-    );
-  }
-);
-
-$("start").addEventListener(
-  "click",
-  () => {
-    startGame(
-      selectedInitialState
-    );
-  }
-);
-
-$("reset").addEventListener(
-  "click",
-  () => {
-    resetGame(
-      false,
-      selectedInitialState
-    );
-  }
-);
-
-$("compare").addEventListener(
-  "click",
-  showAnalysis
-);
-
-$("driveSelected").addEventListener(
-  "click",
-  () => {
-    startGame(
-      selectedInitialState
-    );
-
-    $("experience").scrollIntoView({
-      behavior: "smooth"
-    });
-  }
-);
-
-$("again").addEventListener(
-  "click",
-  () => {
-    selectedInitialState = {
-      lateral: 0,
-      speed: 0
-    };
-
-    startGame(
-      selectedInitialState
-    );
-
-    $("experience").scrollIntoView({
-      behavior: "smooth"
-    });
-  }
-);
-
-window.addEventListener(
-  "resize",
-  () => {
-    resizeGameCanvas();
-    drawGame();
-
-    if (
-      !$("analysis")
-        .classList
-        .contains("hidden")
-    ) {
-      if (referenceResult) {
-        drawCourseMap(
-          $("courseMap"),
-          [
-            {
-              key: "player",
-              points:
-                game.log,
-              color:
-                "#65d7ff",
-              width: 4.2,
-              alpha: 1
-            },
-            {
-              key:
-                referenceResult
-                  .criticalRegion,
-              points:
-                referenceResult.log,
-              color:
-                "#ffd166",
-              width: 4.2,
-              alpha: 1
-            }
-          ]
-        );
-      }
-
-      updateSelectedInitialState();
-    }
-  }
-);
-
-function animationLoop(
-  currentTime
-) {
-  const deltaTime =
-    Math.min(
-      0.035,
-      Math.max(
-        0,
-        (
-          currentTime
-          - game.lastTime
-        ) / 1000
-        || 0
-      )
-    );
-
-  game.lastTime =
-    currentTime;
-
-  if (game.running) {
-    updateGame(
-      deltaTime
-    );
-  }
-
-  drawGame();
-
-  requestAnimationFrame(
-    animationLoop
-  );
-}
-
-$("dots").innerHTML =
-  stageDefinitions
-    .map(
-      (
-        unused,
-        index
-      ) =>
-        `<i class="dot${
-          index === 0
-            ? " active"
-            : ""
-        }"></i>`
-    )
-    .join("");
-
-resizeGameCanvas();
-
-resetGame(
-  true,
-  selectedInitialState
-);
-
-requestAnimationFrame(
-  animationLoop
-);
+resizeViz();
+resetGame(true,selStart);
+requestAnimationFrame(loop);
 </script>
 
 </body>
