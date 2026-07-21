@@ -20,7 +20,7 @@
             --background: #080b14;
             --background-deep: #05070d;
             --panel: rgba(255, 255, 255, 0.04);
-            --panel-strong: rgba(10, 14, 27, 0.96);
+            --panel-strong: rgba(9, 14, 27, 0.96);
             --text: #f5f7ff;
             --muted: #b7bdce;
             --subtle: #8f96aa;
@@ -28,8 +28,7 @@
             --cyan: #65d7ff;
             --gold: #ffd166;
             --green: #7ef0b6;
-            --red: #ff7e8e;
-            --border: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.10);
             --border-strong: rgba(255, 255, 255, 0.18);
             --shadow: 0 35px 90px rgba(0, 0, 0, 0.38);
         }
@@ -48,14 +47,14 @@
             font-family: Arial, Helvetica, sans-serif;
             background:
                 radial-gradient(
-                    circle at 82% 4%,
+                    circle at 82% 5%,
                     rgba(104, 84, 255, 0.16),
-                    transparent 27%
+                    transparent 28%
                 ),
                 radial-gradient(
-                    circle at 8% 32%,
+                    circle at 8% 36%,
                     rgba(101, 215, 255, 0.06),
-                    transparent 24%
+                    transparent 26%
                 ),
                 var(--background);
             color: var(--text);
@@ -94,7 +93,7 @@
             top: -190px;
             right: -130px;
             border-radius: 50%;
-            background: rgba(104, 84, 255, 0.2);
+            background: rgba(104, 84, 255, 0.20);
             filter: blur(130px);
             pointer-events: none;
         }
@@ -187,6 +186,17 @@
             letter-spacing: -5px;
         }
 
+        h2 {
+            margin: 12px 0 28px;
+            font-size: clamp(36px, 5vw, 58px);
+            line-height: 1.08;
+            letter-spacing: -2px;
+        }
+
+        h3 {
+            line-height: 1.2;
+        }
+
         .gradient-text {
             background: linear-gradient(
                 90deg,
@@ -206,6 +216,19 @@
             font-size: clamp(19px, 2vw, 25px);
         }
 
+        .section-description {
+            max-width: 850px;
+            margin: 0;
+            color: var(--muted);
+            font-size: clamp(18px, 2vw, 22px);
+        }
+
+        .about-text {
+            max-width: 950px;
+            color: #c7ccda;
+            font-size: clamp(21px, 3vw, 31px);
+        }
+
         .buttons {
             display: flex;
             flex-wrap: wrap;
@@ -219,8 +242,8 @@
             justify-content: center;
             min-height: 52px;
             padding: 0 24px;
-            border-radius: 999px;
             border: 0;
+            border-radius: 999px;
             cursor: pointer;
             font-weight: 700;
             transition:
@@ -240,51 +263,87 @@
         }
 
         .button-secondary {
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.20);
             background: rgba(255, 255, 255, 0.04);
             color: #ffffff;
         }
 
-        .button-small {
-            min-height: 44px;
-            padding: 0 20px;
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =====================================================
+           ABOUT
+           ===================================================== */
+
+        .research-spectrum {
+            margin-top: 34px;
+            padding: 32px;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(156, 145, 255, 0.06),
+                    rgba(101, 215, 255, 0.025)
+                ),
+                rgba(255, 255, 255, 0.025);
+        }
+
+        .research-spectrum p {
+            max-width: 970px;
+            margin: 0;
+            color: #c7ccda;
+            font-size: clamp(19px, 2.4vw, 27px);
+        }
+
+        .spectrum-words {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .spectrum-word {
+            padding: 9px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.025);
+            color: #bec5d7;
             font-size: 14px;
         }
 
-        .section-label {
-            margin: 0;
-        }
-
-        h2 {
-            margin: 12px 0 28px;
-            font-size: clamp(36px, 5vw, 58px);
-            line-height: 1.08;
-            letter-spacing: -2px;
-        }
-
-        .section-description {
-            max-width: 850px;
-            margin: 0;
-            color: var(--muted);
-            font-size: clamp(18px, 2vw, 22px);
-        }
-
-        .about-text {
-            max-width: 930px;
-            color: #c7ccda;
-            font-size: clamp(21px, 3vw, 31px);
-        }
-
-        /* EXPERIENCE */
+        /* =====================================================
+           INTERACTIVE EXPERIENCE
+           ===================================================== */
 
         .experience-section {
             padding-top: 50px;
         }
 
         .experience-heading {
-            max-width: 850px;
+            max-width: 870px;
             margin-bottom: 36px;
         }
+
+        /*
+            IMPORTANT:
+            The experience frame contains two completely separate rows:
+
+            1. .scene
+            2. .control-area
+
+            The controls are not positioned over the canvas.
+        */
 
         .experience-frame {
             overflow: hidden;
@@ -309,7 +368,7 @@
 
         .scene-header {
             position: absolute;
-            z-index: 12;
+            z-index: 20;
             top: 24px;
             left: 26px;
             right: 26px;
@@ -344,10 +403,10 @@
 
         .scene-message {
             position: absolute;
-            z-index: 13;
-            top: 105px;
+            z-index: 21;
+            top: 106px;
             left: 50%;
-            width: min(850px, calc(100% - 48px));
+            width: min(900px, calc(100% - 48px));
             transform: translateX(-50%);
             text-align: center;
             pointer-events: none;
@@ -361,8 +420,8 @@
 
         .scene-message strong {
             display: block;
-            font-size: clamp(24px, 3.4vw, 42px);
-            line-height: 1.1;
+            font-size: clamp(23px, 3vw, 39px);
+            line-height: 1.12;
         }
 
         .scene-message span {
@@ -372,20 +431,23 @@
             font-size: clamp(14px, 1.5vw, 18px);
         }
 
+        /*
+            This is below .scene in normal document flow.
+            It cannot cover the canvas.
+        */
+
         .control-area {
-            position: relative;
-            z-index: 20;
             display: grid;
-            grid-template-columns: 1fr auto;
+            grid-template-columns: minmax(0, 1fr) auto;
             gap: 18px;
-            align-items: end;
+            align-items: stretch;
             padding: 22px;
             border-top: 1px solid rgba(255, 255, 255, 0.09);
             background:
                 linear-gradient(
                     180deg,
-                    rgba(8, 11, 20, 0.96),
-                    rgba(5, 8, 15, 0.99)
+                    rgba(8, 11, 20, 0.98),
+                    rgba(5, 8, 15, 1)
                 );
         }
 
@@ -424,7 +486,7 @@
         }
 
         .metric {
-            min-width: 110px;
+            min-width: 112px;
             padding: 11px 14px;
             border-radius: 14px;
             background: rgba(255, 255, 255, 0.045);
@@ -442,16 +504,18 @@
 
         .game-buttons {
             display: grid;
+            grid-template-rows: 1fr 1fr;
             gap: 10px;
         }
 
         .game-buttons .button {
             min-width: 165px;
+            height: 100%;
         }
 
         .scene-overlay {
             position: absolute;
-            z-index: 40;
+            z-index: 50;
             inset: 0;
             display: grid;
             place-items: center;
@@ -538,7 +602,9 @@
             font-size: 19px;
         }
 
-        /* PORTFOLIO PORTALS */
+        /* =====================================================
+           PORTFOLIO
+           ===================================================== */
 
         .portal-grid {
             display: grid;
@@ -549,7 +615,7 @@
 
         .portal-card {
             position: relative;
-            min-height: 265px;
+            min-height: 270px;
             overflow: hidden;
             padding: 30px;
             border: 1px solid var(--border);
@@ -615,54 +681,10 @@
             color: #aeb4c5;
         }
 
-        .research-spectrum {
-            margin-top: 28px;
-            padding: 32px;
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.025);
-        }
-
-        .research-spectrum p {
-            max-width: 970px;
-            margin: 0;
-            color: #c7ccda;
-            font-size: clamp(19px, 2.4vw, 27px);
-        }
-
-        .spectrum-words {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 24px;
-        }
-
-        .spectrum-word {
-            padding: 9px 14px;
-            border: 1px solid rgba(255, 255, 255, 0.11);
-            border-radius: 999px;
-            color: #bec5d7;
-            background: rgba(255, 255, 255, 0.025);
-            font-size: 14px;
-        }
-
         footer {
             padding: 50px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--subtle);
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(24px);
-            transition:
-                opacity 0.8s ease,
-                transform 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         @media (max-width: 900px) {
@@ -675,7 +697,7 @@
             }
 
             .scene {
-                height: 520px;
+                height: 510px;
             }
 
             .control-area {
@@ -684,10 +706,12 @@
 
             .game-buttons {
                 grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
             }
 
             .game-buttons .button {
                 min-width: 0;
+                min-height: 52px;
             }
 
             .portal-grid {
@@ -705,7 +729,7 @@
             }
 
             .scene {
-                height: 470px;
+                height: 460px;
             }
 
             .scene-header {
@@ -719,7 +743,7 @@
             }
 
             .scene-message {
-                top: 100px;
+                top: 96px;
             }
 
             .control-area {
@@ -745,7 +769,7 @@
             }
 
             .portal-card {
-                min-height: 240px;
+                min-height: 245px;
             }
         }
     </style>
@@ -832,9 +856,9 @@
                     I move between mathematical theory, system modeling,
                     algorithm development, numerical computation,
                     control, and machine learning depending on the problem.
-                    Rather than being defined by a single technique,
-                    my research is driven by the structure of the system
-                    and the decisions it requires.
+                    Rather than being defined by one technique, my research
+                    is driven by the structure of the system and the decisions
+                    it requires.
                 </p>
 
                 <div class="research-spectrum">
@@ -849,45 +873,16 @@
                     </p>
 
                     <div class="spectrum-words">
-                        <span class="spectrum-word">
-                            Dynamic systems
-                        </span>
-
-                        <span class="spectrum-word">
-                            Optimization
-                        </span>
-
-                        <span class="spectrum-word">
-                            Optimal control
-                        </span>
-
-                        <span class="spectrum-word">
-                            MPC
-                        </span>
-
-                        <span class="spectrum-word">
-                            Continuous time
-                        </span>
-
-                        <span class="spectrum-word">
-                            Discrete time
-                        </span>
-
-                        <span class="spectrum-word">
-                            Multiparametric methods
-                        </span>
-
-                        <span class="spectrum-word">
-                            Mathematical modeling
-                        </span>
-
-                        <span class="spectrum-word">
-                            Numerical computation
-                        </span>
-
-                        <span class="spectrum-word">
-                            Machine learning
-                        </span>
+                        <span class="spectrum-word">Dynamic systems</span>
+                        <span class="spectrum-word">Optimization</span>
+                        <span class="spectrum-word">Optimal control</span>
+                        <span class="spectrum-word">Model predictive control</span>
+                        <span class="spectrum-word">Continuous time</span>
+                        <span class="spectrum-word">Discrete time</span>
+                        <span class="spectrum-word">Multiparametric methods</span>
+                        <span class="spectrum-word">Mathematical modeling</span>
+                        <span class="spectrum-word">Scientific computing</span>
+                        <span class="spectrum-word">Machine learning</span>
                     </div>
 
                 </div>
@@ -914,7 +909,7 @@
                     <p class="section-description">
                         Use one input to guide the car into the target
                         zone and bring it to rest. A translucent prediction
-                        continuously shows where your current decision
+                        continuously shows where your present decision
                         may lead.
                     </p>
 
@@ -922,6 +917,7 @@
 
                 <div class="experience-frame">
 
+                    <!-- VISUAL SCENE ONLY -->
                     <div class="scene">
 
                         <canvas
@@ -955,7 +951,6 @@
                             id="sceneMessage"
                         >
                             <strong id="sceneMessageTitle"></strong>
-
                             <span id="sceneMessageText"></span>
                         </div>
 
@@ -1086,6 +1081,7 @@
 
                     </div>
 
+                    <!-- CONTROLS ARE BELOW THE SCENE -->
                     <div class="control-area">
 
                         <div class="control-panel">
@@ -1122,7 +1118,7 @@
                                     </small>
 
                                     <strong id="distanceMetric">
-                                        85 m
+                                        82 m
                                     </strong>
                                 </div>
 
@@ -1184,9 +1180,8 @@
                         A decision made now changes the state of the system
                         later. The challenge is not simply producing a feasible
                         trajectory, but determining the best trajectory while
-                        accounting for dynamics, constraints, objectives,
-                        and initial conditions. My research develops methods
-                        for revealing and computing these relationships.
+                        accounting for dynamics, objectives, constraints,
+                        and initial conditions.
                     </p>
 
                 </div>
@@ -1202,7 +1197,7 @@
                 </p>
 
                 <h2>
-                    Explore the work, not a fixed list of labels.
+                    Explore an evolving body of work.
                 </h2>
 
                 <p class="section-description">
@@ -1216,7 +1211,6 @@
                     <a
                         class="portal-card"
                         href="#"
-                        aria-label="Research overview"
                     >
                         <div class="portal-top">
                             <span class="portal-label">
@@ -1241,7 +1235,6 @@
                     <a
                         class="portal-card"
                         href="#"
-                        aria-label="Publications"
                     >
                         <div class="portal-top">
                             <span class="portal-label">
@@ -1266,7 +1259,6 @@
                     <a
                         class="portal-card"
                         href="#"
-                        aria-label="Selected projects"
                     >
                         <div class="portal-top">
                             <span class="portal-label">
@@ -1293,7 +1285,6 @@
                         href="https://github.com/LidaLMK"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Software and GitHub"
                     >
                         <div class="portal-top">
                             <span class="portal-label">
@@ -1318,7 +1309,6 @@
                     <a
                         class="portal-card"
                         href="#"
-                        aria-label="Academic profile"
                     >
                         <div class="portal-top">
                             <span class="portal-label">
@@ -1343,7 +1333,6 @@
                     <a
                         class="portal-card"
                         href="#contact"
-                        aria-label="Contact"
                     >
                         <div class="portal-top">
                             <span class="portal-label">
@@ -1510,7 +1499,10 @@
         let canvasHeight = 0;
 
         const deviceScale =
-            Math.min(window.devicePixelRatio || 1, 2);
+            Math.min(
+                window.devicePixelRatio || 1,
+                2
+            );
 
         const state = {
             position: 6,
@@ -1531,7 +1523,11 @@
             lastTime: performance.now()
         };
 
-        function clamp(value, minimum, maximum) {
+        function clamp(
+            value,
+            minimum,
+            maximum
+        ) {
             return Math.max(
                 minimum,
                 Math.min(maximum, value)
@@ -1543,16 +1539,26 @@
                 canvas.getBoundingClientRect();
 
             canvasWidth =
-                Math.max(320, rectangle.width);
+                Math.max(
+                    320,
+                    rectangle.width
+                );
 
             canvasHeight =
-                Math.max(360, rectangle.height);
+                Math.max(
+                    360,
+                    rectangle.height
+                );
 
             canvas.width =
-                Math.floor(canvasWidth * deviceScale);
+                Math.floor(
+                    canvasWidth * deviceScale
+                );
 
             canvas.height =
-                Math.floor(canvasHeight * deviceScale);
+                Math.floor(
+                    canvasHeight * deviceScale
+                );
 
             context.setTransform(
                 deviceScale,
@@ -1565,7 +1571,7 @@
         }
 
         function roadTop() {
-            return canvasHeight * 0.62;
+            return canvasHeight * 0.57;
         }
 
         function roadCenter() {
@@ -1573,8 +1579,17 @@
         }
 
         function mapPosition(position) {
-            const leftMargin = 58;
-            const rightMargin = 58;
+            const leftMargin =
+                Math.max(
+                    72,
+                    canvasWidth * 0.065
+                );
+
+            const rightMargin =
+                Math.max(
+                    72,
+                    canvasWidth * 0.065
+                );
 
             return leftMargin
                 + (position / 100)
@@ -1594,6 +1609,7 @@
             state.running = false;
             state.replaying = false;
             state.showingFamily = false;
+
             state.userTrajectory = [
                 {
                     position: state.position,
@@ -1601,10 +1617,13 @@
                     time: 0
                 }
             ];
+
             state.controlHistory = [];
             state.optimalTrajectory = [];
             state.familyTrajectories = [];
-            state.lastTime = performance.now();
+
+            state.lastTime =
+                performance.now();
 
             slider.value = 0;
 
@@ -1613,12 +1632,20 @@
                 !showIntro
             );
 
-            resultOverlay.classList.add("hidden");
-            familyOverlay.classList.add("hidden");
+            resultOverlay.classList.add(
+                "hidden"
+            );
 
-            sceneMessage.classList.remove("visible");
+            familyOverlay.classList.add(
+                "hidden"
+            );
 
-            statusPill.textContent = "Ready";
+            sceneMessage.classList.remove(
+                "visible"
+            );
+
+            statusPill.textContent =
+                "Ready";
 
             updateInterface();
         }
@@ -1627,9 +1654,12 @@
             resetGame(false);
 
             state.running = true;
-            state.lastTime = performance.now();
 
-            statusPill.textContent = "Live";
+            state.lastTime =
+                performance.now();
+
+            statusPill.textContent =
+                "Live";
         }
 
         function updateSystem(deltaTime) {
@@ -1668,7 +1698,8 @@
                 * deltaTime
                 * 0.60;
 
-            state.elapsed += deltaTime;
+            state.elapsed +=
+                deltaTime;
 
             state.energy +=
                 Math.abs(state.control)
@@ -1718,19 +1749,22 @@
                     - state.position
                 );
 
-            const accuracy = clamp(
-                100
-                - targetError * 7
-                - state.velocity * 2.2,
-                0,
-                100
-            );
+            const accuracy =
+                clamp(
+                    100
+                    - targetError * 7
+                    - state.velocity * 2.2,
+                    0,
+                    100
+                );
 
-            const efficiency = clamp(
-                100 - state.energy * 1.45,
-                0,
-                100
-            );
+            const efficiency =
+                clamp(
+                    100
+                    - state.energy * 1.45,
+                    0,
+                    100
+                );
 
             let controlVariation = 0;
 
@@ -1739,17 +1773,20 @@
                 index < state.controlHistory.length;
                 index++
             ) {
-                controlVariation += Math.abs(
-                    state.controlHistory[index]
-                    - state.controlHistory[index - 1]
-                );
+                controlVariation +=
+                    Math.abs(
+                        state.controlHistory[index]
+                        - state.controlHistory[index - 1]
+                    );
             }
 
-            const smoothness = clamp(
-                100 - controlVariation * 3.5,
-                0,
-                100
-            );
+            const smoothness =
+                clamp(
+                    100
+                    - controlVariation * 3.5,
+                    0,
+                    100
+                );
 
             resultAccuracy.textContent =
                 `${Math.round(accuracy)}%`;
@@ -1760,19 +1797,24 @@
             resultSmoothness.textContent =
                 `${Math.round(smoothness)}%`;
 
-            resultTitle.textContent = success
-                ? "You reached the target."
-                : "The scenario is complete.";
+            resultTitle.textContent =
+                success
+                    ? "You reached the target."
+                    : "The scenario is complete.";
 
-            statusPill.textContent = success
-                ? "Target reached"
-                : "Scenario complete";
+            statusPill.textContent =
+                success
+                    ? "Target reached"
+                    : "Scenario complete";
 
-            window.setTimeout(() => {
-                resultOverlay.classList.remove(
-                    "hidden"
-                );
-            }, 420);
+            window.setTimeout(
+                () => {
+                    resultOverlay.classList.remove(
+                        "hidden"
+                    );
+                },
+                420
+            );
         }
 
         function calculateOptimalTrajectory(
@@ -1789,15 +1831,24 @@
 
             let time = 0;
 
-            const timeStep = 0.035;
+            const timeStep =
+                0.035;
 
             while (time < 20) {
                 const remaining =
-                    state.targetCenter - position;
+                    state.targetCenter
+                    - position;
 
                 const stoppingDistance =
-                    (velocity * velocity)
-                    / (2 * 5.8 + 0.001);
+                    (
+                        velocity
+                        * velocity
+                    )
+                    /
+                    (
+                        2 * 5.8
+                        + 0.001
+                    );
 
                 let control;
 
@@ -1805,12 +1856,13 @@
                     remaining
                     <= stoppingDistance + 5.2
                 ) {
-                    control = clamp(
-                        -0.72
-                        - velocity * 0.025,
-                        -1,
-                        0
-                    );
+                    control =
+                        clamp(
+                            -0.72
+                            - velocity * 0.025,
+                            -1,
+                            0
+                        );
                 } else {
                     const desiredVelocity =
                         clamp(
@@ -1819,14 +1871,15 @@
                             15
                         );
 
-                    control = clamp(
-                        (
-                            desiredVelocity
-                            - velocity
-                        ) * 0.17,
-                        -1,
-                        0.82
-                    );
+                    control =
+                        clamp(
+                            (
+                                desiredVelocity
+                                - velocity
+                            ) * 0.17,
+                            -1,
+                            0.82
+                        );
                 }
 
                 const acceleration =
@@ -1841,20 +1894,23 @@
                     * Math.abs(velocity);
 
                 velocity +=
-                    acceleration * timeStep;
+                    acceleration
+                    * timeStep;
 
-                velocity = clamp(
-                    velocity,
-                    0,
-                    25
-                );
+                velocity =
+                    clamp(
+                        velocity,
+                        0,
+                        25
+                    );
 
                 position +=
                     velocity
                     * timeStep
                     * 0.60;
 
-                time += timeStep;
+                time +=
+                    timeStep;
 
                 trajectory.push({
                     position,
@@ -1893,7 +1949,9 @@
                 );
 
             state.replaying = true;
-            state.replayStart = performance.now();
+
+            state.replayStart =
+                performance.now();
 
             statusPill.textContent =
                 "Optimized replay";
@@ -1908,17 +1966,20 @@
                 "visible"
             );
 
-            window.setTimeout(() => {
-                state.replaying = false;
+            window.setTimeout(
+                () => {
+                    state.replaying = false;
 
-                sceneMessage.classList.remove(
-                    "visible"
-                );
+                    sceneMessage.classList.remove(
+                        "visible"
+                    );
 
-                familyOverlay.classList.remove(
-                    "hidden"
-                );
-            }, 5600);
+                    familyOverlay.classList.remove(
+                        "hidden"
+                    );
+                },
+                5600
+            );
         }
 
         function revealFamily() {
@@ -1945,7 +2006,9 @@
             initialConditions.forEach(
                 (condition, index) => {
                     state.familyTrajectories.push({
-                        delay: index * 150,
+                        delay:
+                            index * 150,
+
                         points:
                             calculateOptimalTrajectory(
                                 condition.position,
@@ -1967,11 +2030,14 @@
             sceneMessageText.textContent =
                 "A parameter-dependent framework can reveal the entire family.";
 
-            window.setTimeout(() => {
-                sceneMessage.classList.add(
-                    "visible"
-                );
-            }, 2100);
+            window.setTimeout(
+                () => {
+                    sceneMessage.classList.add(
+                        "visible"
+                    );
+                },
+                1900
+            );
         }
 
         function updateInterface() {
@@ -1983,7 +2049,9 @@
                 );
 
             controlValue.textContent =
-                Number(slider.value).toFixed(2);
+                Number(
+                    slider.value
+                ).toFixed(2);
 
             distanceMetric.textContent =
                 `${remaining.toFixed(0)} m`;
@@ -1994,7 +2062,9 @@
             energyMetric.textContent =
                 `${Math.min(
                     100,
-                    Math.round(state.energy * 1.8)
+                    Math.round(
+                        state.energy * 1.8
+                    )
                 )}%`;
         }
 
@@ -2017,7 +2087,8 @@
                 "#101b2c"
             );
 
-            context.fillStyle = sky;
+            context.fillStyle =
+                sky;
 
             context.fillRect(
                 0,
@@ -2030,7 +2101,7 @@
                 canvasWidth * 0.80;
 
             const moonY =
-                canvasHeight * 0.20;
+                canvasHeight * 0.19;
 
             const moonGlow =
                 context.createRadialGradient(
@@ -2073,8 +2144,9 @@
                 index++
             ) {
                 const starX =
-                    (index * 89.37)
-                    % canvasWidth;
+                    (
+                        index * 89.37
+                    ) % canvasWidth;
 
                 const starY =
                     (
@@ -2112,7 +2184,8 @@
             let buildingIndex = 0;
 
             while (
-                buildingX < canvasWidth + 60
+                buildingX
+                < canvasWidth + 60
             ) {
                 const buildingWidth =
                     42
@@ -2276,20 +2349,17 @@
 
             context.moveTo(
                 0,
-                roadCenter()
+                roadCenter() + 36
             );
 
             context.lineTo(
                 canvasWidth,
-                roadCenter()
+                roadCenter() + 36
             );
 
             context.stroke();
 
             context.setLineDash([]);
-
-            const lowerLine =
-                canvasHeight - 45;
 
             context.strokeStyle =
                 "rgba(255, 255, 255, 0.13)";
@@ -2300,12 +2370,12 @@
 
             context.moveTo(
                 0,
-                lowerLine
+                canvasHeight - 35
             );
 
             context.lineTo(
                 canvasWidth,
-                lowerLine
+                canvasHeight - 35
             );
 
             context.stroke();
@@ -2323,10 +2393,10 @@
                 );
 
             const top =
-                roadTop() + 18;
+                roadTop() + 20;
 
             const bottom =
-                canvasHeight - 28;
+                canvasHeight - 24;
 
             const glow =
                 context.createLinearGradient(
@@ -2343,7 +2413,7 @@
 
             glow.addColorStop(
                 0.5,
-                "rgba(126, 240, 182, 0.22)"
+                "rgba(126, 240, 182, 0.23)"
             );
 
             glow.addColorStop(
@@ -2351,7 +2421,8 @@
                 "rgba(126, 240, 182, 0)"
             );
 
-            context.fillStyle = glow;
+            context.fillStyle =
+                glow;
 
             context.fillRect(
                 startX - 28,
@@ -2361,7 +2432,7 @@
             );
 
             context.strokeStyle =
-                "rgba(126, 240, 182, 0.9)";
+                "rgba(126, 240, 182, 0.92)";
 
             context.lineWidth = 2;
 
@@ -2373,7 +2444,7 @@
             );
 
             context.fillStyle =
-                "rgba(220, 255, 237, 0.9)";
+                "rgba(220, 255, 237, 0.92)";
 
             context.font =
                 "700 12px Arial, sans-serif";
@@ -2383,8 +2454,11 @@
 
             context.fillText(
                 "TARGET ZONE",
-                (startX + endX) / 2,
-                top + 3
+                (
+                    startX
+                    + endX
+                ) / 2,
+                top + 2
             );
         }
 
@@ -2399,7 +2473,7 @@
 
             const y =
                 roadCenter()
-                - 24
+                - 18
                 + verticalOffset;
 
             context.save();
@@ -2419,12 +2493,12 @@
                     0,
                     0,
                     0,
-                    64
+                    65
                 );
 
             carGlow.addColorStop(
                 0,
-                `rgba(${color}, 0.28)`
+                `rgba(${color}, 0.30)`
             );
 
             carGlow.addColorStop(
@@ -2440,7 +2514,7 @@
             context.arc(
                 0,
                 4,
-                64,
+                65,
                 0,
                 Math.PI * 2
             );
@@ -2448,24 +2522,24 @@
             context.fill();
 
             context.fillStyle =
-                `rgba(${color}, 0.96)`;
+                `rgba(${color}, 0.97)`;
 
             context.beginPath();
 
             if (context.roundRect) {
                 context.roundRect(
-                    -34,
+                    -36,
                     -11,
-                    68,
-                    23,
-                    7
+                    72,
+                    24,
+                    8
                 );
             } else {
                 context.rect(
-                    -34,
+                    -36,
                     -11,
-                    68,
-                    23
+                    72,
+                    24
                 );
             }
 
@@ -2474,22 +2548,22 @@
             context.beginPath();
 
             context.moveTo(
-                -19,
+                -20,
                 -11
             );
 
             context.lineTo(
                 -7,
-                -27
+                -28
             );
 
             context.lineTo(
-                17,
-                -27
+                18,
+                -28
             );
 
             context.lineTo(
-                29,
+                30,
                 -11
             );
 
@@ -2498,27 +2572,27 @@
             context.fill();
 
             context.fillStyle =
-                "rgba(9, 18, 31, 0.80)";
+                "rgba(8, 18, 31, 0.84)";
 
             context.beginPath();
 
             context.moveTo(
-                -11,
+                -12,
                 -12
             );
 
             context.lineTo(
                 -4,
-                -22
+                -23
             );
 
             context.lineTo(
-                6,
-                -22
+                7,
+                -23
             );
 
             context.lineTo(
-                6,
+                7,
                 -12
             );
 
@@ -2529,22 +2603,22 @@
             context.beginPath();
 
             context.moveTo(
-                9,
-                -22
+                10,
+                -23
             );
 
             context.lineTo(
-                16,
-                -22
+                17,
+                -23
             );
 
             context.lineTo(
-                24,
+                25,
                 -12
             );
 
             context.lineTo(
-                9,
+                10,
                 -12
             );
 
@@ -2558,16 +2632,16 @@
             context.beginPath();
 
             context.arc(
-                -22,
-                13,
+                -23,
+                14,
                 8,
                 0,
                 Math.PI * 2
             );
 
             context.arc(
-                23,
-                13,
+                24,
+                14,
                 8,
                 0,
                 Math.PI * 2
@@ -2576,23 +2650,23 @@
             context.fill();
 
             context.strokeStyle =
-                "rgba(255, 255, 255, 0.42)";
+                "rgba(255, 255, 255, 0.44)";
 
             context.lineWidth = 2;
 
             context.beginPath();
 
             context.arc(
-                -22,
-                13,
+                -23,
+                14,
                 4,
                 0,
                 Math.PI * 2
             );
 
             context.arc(
-                23,
-                13,
+                24,
+                14,
                 4,
                 0,
                 Math.PI * 2
@@ -2601,10 +2675,10 @@
             context.stroke();
 
             context.fillStyle =
-                "rgba(255, 244, 191, 0.95)";
+                "rgba(255, 244, 191, 0.96)";
 
             context.fillRect(
-                30,
+                32,
                 -5,
                 5,
                 5
@@ -2612,15 +2686,15 @@
 
             const headlight =
                 context.createLinearGradient(
-                    32,
+                    34,
                     0,
-                    95,
+                    100,
                     0
                 );
 
             headlight.addColorStop(
                 0,
-                "rgba(255, 239, 177, 0.20)"
+                "rgba(255, 239, 177, 0.22)"
             );
 
             headlight.addColorStop(
@@ -2634,22 +2708,22 @@
             context.beginPath();
 
             context.moveTo(
-                33,
+                34,
                 -8
             );
 
             context.lineTo(
-                96,
-                -24
+                100,
+                -25
             );
 
             context.lineTo(
-                96,
+                100,
                 22
             );
 
             context.lineTo(
-                33,
+                34,
                 5
             );
 
@@ -2692,13 +2766,15 @@
                     * Math.abs(velocity);
 
                 velocity +=
-                    acceleration * timeStep;
+                    acceleration
+                    * timeStep;
 
-                velocity = clamp(
-                    velocity,
-                    0,
-                    25
-                );
+                velocity =
+                    clamp(
+                        velocity,
+                        0,
+                        25
+                    );
 
                 position +=
                     velocity
@@ -2745,7 +2821,7 @@
 
                     const y =
                         roadCenter()
-                        - 29
+                        - 23
                         - Math.sin(
                             index * 0.16
                         ) * 3;
@@ -2826,15 +2902,14 @@
                 const point =
                     points[index];
 
-                const position =
-                    point.position;
-
                 const x =
-                    mapPosition(position);
+                    mapPosition(
+                        point.position
+                    );
 
                 const y =
                     roadCenter()
-                    - 28
+                    - 22
                     + verticalOffset
                     - Math.sin(
                         index * 0.09
@@ -2884,7 +2959,7 @@
                 "rgba(197, 204, 224, 0.60)",
                 0.75,
                 1,
-                18
+                20
             );
 
             drawTrajectory(
@@ -2892,7 +2967,7 @@
                 "#ffd166",
                 0.98,
                 progress,
-                -13
+                -14
             );
 
             const pointIndex =
@@ -2915,7 +2990,7 @@
                 currentPoint.position,
                 1,
                 "255, 209, 102",
-                -8
+                -9
             );
         }
 
@@ -2925,7 +3000,8 @@
             }
 
             const elapsed =
-                time - state.familyStart;
+                time
+                - state.familyStart;
 
             state.familyTrajectories.forEach(
                 (trajectory, index) => {
@@ -2949,7 +3025,7 @@
                             index % 4
                         ) * 0.07,
                         progress,
-                        -34 + index * 7
+                        -42 + index * 8
                     );
                 }
             );
