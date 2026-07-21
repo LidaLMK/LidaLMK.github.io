@@ -334,7 +334,7 @@ footer{border-top:1px solid var(--line);padding:34px 0;color:var(--sub);font-siz
         <div class="hud">
           <div class="chip"><small>Time</small><strong id="hTime">0.00 s</strong></div>
           <div class="chip"><small>Distance to target</small><strong id="hDist">1.00</strong></div>
-          <div class="chip"><small>Speed</small><strong id="hSpeed">0.00</strong></div>
+          <div class="chip"><small>Speed / limit</small><strong id="hSpeed" class="g-ok">0.00 / 0.62</strong></div>
           <div class="chip arc"><small>Your arc</small><strong id="hArc">coast</strong></div>
           <div class="chip"><small>Status</small><strong id="hStat" class="g-ok">ready</strong></div>
         </div>
@@ -543,14 +543,15 @@ $("yr").textContent = new Date().getFullYear();
 
 const TARGET = 1.0;      // target position (start x measured 0..TARGET region)
 const VMAX   = 0.62;     // speed cap
-const UMAX   = 1.0;
+const ACCEL  = 0.85;     // acceleration force (matches player)
+const BRAKE  = 1.15;     // braking force (matches player)
 
 /* Time-optimal control law evaluated at a state.
    Returns u in {-1,0,+1}. Uses the switching curve for the
    double integrator plus velocity saturation. */
 function optimalControl(x, v){
   const rem = TARGET - x;                 // distance still to cover
-  const stopDist = (v*v)/(2*UMAX);        // distance needed to brake to rest
+  const stopDist = (v*v)/(2*BRAKE);       // distance needed to brake to rest
   // If braking now would still overshoot (or just reach), brake.
   if (stopDist >= rem - 1e-4) return -1;
   // Otherwise accelerate — unless we're at the speed cap, then cruise.
@@ -560,7 +561,7 @@ function optimalControl(x, v){
 
 /* Integrate the optimal solution from a start state. Returns
    full log + summary (arrival time, switch times, arc sequence). */
-function solveOptimal(x0, v0, dt=0.004, Tmax=12){
+function solveOptimal(x0, v0, dt=0.004, Tmax=16){
   let x=x0, v=v0, t=0;
   const log=[{t,x,v,u:0}];
   let prevU=null, switches=0;
@@ -571,7 +572,8 @@ function solveOptimal(x0, v0, dt=0.004, Tmax=12){
     if(prevU!==null && u!==prevU) switches++;
     if(arcs.length===0 || arcs[arcs.length-1]!==u) arcs.push(u);
     prevU=u;
-    let v2=v+u*dt;
+    const dv = u>0 ? ACCEL*dt : u<0 ? -BRAKE*dt : 0;
+    let v2=v+dv;
     if(v2<0) v2=0;
     if(v2>VMAX) v2=VMAX;
     const x2=x+(v+v2)/2*dt;
@@ -681,7 +683,9 @@ function setCoach(i,force){
 function hud(stat,cls){
   $("hTime").textContent=G.t.toFixed(2)+" s";
   $("hDist").textContent=Math.max(0,TARGET-G.x).toFixed(2);
-  $("hSpeed").textContent=G.v.toFixed(2);
+  const spEl=$("hSpeed");
+  spEl.textContent=G.v.toFixed(2)+" / "+VMAX.toFixed(2);
+  spEl.className = G.v>=VMAX-0.005 ? "g-warn" : "g-ok";
   const u=effU();
   $("hArc").textContent = u>0?"accelerate":u<0?"brake":"coast";
   if(stat){ $("hStat").textContent=stat; $("hStat").className="g "+cls; }
@@ -691,24 +695,27 @@ function stepGame(dt){
   const u=effU();
   if(u!==G.prevU && u!==0 && G.prevU!==0) G.switches++;
   G.prevU=u;
-  let v2=G.v+u*dt;
+  // gentle, continuous pedal force so speed is easy to hold steady
+  const ACCEL=0.85, BRAKE=1.15;
+  let dv = u>0 ? ACCEL*dt : u<0 ? -BRAKE*dt : 0;
+  let v2=G.v+dv;
   if(v2<0) v2=0;
-  if(v2>VMAX+0.05) v2=VMAX+0.05; // player can nudge slightly over cap (penalized)
+  if(v2>VMAX) v2=VMAX;          // hard cap: constraint always satisfied
   const x2=G.x+(G.v+v2)/2*dt;
   G.x=x2; G.v=v2; G.t+=dt;
   G.log.push({t:G.t,x:G.x,v:G.v,u});
 
   setCoach(coachIndex());
 
-  // overspeed status
+  // status against the hard cap
   let stat="on track", cls="g-ok";
-  if(G.v>VMAX+0.01){ stat="over speed limit"; cls="g-warn"; }
+  if(G.v>=VMAX-0.005){ stat="at speed limit"; cls="g-warn"; }
 
-  // finish conditions
-  if(G.x>=TARGET && G.v<0.02){ G.stoppedAt=G.x; finish(true,"Stopped on target"); return; }
-  if(G.x>TARGET+0.001 && G.v<0.02){ G.overshoot=G.x-TARGET; G.stoppedAt=G.x; finish(false,"Overshot the target"); return; }
-  if(G.x>TARGET+0.35){ G.overshoot=G.x-TARGET; G.stoppedAt=G.x; finish(false,"Ran past the target"); return; }
-  if(G.t>14){ finish(false,"Time ran out"); return; }
+  // finish conditions (forgiving stop tolerance)
+  if(G.x>=TARGET && G.v<0.04){ G.stoppedAt=G.x; finish(true,"Stopped on target"); return; }
+  if(G.x>TARGET+0.02 && G.v<0.04){ G.overshoot=G.x-TARGET; G.stoppedAt=G.x; finish(false,"Overshot the target"); return; }
+  if(G.x>TARGET+0.4){ G.overshoot=G.x-TARGET; G.stoppedAt=G.x; finish(false,"Ran past the target"); return; }
+  if(G.t>16){ finish(false,"Time ran out"); return; }
 
   hud(stat,cls);
 }
@@ -718,8 +725,7 @@ function finish(success,msg){
   G.done=true; G.running=false;
   input.accel=input.brake=false; input.pointer=0;
 
-  const opt=solveOptimal(G.x0!==undefined?G.x0:selStart.x0, selStart.v0);
-  // recompute optimal from the ACTUAL start used this run:
+  // optimal from the ACTUAL start used this run:
   const optRun=solveOptimal(G.log[0].x, G.log[0].v);
   const eff = optRun.time>0 ? clamp(Math.round(optRun.time/Math.max(G.t,1e-3)*100),0,100) : 0;
 
@@ -981,16 +987,16 @@ function drawPhase(){
   // axes
   c.strokeStyle="#e3ddce"; c.lineWidth=1;
   c.beginPath(); c.moveTo(pad.l,pad.t); c.lineTo(pad.l,h-pad.b); c.lineTo(w-pad.r,h-pad.b); c.stroke();
-  // switching curve v = sqrt(2*(TARGET - x))  (brake locus to the origin/target)
+  // switching curve v = sqrt(2*BRAKE*(TARGET - x))  (brake locus to the target)
   c.strokeStyle="#b8892b"; c.lineWidth=1.6; c.setLineDash([5,4]);
   c.beginPath();
   for(let x=0;x<=TARGET;x+=0.01){
-    const v=Math.sqrt(Math.max(0,2*(TARGET-x)));
+    const v=Math.sqrt(Math.max(0,2*BRAKE*(TARGET-x)));
     const X=px(x),Y=py(Math.min(v,vHi)); x===0?c.moveTo(X,Y):c.lineTo(X,Y);
   }
   c.stroke(); c.setLineDash([]);
   c.fillStyle="#b8892b"; c.font='10px "JetBrains Mono",monospace';
-  c.fillText("switching curve", px(0.35), py(Math.sqrt(2*(TARGET-0.35)))-6);
+  c.fillText("switching curve", px(0.35), py(Math.min(Math.sqrt(2*BRAKE*(TARGET-0.35)),vHi))-6);
   // target point
   c.fillStyle="#2f7d52"; c.beginPath(); c.arc(px(TARGET),py(0),5,0,Math.PI*2); c.fill();
   c.fillText("target", px(TARGET)-30, py(0)+16);
