@@ -3,1112 +3,4294 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lida Lamakani | Continuous-Time Multiparametric Optimal Control</title>
-<meta name="description" content="Research portfolio of Lida Lamakani: continuous-time multiparametric optimal control, explicit MPC, and model-based control via Pontryagin's Maximum Principle.">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Lida Lamakani | Optimization, Control and Intelligent Systems</title>
+
+<meta
+    name="description"
+    content="Research portfolio of Lida Lamakani across optimization, control, modeling, scientific computing, and machine learning."
+>
 
 <style>
-:root{
-  --ink:#0c0f14;
-  --paper:#f3efe6;
-  --paper-2:#e9e3d5;
-  --line:#c9c1ad;
-  --sub:#6b6656;
-  --amber:#c8622b;      /* control / action */
-  --teal:#1f6f6b;       /* state / trajectory */
-  --violet:#5b4ea8;     /* costate / boundary */
-  --gold:#b8892b;
-  --red:#b23a48;
-  --ok:#2f7d52;
+:root {
+    --bg: #070a12;
+    --panel: #0d1320;
+    --text: #f6f8ff;
+    --muted: #b6bfd2;
+    --sub: #8792a8;
+    --violet: #9c91ff;
+    --cyan: #66dcff;
+    --green: #7ef0b6;
+    --gold: #ffd166;
+    --red: #ff7087;
+    --line: rgba(255, 255, 255, 0.1);
 }
 
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  background:var(--paper);
-  color:var(--ink);
-  font-family:"Space Grotesk",system-ui,sans-serif;
-  line-height:1.6;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-}
-a{color:inherit;text-decoration:none}
-button{font:inherit;color:inherit;cursor:pointer}
-.container{width:min(1180px,92%);margin:auto}
-.mono{font-family:"JetBrains Mono",monospace}
-
-/* ---- fine grid backdrop ---- */
-body::before{
-  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background-image:
-    linear-gradient(var(--line) 1px,transparent 1px),
-    linear-gradient(90deg,var(--line) 1px,transparent 1px);
-  background-size:44px 44px;
-  opacity:.14;
+* {
+    box-sizing: border-box;
 }
 
-/* ================= HEADER ================= */
-header{
-  position:sticky;top:0;z-index:100;
-  background:rgba(243,239,230,.82);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
+html {
+    scroll-behavior: smooth;
 }
-nav{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.logo{font-family:"Fraunces",serif;font-weight:600;font-size:20px;letter-spacing:.2px}
-.logo b{color:var(--amber)}
-.nav-links{display:flex;gap:26px;font-size:14px;font-weight:500}
-.nav-links a{color:var(--sub);transition:color .2s}
-.nav-links a:hover{color:var(--ink)}
 
-/* ================= HERO ================= */
-.hero{padding:88px 0 64px}
-.eyebrow{
-  font-family:"JetBrains Mono",monospace;
-  font-size:12px;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--amber);margin:0 0 22px;
+body {
+    margin: 0;
+    overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    background:
+        radial-gradient(
+            circle at 83% 3%,
+            rgba(110, 84, 255, 0.18),
+            transparent 29%
+        ),
+        radial-gradient(
+            circle at 7% 42%,
+            rgba(102, 220, 255, 0.07),
+            transparent 27%
+        ),
+        var(--bg);
 }
-h1{
-  font-family:"Fraunces",serif;
-  font-weight:600;
-  font-size:clamp(42px,7vw,86px);
-  line-height:1.02;
-  letter-spacing:-1.5px;
-  margin:0;
-  max-width:16ch;
+
+a {
+    color: inherit;
+    text-decoration: none;
 }
-h1 em{font-style:italic;color:var(--teal)}
-.hero-copy{
-  max-width:60ch;margin:30px 0 0;
-  font-size:clamp(17px,1.6vw,20px);color:#3c3a32;
+
+button {
+    font: inherit;
+    color: inherit;
 }
-.hero-eq{
-  margin-top:34px;padding:22px 26px;
-  border:1px solid var(--line);
-  border-left:4px solid var(--amber);
-  background:var(--paper-2);
-  border-radius:4px;
-  max-width:640px;
+
+.container {
+    width: min(1120px, 90%);
+    margin: auto;
 }
-.hero-eq .lbl{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.5px;color:var(--sub);text-transform:uppercase}
-.hero-eq .exp{font-family:"JetBrains Mono",monospace;font-size:clamp(15px,2vw,19px);margin-top:8px;color:var(--ink)}
-.buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-height:50px;padding:0 26px;border-radius:3px;font-weight:600;font-size:15px;
-  border:1px solid var(--ink);transition:transform .15s,background .2s,color .2s;
+
+.wide {
+    width: min(1280px, 95%);
+    margin: auto;
 }
-.btn:hover{transform:translateY(-2px)}
-.btn.primary{background:var(--ink);color:var(--paper)}
-.btn.ghost{background:transparent;color:var(--ink)}
-.btn.amber{background:var(--amber);border-color:var(--amber);color:#fff}
-.btn.small{min-height:42px;padding:0 18px;font-size:14px}
 
-/* ================= SECTION SHELL ================= */
-section{padding:78px 0}
-.label{
-  font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:2.5px;
-  text-transform:uppercase;color:var(--amber);margin:0 0 14px;
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 10, 18, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
-h2{
-  font-family:"Fraunces",serif;font-weight:600;
-  font-size:clamp(30px,4.4vw,50px);line-height:1.08;letter-spacing:-1px;margin:0 0 22px;
+
+nav {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-.section-copy{max-width:64ch;font-size:clamp(16px,1.5vw,19px);color:#3c3a32}
 
-/* ================= CONCEPT STRIP ================= */
-.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:40px}
-.concept{background:var(--paper);padding:28px 26px}
-.concept .n{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--amber);letter-spacing:1.5px}
-.concept h3{font-family:"Fraunces",serif;font-weight:600;font-size:22px;margin:12px 0 8px}
-.concept p{margin:0;color:var(--sub);font-size:15px}
-
-/* ================= GAME ================= */
-.lab{background:var(--ink);color:var(--paper);border-radius:14px;overflow:hidden;border:1px solid #1c222c;box-shadow:0 30px 80px rgba(0,0,0,.28)}
-.lab-head{padding:30px 32px 22px;border-bottom:1px solid #1b212b}
-.lab-head .label{color:var(--gold);margin-bottom:10px}
-.lab-head h2{color:var(--paper);margin:0 0 12px}
-.lab-head p{margin:0;color:#b9b3a3;max-width:70ch;font-size:16px}
-
-.stage-wrap{position:relative;background:#080b10}
-#viz{display:block;width:100%;height:520px;touch-action:none;cursor:crosshair}
-
-.hud{
-  position:absolute;top:18px;left:18px;right:18px;z-index:20;
-  display:flex;gap:10px;flex-wrap:wrap;pointer-events:none;
+.logo {
+    font-weight: 800;
+    font-size: 20px;
 }
-.chip{
-  padding:8px 13px;border:1px solid #232a35;border-radius:9px;
-  background:rgba(8,11,16,.72);backdrop-filter:blur(6px);min-width:92px;
+
+.nav {
+    display: flex;
+    gap: 25px;
+    color: #c7ccdc;
+    font-size: 15px;
 }
-.chip small{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:1.3px;color:#7f8798;text-transform:uppercase}
-.chip strong{display:block;margin-top:3px;font-size:15px;font-weight:600}
-.chip.arc strong{color:var(--gold)}
-.g-ok{color:#57c98a}.g-warn{color:#e0b64e}.g-bad{color:#e0687a}
 
-.coach{
-  position:absolute;left:50%;bottom:18px;transform:translateX(-50%);
-  z-index:20;width:min(680px,calc(100% - 36px));
-  padding:13px 18px;border-radius:12px;text-align:center;pointer-events:none;
-  border:1px solid #262d38;background:rgba(10,13,19,.82);backdrop-filter:blur(8px);
+section {
+    padding: 100px 0;
 }
-.coach .step{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1.5px;color:var(--gold)}
-.coach strong{display:block;font-family:"Fraunces",serif;font-size:clamp(17px,2.4vw,23px);font-weight:600;margin:4px 0 2px}
-.coach span.txt{display:block;color:#b9b3a3;font-size:13.5px}
 
-.overlay{position:absolute;inset:0;z-index:40;display:grid;place-items:center;padding:24px;background:rgba(6,9,13,.8);backdrop-filter:blur(6px);transition:opacity .25s}
-.overlay.off{opacity:0;visibility:hidden;pointer-events:none}
-.ocard{width:min(560px,100%);background:#0e131b;border:1px solid #232a35;border-radius:14px;padding:32px;text-align:center}
-.ocard .label{color:var(--gold)}
-.ocard h3{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(24px,4vw,34px);margin:6px 0 14px;color:var(--paper)}
-.ocard p{color:#b9b3a3;margin:0 0 20px;font-size:15px}
-.keys{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 8px}
-.keys div{font-family:"JetBrains Mono",monospace;font-size:12px;color:#cfc9b9;border:1px solid #2a3240;border-radius:7px;padding:9px 12px;background:#11171f}
-.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0 22px}
-.result-grid div{background:#11171f;border:1px solid #232a35;border-radius:10px;padding:13px;text-align:left}
-.result-grid small{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1px;color:#7f8798;text-transform:uppercase}
-.result-grid strong{display:block;margin-top:4px;font-size:18px}
-
-.lab-foot{padding:18px 32px;border-top:1px solid #1b212b;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.lab-foot .note{color:#8b93a3;font-size:13px;max-width:60ch}
-.lab-foot .acts{display:flex;gap:10px}
-.lab-foot .btn{border-color:#39414f;color:var(--paper)}
-.lab-foot .btn.amber{border-color:var(--amber)}
-
-/* ================= ANALYSIS ================= */
-.analysis{margin-top:26px;border:1px solid var(--line);border-radius:14px;background:var(--paper);overflow:hidden}
-.analysis.hidden{display:none}
-.an-head{padding:26px 30px 8px}
-.an-head h3{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(22px,3vw,30px);margin:6px 0 6px}
-.an-head p{color:var(--sub);margin:0;max-width:70ch;font-size:15px}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:22px 0 0}
-.metric{background:var(--paper);padding:16px 18px}
-.metric small{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1px;color:var(--sub);text-transform:uppercase}
-.metric strong{display:block;margin-top:5px;font-size:17px}
-.metric strong .ref{color:var(--gold)}
-
-.an-body{padding:24px 30px 30px}
-.plot-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
-.plot-card{border:1px solid var(--line);border-radius:10px;background:#fbf9f3;padding:14px 16px}
-.plot-card h4{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sub);margin:0 0 4px;font-weight:600}
-.plot-card .cap{font-size:12.5px;color:var(--sub);margin:0 0 10px}
-canvas.plot{display:block;width:100%;height:260px;border-radius:6px;background:#fff;border:1px solid var(--line)}
-
-.mp{margin-top:22px;border-top:1px solid var(--line);padding-top:22px}
-.mp h3{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(22px,3vw,30px);margin:0 0 6px}
-.mp .lede{color:var(--sub);max-width:72ch;margin:0 0 18px;font-size:15px}
-.mp-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
-.mp-card{border:1px solid var(--line);border-radius:10px;background:#fbf9f3;padding:14px 16px}
-.mp-card h4{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sub);margin:0 0 4px;font-weight:600}
-.mp-card .cap{font-size:12.5px;color:var(--sub);margin:0 0 10px}
-canvas#crMap{display:block;width:100%;height:340px;border-radius:6px;background:#fff;border:1px solid var(--line);cursor:crosshair}
-canvas#phase{display:block;width:100%;height:340px;border-radius:6px;background:#fff;border:1px solid var(--line)}
-.sel{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--paper-2);font-size:13.5px}
-.sel b{color:var(--ink)}
-.dt-note{margin-top:14px;font-size:13px;color:var(--sub);border-left:3px solid var(--violet);padding-left:12px}
-.an-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-
-/* ================= PORTFOLIO ================= */
-.pf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:36px}
-.pf{position:relative;border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:26px;transition:transform .2s,border-color .2s,background .2s;min-height:190px;display:flex;flex-direction:column;justify-content:space-between}
-.pf:hover{transform:translateY(-4px);border-color:var(--amber);background:#fbf9f3}
-.pf-top{display:flex;justify-content:space-between;align-items:flex-start}
-.pf-tag{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber)}
-.pf h3{font-family:"Fraunces",serif;font-weight:600;font-size:22px;margin:14px 0 8px}
-.pf p{margin:0;color:var(--sub);font-size:14.5px}
-
-/* ================= CONTACT / FOOTER ================= */
-.contact h2{max-width:16ch}
-footer{border-top:1px solid var(--line);padding:34px 0;color:var(--sub);font-size:13px;font-family:"JetBrains Mono",monospace}
-
-@media(max-width:900px){
-  .concept-grid{grid-template-columns:1fr}
-  .plot-row{grid-template-columns:1fr}
-  .mp-grid{grid-template-columns:1fr}
-  .metrics{grid-template-columns:repeat(2,1fr)}
-  .pf-grid{grid-template-columns:1fr}
-  .nav-links{display:none}
-  #viz{height:440px}
+.hero {
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
 }
-@media(max-width:520px){
-  .result-grid{grid-template-columns:1fr}
-  .metrics{grid-template-columns:1fr}
+
+.eyebrow,
+.label {
+    color: var(--violet);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}.btn:hover{transform:none}.pf:hover{transform:none}}
+
+h1 {
+    margin: 0;
+    font-size: clamp(52px, 9vw, 105px);
+    line-height: 0.95;
+    letter-spacing: -5px;
+}
+
+h2 {
+    margin: 12px 0 28px;
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1.08;
+    letter-spacing: -2px;
+}
+
+.gradient {
+    color: transparent;
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            var(--violet),
+            var(--cyan)
+        );
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.hero p,
+.section-copy {
+    max-width: 900px;
+    color: var(--muted);
+    font-size: clamp(19px, 2vw, 25px);
+}
+
+.about {
+    max-width: 970px;
+    color: #c7ccda;
+    font-size: clamp(21px, 3vw, 31px);
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 34px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 800;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.primary {
+    background: #ffffff;
+    color: #070a12;
+}
+
+.secondary {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.gold {
+    background: var(--gold);
+    color: #18130a;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 24px;
+}
+
+.tag {
+    padding: 8px 13px;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.025);
+    color: #bec5d7;
+    font-size: 14px;
+}
+
+.fade {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: 0.8s;
+}
+
+.fade.show {
+    opacity: 1;
+    transform: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================================================
+   GAME
+   ========================================================= */
+
+.game {
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 28px;
+    background: #090e1a;
+    box-shadow: 0 35px 95px rgba(0, 0, 0, 0.45);
+}
+
+.hud {
+    display: grid;
+    grid-template-columns: 1.4fr repeat(4, 1fr);
+    gap: 10px;
+    padding: 16px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+        linear-gradient(
+            #0e1524,
+            #080c15
+        );
+}
+
+.hud > div {
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.hud .mission {
+    border: 0;
+    background: none;
+}
+
+.hud small {
+    display: block;
+    color: var(--sub);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.hud strong {
+    display: block;
+    font-size: 15px;
+}
+
+.mission strong {
+    font-size: 18px;
+}
+
+.mission span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.scene {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    touch-action: none;
+    background:
+        radial-gradient(
+            circle at 78% 17%,
+            rgba(173, 228, 255, 0.18),
+            transparent 14%
+        ),
+        linear-gradient(
+            #07101f 0%,
+            #101a2d 58%,
+            #080c14 100%
+        );
+}
+
+.scene::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 48%;
+    opacity: 0.55;
+    background-image:
+        radial-gradient(
+            circle at 8% 16%,
+            #d8edff 0 1px,
+            transparent 1.5px
+        ),
+        radial-gradient(
+            circle at 24% 37%,
+            #d8edff 0 1px,
+            transparent 1.5px
+        ),
+        radial-gradient(
+            circle at 41% 13%,
+            #d8edff 0 1px,
+            transparent 1.5px
+        ),
+        radial-gradient(
+            circle at 61% 30%,
+            #d8edff 0 1px,
+            transparent 1.5px
+        ),
+        radial-gradient(
+            circle at 83% 12%,
+            #d8edff 0 1px,
+            transparent 1.5px
+        );
+}
+
+.guide {
+    position: absolute;
+    z-index: 30;
+    top: 22px;
+    left: 50%;
+    width: min(760px, calc(100% - 30px));
+    transform: translateX(-50%);
+    padding: 13px 18px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    background: rgba(7, 11, 20, 0.78);
+    backdrop-filter: blur(14px);
+}
+
+.guide b {
+    display: block;
+    font-size: clamp(22px, 2.7vw, 35px);
+}
+
+.guide span {
+    color: #c5cfff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.guide p {
+    margin: 5px 0 0;
+    color: #bcc5d8;
+}
+
+.track {
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    bottom: 48px;
+    height: 154px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 26px;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 70px,
+            rgba(255, 255, 255, 0.18) 70px 105px,
+            transparent 105px 175px
+        ),
+        linear-gradient(
+            #1c2431,
+            #0a0e15
+        );
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.42);
+}
+
+.track::before,
+.track::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.track::before {
+    top: 24px;
+}
+
+.track::after {
+    bottom: 24px;
+}
+
+.finish {
+    position: absolute;
+    top: -42px;
+    bottom: -16px;
+    width: 6px;
+    background: var(--green);
+    box-shadow: 0 0 20px rgba(126, 240, 182, 0.75);
+}
+
+.finish::before {
+    content: "FINISH + STOP";
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    color: #dffff0;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.band {
+    position: absolute;
+    top: 36px;
+    height: 82px;
+    border: 1px solid rgba(102, 220, 255, 0.35);
+    border-radius: 18px;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(102, 220, 255, 0.1),
+            rgba(102, 220, 255, 0.28)
+        );
+    pointer-events: none;
+}
+
+.band.warn {
+    border-color: rgba(255, 209, 102, 0.55);
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 209, 102, 0.12),
+            rgba(255, 209, 102, 0.32)
+        );
+}
+
+.band.bad {
+    border-color: rgba(255, 112, 135, 0.6);
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 112, 135, 0.14),
+            rgba(255, 112, 135, 0.34)
+        );
+}
+
+.band span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.switch {
+    position: absolute;
+    top: 18px;
+    bottom: 18px;
+    width: 3px;
+    background: var(--gold);
+    box-shadow: 0 0 14px rgba(255, 209, 102, 0.8);
+    opacity: 0;
+}
+
+.switch.show {
+    opacity: 1;
+}
+
+.switch::before {
+    content: "EXACT SWITCH";
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    color: #ffe9aa;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.car {
+    position: absolute;
+    z-index: 18;
+    top: 46px;
+    width: 145px;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.55));
+}
+
+.car svg {
+    width: 100%;
+    display: block;
+}
+
+.car.opt {
+    top: 82px;
+    width: 130px;
+    opacity: 0;
+}
+
+.car.opt.show {
+    opacity: 1;
+}
+
+.touch {
+    position: absolute;
+    z-index: 25;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    cursor: pointer;
+    touch-action: none;
+}
+
+.zone {
+    display: flex;
+    align-items: flex-end;
+    padding: 0 18px 13px;
+    pointer-events: none;
+}
+
+.zone:last-child {
+    justify-content: flex-end;
+}
+
+.zone span {
+    padding: 7px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    background: rgba(5, 8, 14, 0.5);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.limit {
+    position: absolute;
+    z-index: 20;
+    right: 24px;
+    top: 145px;
+    width: 68px;
+    height: 68px;
+    border: 6px solid #ff6f75;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #ffffff;
+    color: #111111;
+    font-size: 21px;
+    font-weight: 900;
+}
+
+.overlay {
+    position: absolute;
+    z-index: 60;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 25px;
+    background: rgba(4, 7, 14, 0.8);
+    backdrop-filter: blur(13px);
+    transition: 0.3s;
+}
+
+.overlay.off {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.overlay-card {
+    width: min(650px, 100%);
+    padding: 34px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 24px;
+    background: rgba(9, 14, 27, 0.97);
+}
+
+.overlay-card h3 {
+    margin: 8px 0 14px;
+    font-size: clamp(30px, 5vw, 49px);
+}
+
+.overlay-card p {
+    color: var(--muted);
+}
+
+.grid4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 9px;
+    margin: 20px 0;
+}
+
+.grid4 div {
+    padding: 12px;
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.grid4 small {
+    display: block;
+    color: var(--sub);
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 17px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: #070b13;
+}
+
+.bar p {
+    margin: 0;
+    color: #aeb5c7;
+    font-size: 14px;
+}
+
+.bar-actions {
+    display: flex;
+    gap: 9px;
+}
+
+.bar .btn {
+    min-height: 44px;
+    padding: 0 17px;
+}
+
+.formula {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.formula div {
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.formula small {
+    display: block;
+    color: var(--sub);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.formula strong {
+    font-size: 14px;
+}
+
+.explain {
+    margin-top: 28px;
+    padding: 34px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background:
+        radial-gradient(
+            circle at 88% 20%,
+            rgba(156, 145, 255, 0.15),
+            transparent 28%
+        ),
+        rgba(255, 255, 255, 0.035);
+}
+
+.explain strong {
+    display: block;
+    font-size: clamp(29px, 4vw, 48px);
+    line-height: 1.1;
+}
+
+.explain p {
+    max-width: 950px;
+    color: var(--muted);
+}
+
+/* =========================================================
+   ANALYSIS
+   ========================================================= */
+
+.analysis {
+    margin-top: 28px;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 18px 0;
+}
+
+.summary div {
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.summary small {
+    display: block;
+    color: var(--sub);
+}
+
+.summary strong {
+    display: block;
+    font-size: 17px;
+}
+
+.chart {
+    display: block;
+    width: 100%;
+    height: 370px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 17px;
+    background: #060a12;
+}
+
+.why {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.why article {
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.why h4 {
+    margin: 8px 0;
+    font-size: 20px;
+}
+
+.why p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.why div {
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 13px;
+}
+
+.mp {
+    margin-top: 26px;
+    padding-top: 26px;
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.mp-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 14px;
+}
+
+.mp-card {
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 17px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.mp-card canvas {
+    display: block;
+    width: 100%;
+    height: 360px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    background: #060a12;
+    cursor: crosshair;
+}
+
+.selected {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.035);
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* =========================================================
+   PORTFOLIO
+   ========================================================= */
+
+.portal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 38px;
+}
+
+.portal {
+    min-height: 240px;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.035);
+    transition: 0.3s;
+}
+
+.portal:hover {
+    transform: translateY(-6px);
+    border-color: rgba(156, 145, 255, 0.58);
+}
+
+.portal h3 {
+    margin: 45px 0 10px;
+    font-size: 28px;
+}
+
+.portal p {
+    color: #aeb4c5;
+}
+
+footer {
+    padding: 45px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--sub);
+}
+
+@media (max-width: 950px) {
+    .hud {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hud .mission {
+        grid-column: 1 / -1;
+    }
+
+    .formula,
+    .summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .why,
+    .mp-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+    .nav {
+        display: none;
+    }
+
+    h1 {
+        letter-spacing: -3px;
+    }
+
+    .scene {
+        height: 560px;
+    }
+
+    .guide {
+        top: 16px;
+    }
+
+    .grid4,
+    .formula,
+    .summary {
+        grid-template-columns: 1fr;
+    }
+
+    .bar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .bar-actions {
+        width: 100%;
+    }
+
+    .bar-actions .btn {
+        flex: 1;
+    }
+
+    .portal-grid {
+        grid-template-columns: 1fr;
+    }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-  <nav class="container">
-    <a class="logo" href="#home">Lida <b>Lamakani</b></a>
-    <div class="nav-links">
-      <a href="#idea">The idea</a>
-      <a href="#lab">Interactive demo</a>
-      <a href="#work">Work</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
+    <nav class="container">
+        <a class="logo" href="#home">
+            LIDA LAMAKANI
+        </a>
+
+        <div class="nav">
+            <a href="#about">About</a>
+            <a href="#experience">Experience</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
 </header>
 
 <main>
 
-<!-- ============ HERO ============ -->
 <section class="hero" id="home">
-  <div class="container">
-    <p class="eyebrow">Continuous-time optimal control · Explicit MPC · Chemical engineering</p>
-    <h1>I compute the <em>best</em> decision for a system — before it ever has to make one.</h1>
-    <p class="hero-copy">
-      I'm a chemical engineering PhD researcher working on multiparametric continuous-time
-      optimal control. My work solves the control problem once, offline, as a map: given
-      any starting condition, the optimal strategy is already known. No re-solving at runtime.
-    </p>
+    <div class="container fade">
 
-    <div class="hero-eq">
-      <div class="lbl">The optimal control law, from Pontryagin's Maximum Principle</div>
-      <div class="exp">u*(t) = arg min<sub>u</sub> H(x, λ, u) &nbsp;→&nbsp; u* = −sign(λ<sub>v</sub>)</div>
-    </div>
-
-    <div class="buttons">
-      <a class="btn amber" href="#lab">Play the demo</a>
-      <a class="btn ghost" href="#idea">See the idea first</a>
-      <a class="btn ghost" href="https://github.com/LidaLMK" target="_blank" rel="noopener">GitHub</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ THE IDEA ============ -->
-<section id="idea">
-  <div class="container">
-    <p class="label">The one idea to take away</p>
-    <h2>An optimal trajectory isn't a guess. It has a structure you can prove.</h2>
-    <p class="section-copy">
-      For a system that has to reach a target as fast as possible, the best control is not smooth
-      and gradual. It is decisive: push hard, then brake hard, switching at exactly the right instant.
-      That switch is dictated by a hidden quantity called the costate. My research computes where those
-      switches happen — and how the whole strategy changes as the starting point changes.
-    </p>
-
-    <div class="concept-grid">
-      <div class="concept">
-        <div class="n">01 / STATE</div>
-        <h3>Where the system is</h3>
-        <p>Position and velocity. In the demo, how far the car is from its target and how fast it's going.</p>
-      </div>
-      <div class="concept">
-        <div class="n">02 / CONTROL</div>
-        <h3>What you can push</h3>
-        <p>Accelerate or brake, bounded. The optimal choice is almost always all-the-way one direction, then the other — this is "bang-bang" control.</p>
-      </div>
-      <div class="concept">
-        <div class="n">03 / THE MAP</div>
-        <h3>Every start, pre-solved</h3>
-        <p>Split the space of starting conditions into regions. Each region has one optimal strategy. That partition is the explicit solution.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ INTERACTIVE LAB ============ -->
-<section id="lab">
-  <div class="container">
-    <div class="lab">
-      <div class="lab-head">
-        <p class="label">Interactive research demo</p>
-        <h2>Drive to the target. Then watch the math beat you.</h2>
-        <p>
-          You control acceleration and braking to stop exactly on the target line, as fast as possible
-          without overshooting or exceeding the speed limit. Then reveal the true time-optimal solution,
-          computed live from Pontryagin's Maximum Principle — and the full map of strategies behind it.
+        <p class="eyebrow">
+            Optimization · Control · Modeling · Machine Learning
         </p>
-      </div>
 
-      <div class="stage-wrap">
-        <canvas id="viz"></canvas>
+        <h1>
+            Engineering
+            <span class="gradient">
+                intelligent systems.
+            </span>
+        </h1>
 
-        <div class="hud">
-          <div class="chip"><small>Time</small><strong id="hTime">0.00 s</strong></div>
-          <div class="chip"><small>Distance to target</small><strong id="hDist">1.00</strong></div>
-          <div class="chip"><small>Speed / limit</small><strong id="hSpeed" class="g-ok">0.00 / 0.62</strong></div>
-          <div class="chip arc"><small>Your arc</small><strong id="hArc">coast</strong></div>
-          <div class="chip"><small>Status</small><strong id="hStat" class="g-ok">ready</strong></div>
+        <p>
+            I develop mathematical and computational methods for
+            complex engineering systems, connecting optimization,
+            dynamics, control, modeling, scientific computing,
+            and data-driven intelligence.
+        </p>
+
+        <div class="buttons">
+            <a class="btn primary" href="#experience">
+                Experience my research
+            </a>
+
+            <a
+                class="btn secondary"
+                href="https://github.com/LidaLMK"
+                target="_blank"
+                rel="noopener"
+            >
+                GitHub
+            </a>
         </div>
 
-        <div class="coach">
-          <span class="step" id="cStep">STEP 1 OF 4</span>
-          <strong id="cTitle">Accelerate off the line</strong>
-          <span class="txt" id="cText">Hold the accelerator. Watch the speed climb toward the limit.</span>
+    </div>
+</section>
+
+<section id="about">
+    <div class="container fade">
+
+        <p class="label">
+            About
+        </p>
+
+        <h2>
+            Research across connected disciplines.
+        </h2>
+
+        <p class="about">
+            My work is centered on understanding, computing,
+            and improving decisions in dynamic engineering systems.
+            I move between mathematical theory, system modeling,
+            algorithm development, numerical computation, control,
+            and machine learning depending on the problem.
+        </p>
+
+        <div class="tags">
+            <span class="tag">Dynamic systems</span>
+            <span class="tag">Optimization</span>
+            <span class="tag">Optimal control</span>
+            <span class="tag">MPC</span>
+            <span class="tag">Continuous time</span>
+            <span class="tag">Multiparametric methods</span>
+            <span class="tag">Modeling</span>
+            <span class="tag">Scientific computing</span>
+            <span class="tag">Machine learning</span>
         </div>
 
-        <!-- intro -->
-        <div class="overlay" id="intro">
-          <div class="ocard">
-            <p class="label">How to drive</p>
-            <h3>Stop exactly on the line — as fast as you can.</h3>
+    </div>
+</section>
+
+<section id="experience">
+    <div class="wide fade">
+
+        <p class="label">
+            Exact interactive optimal-control experience
+        </p>
+
+        <h2>
+            The Perfect Stop.
+        </h2>
+
+        <p class="section-copy">
+            Reach the gate in minimum time and stop exactly on it.
+            The gold solution is analytically derived from the
+            continuous-time model, not generated by a heuristic
+            or random path.
+        </p>
+
+        <div class="game">
+
+            <div class="hud">
+
+                <div class="mission">
+                    <strong>
+                        Mission: minimum time, exact stop
+                    </strong>
+
+                    <span>
+                        ẋ = v, v̇ = u, with bounded acceleration,
+                        braking, and speed.
+                    </span>
+                </div>
+
+                <div>
+                    <small>Time</small>
+                    <strong id="time">0.00 s</strong>
+                </div>
+
+                <div>
+                    <small>Speed</small>
+                    <strong id="speed">0.0 m/s</strong>
+                </div>
+
+                <div>
+                    <small>Remaining</small>
+                    <strong id="remaining">120.0 m</strong>
+                </div>
+
+                <div>
+                    <small>Stopping margin</small>
+                    <strong id="margin">120.0 m</strong>
+                </div>
+
+            </div>
+
+            <div class="scene">
+
+                <div class="guide">
+                    <span id="step">STEP 1 OF 5</span>
+                    <b id="guideTitle">Accelerate.</b>
+
+                    <p id="guideText">
+                        Hold the right half. Release to coast.
+                    </p>
+                </div>
+
+                <div class="limit">
+                    22
+                </div>
+
+                <div class="track" id="track">
+
+                    <div class="finish" id="finish"></div>
+
+                    <div class="band" id="band">
+                        <span>
+                            minimum braking distance
+                        </span>
+                    </div>
+
+                    <div class="switch" id="switch"></div>
+
+                    <div class="car" id="playerCar">
+
+                        <svg viewBox="0 0 260 125">
+
+                            <defs>
+                                <linearGradient
+                                    id="b"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1"
+                                >
+                                    <stop
+                                        offset="0"
+                                        stop-color="#d7fbff"
+                                    />
+
+                                    <stop
+                                        offset=".2"
+                                        stop-color="#78e8ff"
+                                    />
+
+                                    <stop
+                                        offset=".6"
+                                        stop-color="#18b9e8"
+                                    />
+
+                                    <stop
+                                        offset="1"
+                                        stop-color="#056b9a"
+                                    />
+                                </linearGradient>
+                            </defs>
+
+                            <ellipse
+                                cx="130"
+                                cy="108"
+                                rx="104"
+                                ry="12"
+                                fill="#000"
+                                opacity=".48"
+                            />
+
+                            <path
+                                d="M24 84C38 62 60 48 87 39L111 24H163L186 39C212 48 231 62 239 84L224 101H37Z"
+                                fill="url(#b)"
+                            />
+
+                            <path
+                                d="M94 39L115 27H158L178 39L167 56H103Z"
+                                fill="#07101d"
+                            />
+
+                            <path
+                                d="M53 91H207L219 103H41Z"
+                                fill="#071018"
+                            />
+
+                            <rect
+                                x="52"
+                                y="78"
+                                width="42"
+                                height="8"
+                                rx="4"
+                                fill="#ff2e4e"
+                            />
+
+                            <rect
+                                x="166"
+                                y="78"
+                                width="42"
+                                height="8"
+                                rx="4"
+                                fill="#ff2e4e"
+                            />
+
+                            <ellipse
+                                cx="57"
+                                cy="101"
+                                rx="15"
+                                ry="18"
+                                fill="#020305"
+                            />
+
+                            <ellipse
+                                cx="203"
+                                cy="101"
+                                rx="15"
+                                ry="18"
+                                fill="#020305"
+                            />
+
+                        </svg>
+
+                    </div>
+
+                    <div class="car opt" id="optimalCar">
+
+                        <svg viewBox="0 0 260 125">
+
+                            <defs>
+                                <linearGradient
+                                    id="g"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1"
+                                >
+                                    <stop
+                                        offset="0"
+                                        stop-color="#fff7ce"
+                                    />
+
+                                    <stop
+                                        offset=".3"
+                                        stop-color="#ffe28a"
+                                    />
+
+                                    <stop
+                                        offset=".7"
+                                        stop-color="#f4b63f"
+                                    />
+
+                                    <stop
+                                        offset="1"
+                                        stop-color="#a76a09"
+                                    />
+                                </linearGradient>
+                            </defs>
+
+                            <ellipse
+                                cx="130"
+                                cy="108"
+                                rx="104"
+                                ry="12"
+                                fill="#000"
+                                opacity=".42"
+                            />
+
+                            <path
+                                d="M24 84C38 62 60 48 87 39L111 24H163L186 39C212 48 231 62 239 84L224 101H37Z"
+                                fill="url(#g)"
+                            />
+
+                            <path
+                                d="M94 39L115 27H158L178 39L167 56H103Z"
+                                fill="#211707"
+                            />
+
+                            <path
+                                d="M53 91H207L219 103H41Z"
+                                fill="#171005"
+                            />
+
+                            <ellipse
+                                cx="57"
+                                cy="101"
+                                rx="15"
+                                ry="18"
+                                fill="#020305"
+                            />
+
+                            <ellipse
+                                cx="203"
+                                cy="101"
+                                rx="15"
+                                ry="18"
+                                fill="#020305"
+                            />
+
+                        </svg>
+
+                    </div>
+
+                    <div class="touch" id="touch">
+
+                        <div class="zone">
+                            <span>
+                                HOLD LEFT · BRAKE
+                            </span>
+                        </div>
+
+                        <div class="zone">
+                            <span>
+                                HOLD RIGHT · ACCELERATE
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="overlay" id="intro">
+
+                    <div class="overlay-card">
+
+                        <p class="label">
+                            A 10-second exact-control experiment
+                        </p>
+
+                        <h3>
+                            Stop exactly at the gate.
+                        </h3>
+
+                        <p>
+                            Hold right to accelerate, left to brake,
+                            and release to coast. The speed limit is
+                            a hard constraint. The blue band is the
+                            exact minimum braking distance at your
+                            current speed.
+                        </p>
+
+                        <div
+                            class="buttons"
+                            style="justify-content:center"
+                        >
+                            <button
+                                class="btn primary"
+                                id="play"
+                            >
+                                Play now
+                            </button>
+
+                            <button
+                                class="btn secondary"
+                                id="watch"
+                            >
+                                Watch exact optimum
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="overlay off" id="result">
+
+                    <div class="overlay-card">
+
+                        <p class="label">
+                            Your experiment
+                        </p>
+
+                        <h3 id="resultTitle">
+                            Run complete.
+                        </h3>
+
+                        <div class="grid4">
+
+                            <div>
+                                <small>Stop error</small>
+                                <strong id="rError">—</strong>
+                            </div>
+
+                            <div>
+                                <small>Your time</small>
+                                <strong id="rTime">—</strong>
+                            </div>
+
+                            <div>
+                                <small>Exact minimum</small>
+                                <strong id="rOpt">—</strong>
+                            </div>
+
+                            <div>
+                                <small>Brake timing</small>
+                                <strong id="rSwitch">—</strong>
+                            </div>
+
+                        </div>
+
+                        <p id="resultText"></p>
+
+                        <button
+                            class="btn gold"
+                            id="reveal"
+                        >
+                            Reveal time, continuous time, and MP
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="bar">
+
+                <p>
+                    <strong>Simple control:</strong>
+                    hold right to accelerate, hold left to brake,
+                    release to coast. Keyboard: W/↑ and S/↓.
+                </p>
+
+                <div class="bar-actions">
+
+                    <button
+                        class="btn primary"
+                        id="start"
+                    >
+                        Start
+                    </button>
+
+                    <button
+                        class="btn secondary"
+                        id="reset"
+                    >
+                        Reset
+                    </button>
+
+                    <button
+                        class="btn secondary"
+                        id="exact"
+                    >
+                        Watch exact
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="formula">
+
+                <div>
+                    <small>Model</small>
+                    <strong>ẋ = v, v̇ = u</strong>
+                </div>
+
+                <div>
+                    <small>Control bounds</small>
+                    <strong>−7 ≤ u ≤ 5</strong>
+                </div>
+
+                <div>
+                    <small>Speed constraint</small>
+                    <strong>v ≤ 22 m/s</strong>
+                </div>
+
+                <div>
+                    <small>Objective</small>
+                    <strong>
+                        min T, x(T)=gate, v(T)=0
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="explain">
+
+            <strong>
+                One simple experiment reveals the core ideas.
+            </strong>
+
             <p>
-              One control: accelerate or brake. The catch is the same one every optimal-control
-              problem has — brake too late and you overshoot, too early and you waste time.
-              There is exactly one perfect switch point.
+                The exact switch, active speed constraint,
+                and parameter-space regions are calculated from
+                equations. This isolates why event timing,
+                continuous time, and explicit parameter-to-policy
+                structure matter.
             </p>
-            <div class="keys">
-              <div>↑ / W&nbsp;&nbsp;accelerate</div>
-              <div>↓ / S&nbsp;&nbsp;brake</div>
-              <div>hold top half of canvas = accelerate</div>
-              <div>hold bottom = brake</div>
-            </div>
-            <button class="btn amber" id="begin">Start driving</button>
-          </div>
+
         </div>
 
-        <!-- result -->
-        <div class="overlay off" id="result">
-          <div class="ocard">
-            <p class="label">Your run</p>
-            <h3 id="rTitle">Run complete</h3>
-            <div class="result-grid">
-              <div><small>Your time</small><strong id="rTime">—</strong></div>
-              <div><small>Optimal time</small><strong id="rOpt">—</strong></div>
-              <div><small>Stopped at</small><strong id="rStop">—</strong></div>
-              <div><small>Efficiency</small><strong id="rEff">—</strong></div>
-            </div>
-            <p>See exactly where the optimal controller switched — and why your run differs.</p>
-            <button class="btn amber" id="reveal">Reveal the optimal solution</button>
-          </div>
-        </div>
-      </div>
+        <div class="analysis hidden" id="analysis">
 
-      <div class="lab-foot">
-        <div class="note">
-          <strong>What you're driving:</strong> a double integrator — the textbook system where
-          time-optimal control is provably bang-bang. The reference isn't scripted; it's solved each time.
+            <p class="label">
+                Exact solution reveal
+            </p>
+
+            <h2>
+                Why time, continuous time, and MP matter.
+            </h2>
+
+            <div class="summary">
+
+                <div>
+                    <small>Exact structure</small>
+                    <strong id="sStructure">—</strong>
+                </div>
+
+                <div>
+                    <small>Exact brake event</small>
+                    <strong id="sBrake">—</strong>
+                </div>
+
+                <div>
+                    <small>Exact minimum time</small>
+                    <strong id="sTime">—</strong>
+                </div>
+
+                <div>
+                    <small>Active constraint</small>
+                    <strong id="sConstraint">—</strong>
+                </div>
+
+            </div>
+
+            <canvas
+                class="chart"
+                id="compareChart"
+            ></canvas>
+
+            <div class="why">
+
+                <article>
+                    <h4>
+                        1. Why time matters
+                    </h4>
+
+                    <p>
+                        The vehicle must reach the gate and stop
+                        while minimizing elapsed time.
+                    </p>
+
+                    <div id="whyTime">
+                        —
+                    </div>
+                </article>
+
+                <article>
+                    <h4>
+                        2. Why continuous time matters
+                    </h4>
+
+                    <p>
+                        The exact braking event usually lies
+                        between coarse sampling instants.
+                    </p>
+
+                    <div id="whyCT">
+                        —
+                    </div>
+                </article>
+
+                <article>
+                    <h4>
+                        3. Why MP matters
+                    </h4>
+
+                    <p>
+                        Initial distance and speed change feasibility,
+                        active constraints, and policy structure.
+                    </p>
+
+                    <div id="whyMP">
+                        —
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="mp">
+
+                <p class="label">
+                    Exact parameter-to-solution map
+                </p>
+
+                <h2>
+                    Change the initial condition.
+                    The exact policy changes.
+                </h2>
+
+                <p class="section-copy">
+                    Click the map. Parameters are remaining distance
+                    d and initial speed v₀. The regions come from
+                    exact feasibility and speed-limit boundaries.
+                </p>
+
+                <div class="mp-grid">
+
+                    <div class="mp-card">
+
+                        <canvas id="map"></canvas>
+
+                        <div class="selected" id="selected">
+                            —
+                        </div>
+
+                    </div>
+
+                    <div class="mp-card">
+                        <canvas id="selectedChart"></canvas>
+                    </div>
+
+                </div>
+
+                <div class="buttons">
+
+                    <button
+                        class="btn primary"
+                        id="load"
+                    >
+                        Play selected scenario
+                    </button>
+
+                    <button
+                        class="btn secondary"
+                        id="default"
+                    >
+                        Return to default
+                    </button>
+
+                </div>
+
+            </div>
+
         </div>
-        <div class="acts">
-          <button class="btn small" id="start">Start</button>
-          <button class="btn small" id="resetBtn">Reset</button>
-        </div>
-      </div>
+
     </div>
+</section>
 
-    <!-- ANALYSIS -->
-    <div class="analysis hidden" id="analysis">
-      <div class="an-head">
-        <p class="label">Analysis</p>
-        <h3>Your trajectory vs. the computed optimum</h3>
-        <p>
-          The gold curve is the true minimum-time solution for the same start, integrated from the
-          PMP switching law. The switch point is where the costate λ<sub>v</sub> changes sign — the car
-          flips from full acceleration to full braking at exactly the right instant.
+<section id="portfolio">
+    <div class="container fade">
+
+        <p class="label">
+            Portfolio
         </p>
-      </div>
 
-      <div class="metrics">
-        <div class="metric"><small>Arrival time</small><strong><span id="mYourT">—</span> / <span class="ref" id="mOptT">—</span></strong></div>
-        <div class="metric"><small>Control switches</small><strong><span id="mYourS">—</span> / <span class="ref" id="mOptS">1</span></strong></div>
-        <div class="metric"><small>Overshoot</small><strong id="mOver">—</strong></div>
-        <div class="metric"><small>Optimal arc sequence</small><strong class="ref" id="mArcs">—</strong></div>
-      </div>
+        <h2>
+            Explore an evolving body of work.
+        </h2>
 
-      <div class="an-body">
-        <div class="plot-row">
-          <div class="plot-card">
-            <h4>Position &amp; speed over time</h4>
-            <p class="cap">Your run (teal) against the time-optimal reference (gold). The dashed line is the target.</p>
-            <canvas class="plot" id="pTime"></canvas>
-          </div>
-          <div class="plot-card">
-            <h4>Control input u(t)</h4>
-            <p class="cap">The optimal input is bang-bang: +1, then −1, with a single switch. Yours is whatever you held.</p>
-            <canvas class="plot" id="pCtrl"></canvas>
-          </div>
+        <div class="portal-grid">
+
+            <a class="portal" href="#">
+                <span class="label">Research</span>
+
+                <h3>
+                    Research directions
+                </h3>
+
+                <p>
+                    Questions, theory, computational frameworks,
+                    and ongoing research.
+                </p>
+            </a>
+
+            <a class="portal" href="#">
+                <span class="label">Publications</span>
+
+                <h3>
+                    Papers and scholarly work
+                </h3>
+
+                <p>
+                    Journal articles, manuscripts, presentations,
+                    and research outputs.
+                </p>
+            </a>
+
+            <a class="portal" href="#">
+                <span class="label">Projects</span>
+
+                <h3>
+                    Selected projects
+                </h3>
+
+                <p>
+                    Computational studies, engineering applications,
+                    and collaborative work.
+                </p>
+            </a>
+
+            <a
+                class="portal"
+                href="https://github.com/LidaLMK"
+                target="_blank"
+                rel="noopener"
+            >
+                <span class="label">Software</span>
+
+                <h3>
+                    Code and computational tools
+                </h3>
+
+                <p>
+                    Numerical implementations, visualization tools,
+                    and reproducible workflows.
+                </p>
+            </a>
+
         </div>
 
-        <div class="mp">
-          <p class="label">The multiparametric result</p>
-          <h3>Every starting point, solved at once.</h3>
-          <p class="lede">
-            This is the actual contribution. Instead of solving one problem, solve them all: scan every
-            initial position and speed, record which optimal arc sequence wins, and color the space by it.
-            Click anywhere on the map to pick a start — the phase portrait on the right shows its exact
-            optimal path to the target.
-          </p>
-
-          <div class="mp-grid">
-            <div class="mp-card">
-              <h4>Critical-region map — computed, not drawn</h4>
-              <p class="cap">Axes: initial position x₀ and initial speed v₀. Each color is a distinct optimal control structure. Boundaries are the switching surfaces.</p>
-              <canvas id="crMap"></canvas>
-              <div class="sel" id="sel">Selected θ = (x₀, v₀) — click the map to choose a start.</div>
-            </div>
-            <div class="mp-card">
-              <h4>Phase portrait: state space (x, v)</h4>
-              <p class="cap">The optimal trajectory for the selected start, following the switching curve down to the target at the origin.</p>
-              <canvas id="phase"></canvas>
-              <div class="dt-note" id="dtNote">
-                In discrete time, this same problem fragments into many more regions — one per active-set
-                combination at each step. The continuous-time formulation keeps it to a handful, because each
-                region is one arc sequence. That structural reduction is the point of the work.
-              </div>
-            </div>
-          </div>
-
-          <div class="an-acts">
-            <button class="btn amber small" id="driveSel">Drive from the selected start</button>
-            <button class="btn ghost small" id="again">Reset to center</button>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </section>
 
-<!-- ============ WORK ============ -->
-<section id="work">
-  <div class="container">
-    <p class="label">Selected work</p>
-    <h2>Theory, algorithms, and real chemical process systems.</h2>
-    <p class="section-copy">
-      My research spans the proof side — costate continuity, switching-surface geometry — and the
-      computational side, applied to large nonlinear process models such as distillation columns.
-    </p>
+<section id="contact">
+    <div class="container fade">
 
-    <div class="pf-grid">
-      <a class="pf" href="#">
-        <div class="pf-top"><span class="pf-tag">Journal · under review</span><span>↗</span></div>
-        <div><h3>Explicit CT optimal control via PMP</h3>
-        <p>Continuous-time multiparametric solutions with structurally fewer critical regions than their discrete-time counterparts.</p></div>
-      </a>
-      <a class="pf" href="#">
-        <div class="pf-top"><span class="pf-tag">Conference · CDC 2026</span><span>↗</span></div>
-        <div><h3>Critical-region boundary geometry</h3>
-        <p>The geometry of the surfaces that separate one optimal strategy from another in parameter space.</p></div>
-      </a>
-      <a class="pf" href="#">
-        <div class="pf-top"><span class="pf-tag">In preparation</span><span>↗</span></div>
-        <div><h3>Curved boundaries &amp; nonlinear regions</h3>
-        <p>A computational framework for critical regions whose boundaries are genuinely nonlinear, not piecewise-affine.</p></div>
-      </a>
-      <a class="pf" href="#">
-        <div class="pf-top"><span class="pf-tag">Applied · process systems</span><span>↗</span></div>
-        <div><h3>Model reduction on a distillation column</h3>
-        <p>Surrogate modeling and multiparametric MPC on a 32-state nonlinear column within the PAROC framework.</p></div>
-      </a>
-    </div>
-  </div>
-</section>
+        <p class="label">
+            Contact
+        </p>
 
-<!-- ============ CONTACT ============ -->
-<section id="contact" class="contact">
-  <div class="container">
-    <p class="label">Contact</p>
-    <h2>Open to research and industry roles in control and optimization.</h2>
-    <p class="section-copy">
-      I build methods that connect rigorous optimal-control theory with real engineering systems.
-      If that's useful to your team, let's talk.
-    </p>
-    <div class="buttons">
-      <a class="btn primary" href="https://github.com/LidaLMK" target="_blank" rel="noopener">View GitHub</a>
-      <a class="btn ghost" href="#lab">Replay the demo</a>
+        <h2>
+            Let’s build something meaningful.
+        </h2>
+
+        <p class="about">
+            I am interested in collaborations and opportunities
+            connecting mathematics, computation, intelligent systems,
+            and real engineering problems.
+        </p>
+
     </div>
-  </div>
 </section>
 
 </main>
 
 <footer>
-  <div class="container">© <span id="yr"></span> Lida Lamakani · Continuous-time multiparametric optimal control</div>
+    <div class="container">
+        © <span id="year"></span> Lida Lamakani
+    </div>
 </footer>
 
 <script>
 "use strict";
-const $ = id => document.getElementById(id);
-$("yr").textContent = new Date().getFullYear();
 
-/* ============================================================
-   TRUE OPTIMAL CONTROL CORE
-   System: double integrator.  state = [x (position), v (velocity)]
-           x' = v ,  v' = u ,  u in [-1, +1]
-   Goal:  reach x = TARGET with v = 0, minimum time,
-          subject to speed cap v <= VMAX.
-   PMP:   H = 1 + λx·v + λv·u ;  u* = -sign(λv)  (bang-bang)
-          For the double integrator this is the classic
-          time-optimal law: accelerate, then brake, ONE switch,
-          with a saturated (constant-velocity) arc if VMAX binds.
-   Everything below is SOLVED, never hand-drawn.
-   ============================================================ */
+const $ = id =>
+    document.getElementById(id);
 
-const TARGET = 1.0;      // target position (start x measured 0..TARGET region)
-const VMAX   = 0.62;     // speed cap
-const ACCEL  = 0.85;     // acceleration force (matches player)
-const BRAKE  = 1.15;     // braking force (matches player)
+$("year").textContent =
+    new Date().getFullYear();
 
-/* Time-optimal control law evaluated at a state.
-   Returns u in {-1,0,+1}. Uses the switching curve for the
-   double integrator plus velocity saturation. */
-function optimalControl(x, v){
-  const rem = TARGET - x;                 // distance still to cover
-  const stopDist = (v*v)/(2*BRAKE);       // distance needed to brake to rest
-  // If braking now would still overshoot (or just reach), brake.
-  if (stopDist >= rem - 1e-4) return -1;
-  // Otherwise accelerate — unless we're at the speed cap, then cruise.
-  if (v >= VMAX - 1e-4) return 0;
-  return +1;
-}
+const observer =
+    new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                }
+            });
+        },
+        {
+            threshold: 0.12
+        }
+    );
 
-/* Integrate the optimal solution from a start state. Returns
-   full log + summary (arrival time, switch times, arc sequence). */
-function solveOptimal(x0, v0, dt=0.004, Tmax=16){
-  let x=x0, v=v0, t=0;
-  const log=[{t,x,v,u:0}];
-  let prevU=null, switches=0;
-  const arcs=[];
-  const n=Math.round(Tmax/dt);
-  for(let i=0;i<n;i++){
-    let u=optimalControl(x,v);
-    if(prevU!==null && u!==prevU) switches++;
-    if(arcs.length===0 || arcs[arcs.length-1]!==u) arcs.push(u);
-    prevU=u;
-    const dv = u>0 ? ACCEL*dt : u<0 ? -BRAKE*dt : 0;
-    let v2=v+dv;
-    if(v2<0) v2=0;
-    if(v2>VMAX) v2=VMAX;
-    const x2=x+(v+v2)/2*dt;
-    x=x2; v=v2; t+=dt;
-    log.push({t,x,v,u});
-    if(x>=TARGET-1e-3 && v<1.5e-2){ x=TARGET; v=0; log[log.length-1]={t,x,v,u}; break; }
-  }
-  return {log, time:t, switches, arcs, x0, v0};
-}
+document
+    .querySelectorAll(".fade")
+    .forEach(element => {
+        observer.observe(element);
+    });
 
-/* Human-readable arc sequence label */
-function arcLabel(arcs){
-  const map={ "1":"accelerate", "0":"cruise", "-1":"brake" };
-  const compact = arcs.filter(a=>a!==null);
-  return compact.map(a=>map[String(a)]).join(" → ") || "—";
-}
-
-/* Classify a start into a critical region by its optimal arc sequence.
-   This is DERIVED from the solve — the regions are whatever the math says. */
-function regionOf(x0,v0){
-  const s=solveOptimal(x0,v0);
-  const key=s.arcs.join(",");
-  // Map arc-sequence signatures to named regions + colors.
-  if(key.startsWith("-1")) return {id:"R-BRAKE", color:"#b23a48", label:"brake only", arcs:s.arcs, sol:s};
-  if(key.includes("0"))    return {id:"R-CRUISE",color:"#5b4ea8", label:"accelerate → cruise → brake", arcs:s.arcs, sol:s};
-  if(key.startsWith("1,-1"))return {id:"R-BANG",  color:"#1f6f6b", label:"accelerate → brake", arcs:s.arcs, sol:s};
-  return {id:"R-OTHER", color:"#c8622b", label:arcLabel(s.arcs), arcs:s.arcs, sol:s};
-}
-
-/* ============================================================
-   GAME STATE (player drives the SAME system, manually)
-   ============================================================ */
-const dpr = Math.min(window.devicePixelRatio||1, 2);
-const viz = $("viz"); const vx = viz.getContext("2d");
-let VW=0, VH=0;
-
-const input = { accel:false, brake:false, pointer:0 }; // pointer: +1 accel, -1 brake, 0 none
-
-const start0 = {x0:0.0, v0:0.0};
-let selStart = {x0:0.0, v0:0.0};
-
-const G = {
-  running:false, done:false,
-  x:0, v:0, t:0,
-  prevU:0, switches:0,
-  overshoot:0, stoppedAt:null,
-  log:[]
+const CONSTANTS = {
+    acceleration: 5,
+    braking: 7,
+    speedLimit: 22,
+    minimumDistance: 20,
+    maximumDistance: 170
 };
 
-const coachSteps=[
-  {title:"Accelerate off the line", text:"Hold accelerate. Speed climbs until it hits the cap."},
-  {title:"Approaching the target", text:"Now the question: when do you brake? Too late and you overshoot."},
-  {title:"Brake to stop", text:"Full brake. Try to bring the speed to zero exactly on the line."},
-  {title:"Settle on target", text:"Stop as close to the line as you can, then it locks in."}
-];
+const DEFAULT_SCENARIO = {
+    distance: 120,
+    initialSpeed: 0
+};
 
-function clamp(a,lo,hi){return Math.max(lo,Math.min(hi,a));}
+let scenario = {
+    ...DEFAULT_SCENARIO
+};
 
-function resizeViz(){
-  const r=viz.getBoundingClientRect();
-  VW=Math.max(320,r.width); VH=Math.max(360,r.height);
-  viz.width=VW*dpr; viz.height=VH*dpr;
-  vx.setTransform(dpr,0,0,dpr,0,0);
+let selectedScenario = {
+    ...DEFAULT_SCENARIO
+};
+
+let exactSolution;
+let selectedSolution;
+let exactAnimation = null;
+
+const game = {
+    running: false,
+    position: 0,
+    speed: 0,
+    time: 0,
+    control: 0,
+    hasBraked: false,
+    brakingTime: null,
+    stoppedDuration: 0,
+    history: [],
+    previousFrame: performance.now()
+};
+
+const input = {
+    accelerate: false,
+    brake: false,
+    pointerId: null
+};
+
+function clamp(
+    value,
+    minimum,
+    maximum
+) {
+    return Math.max(
+        minimum,
+        Math.min(maximum, value)
+    );
 }
 
-function effU(){
-  let u=0;
-  if(input.pointer!==0) u=input.pointer;
-  if(input.accel) u=1;
-  if(input.brake) u=-1;
-  return u;
+function format(
+    value,
+    digits = 2
+) {
+    return Number.isFinite(value)
+        ? value.toFixed(digits)
+        : "—";
 }
 
-function resetGame(showIntro, s=selStart){
-  input.accel=input.brake=false; input.pointer=0;
-  G.running=false; G.done=false;
-  G.x=s.x0; G.v=s.v0; G.t=0;
-  G.prevU=0; G.switches=0; G.overshoot=0; G.stoppedAt=null;
-  G.log=[{t:0,x:G.x,v:G.v,u:0}];
-  $("intro").classList.toggle("off",!showIntro);
-  $("result").classList.add("off");
-  $("analysis").classList.add("hidden");
-  setCoach(0,true);
-  hud("ready","g-ok");
-  drawViz();
+function minimumStoppingDistance(speed) {
+    return (
+        speed * speed
+        /
+        (
+            2
+            * CONSTANTS.braking
+        )
+    );
 }
 
-function startGame(s=selStart){
-  resetGame(false,s);
-  G.running=true;
-  G.last=performance.now();
-}
+/* =========================================================
+   EXACT ANALYTIC SOLUTION
+   ========================================================= */
 
-function coachIndex(){
-  const rem=TARGET-G.x;
-  if(G.v<VMAX*0.6 && G.x<0.25) return 0;
-  if(rem>0.28) return 1;
-  if(G.v>0.03) return 2;
-  return 3;
-}
-function setCoach(i,force){
-  $("cStep").textContent=`STEP ${i+1} OF ${coachSteps.length}`;
-  $("cTitle").textContent=coachSteps[i].title;
-  $("cText").textContent=coachSteps[i].text;
-}
+function solveExactProblem(
+    distance,
+    initialSpeed
+) {
+    const acceleration =
+        CONSTANTS.acceleration;
 
-function hud(stat,cls){
-  $("hTime").textContent=G.t.toFixed(2)+" s";
-  $("hDist").textContent=Math.max(0,TARGET-G.x).toFixed(2);
-  const spEl=$("hSpeed");
-  spEl.textContent=G.v.toFixed(2)+" / "+VMAX.toFixed(2);
-  spEl.className = G.v>=VMAX-0.005 ? "g-warn" : "g-ok";
-  const u=effU();
-  $("hArc").textContent = u>0?"accelerate":u<0?"brake":"coast";
-  if(stat){ $("hStat").textContent=stat; $("hStat").className="g "+cls; }
-}
+    const braking =
+        CONSTANTS.braking;
 
-function stepGame(dt){
-  const u=effU();
-  if(u!==G.prevU && u!==0 && G.prevU!==0) G.switches++;
-  G.prevU=u;
-  // gentle, continuous pedal force so speed is easy to hold steady
-  const ACCEL=0.85, BRAKE=1.15;
-  let dv = u>0 ? ACCEL*dt : u<0 ? -BRAKE*dt : 0;
-  let v2=G.v+dv;
-  if(v2<0) v2=0;
-  if(v2>VMAX) v2=VMAX;          // hard cap: constraint always satisfied
-  const x2=G.x+(G.v+v2)/2*dt;
-  G.x=x2; G.v=v2; G.t+=dt;
-  G.log.push({t:G.t,x:G.x,v:G.v,u});
+    const speedLimit =
+        CONSTANTS.speedLimit;
 
-  setCoach(coachIndex());
+    const stoppingDistance =
+        initialSpeed * initialSpeed
+        /
+        (
+            2 * braking
+        );
 
-  // status against the hard cap
-  let stat="on track", cls="g-ok";
-  if(G.v>=VMAX-0.005){ stat="at speed limit"; cls="g-warn"; }
-
-  // finish conditions (forgiving stop tolerance)
-  if(G.x>=TARGET && G.v<0.04){ G.stoppedAt=G.x; finish(true,"Stopped on target"); return; }
-  if(G.x>TARGET+0.02 && G.v<0.04){ G.overshoot=G.x-TARGET; G.stoppedAt=G.x; finish(false,"Overshot the target"); return; }
-  if(G.x>TARGET+0.4){ G.overshoot=G.x-TARGET; G.stoppedAt=G.x; finish(false,"Ran past the target"); return; }
-  if(G.t>16){ finish(false,"Time ran out"); return; }
-
-  hud(stat,cls);
-}
-
-function finish(success,msg){
-  if(G.done) return;
-  G.done=true; G.running=false;
-  input.accel=input.brake=false; input.pointer=0;
-
-  // optimal from the ACTUAL start used this run:
-  const optRun=solveOptimal(G.log[0].x, G.log[0].v);
-  const eff = optRun.time>0 ? clamp(Math.round(optRun.time/Math.max(G.t,1e-3)*100),0,100) : 0;
-
-  $("rTitle").textContent=msg;
-  $("rTime").textContent=G.t.toFixed(2)+" s";
-  $("rOpt").textContent=optRun.time.toFixed(2)+" s";
-  $("rStop").textContent=(G.stoppedAt??G.x).toFixed(3);
-  $("rEff").textContent=eff+"%";
-  hud(success?"reached target":"missed","g-"+(success?"ok":"bad"));
-  setTimeout(()=>$("result").classList.remove("off"),260);
-}
-
-/* ============================================================
-   GAME RENDER — a clean side-on track (position axis)
-   ============================================================ */
-function drawViz(){
-  vx.clearRect(0,0,VW,VH);
-  // background
-  vx.fillStyle="#080b10"; vx.fillRect(0,0,VW,VH);
-
-  const marginL=60, marginR=60;
-  const trackY=VH*0.60;
-  const x0px=marginL, x1px=VW-marginR;
-  const px = x => x0px + clamp(x,0,TARGET+0.35)/(TARGET+0.35)*(x1px-x0px);
-
-  // speed-limit ribbon (a subtle band showing VMAX zone context)
-  // road base
-  vx.strokeStyle="#1c2430"; vx.lineWidth=2;
-  vx.beginPath(); vx.moveTo(x0px,trackY); vx.lineTo(x1px,trackY); vx.stroke();
-
-  // tick marks
-  vx.fillStyle="#5c657a"; vx.font='11px "JetBrains Mono",monospace'; vx.textAlign="center";
-  for(let xx=0; xx<=1.0+1e-6; xx+=0.25){
-    const X=px(xx);
-    vx.strokeStyle="#182029"; vx.beginPath(); vx.moveTo(X,trackY-8); vx.lineTo(X,trackY+8); vx.stroke();
-    vx.fillText(xx.toFixed(2), X, trackY+26);
-  }
-
-  // start line
-  const sX=px(G.log.length?G.log[0].x:0);
-  // target line
-  const tX=px(TARGET);
-  vx.strokeStyle="#2f7d52"; vx.lineWidth=3;
-  vx.beginPath(); vx.moveTo(tX,trackY-46); vx.lineTo(tX,trackY+30); vx.stroke();
-  vx.fillStyle="#57c98a"; vx.font='700 12px "JetBrains Mono",monospace';
-  vx.fillText("TARGET", tX, trackY-56);
-
-  // trailing path already driven
-  if(G.log.length>1){
-    vx.strokeStyle="rgba(31,111,107,.5)"; vx.lineWidth=3;
-    vx.beginPath();
-    G.log.forEach((p,i)=>{ const X=px(p.x); const Y=trackY - Math.min(p.v/VMAX,1.3)*70;
-      i?vx.lineTo(X,Y):vx.moveTo(X,Y); });
-    vx.stroke();
-    vx.fillStyle="#7f8798"; vx.font='10px "JetBrains Mono",monospace'; vx.textAlign="left";
-    vx.fillText("speed profile", x0px+4, trackY-78);
-  }
-
-  // the car
-  const carX=px(G.x); const u=effU();
-  drawCar(carX, trackY, u, G.v);
-
-  // labels
-  vx.fillStyle="#5c657a"; vx.textAlign="left"; vx.font='11px "JetBrains Mono",monospace';
-  vx.fillText("position x  →", x0px, trackY+44);
-}
-
-function drawCar(cx,cy,u,v){
-  vx.save();
-  vx.translate(cx,cy);
-  // shadow
-  vx.fillStyle="rgba(0,0,0,.45)";
-  vx.beginPath(); vx.ellipse(0,16,26,7,0,0,Math.PI*2); vx.fill();
-  // body
-  const grad=vx.createLinearGradient(0,-18,0,14);
-  grad.addColorStop(0,"#7fe0e6"); grad.addColorStop(1,"#12787a");
-  vx.fillStyle=grad;
-  vx.beginPath();
-  vx.moveTo(-26,10); vx.quadraticCurveTo(-30,-6,-14,-12);
-  vx.quadraticCurveTo(0,-20,14,-12); vx.quadraticCurveTo(30,-6,26,10);
-  vx.closePath(); vx.fill();
-  // cabin
-  vx.fillStyle="#08303a";
-  vx.beginPath(); vx.moveTo(-11,-11); vx.quadraticCurveTo(0,-17,11,-11);
-  vx.lineTo(8,-2); vx.lineTo(-8,-2); vx.closePath(); vx.fill();
-  // wheels
-  vx.fillStyle="#05070a";
-  vx.beginPath(); vx.ellipse(-15,11,6,6,0,0,Math.PI*2); vx.fill();
-  vx.beginPath(); vx.ellipse(15,11,6,6,0,0,Math.PI*2); vx.fill();
-  // thrust / brake glow
-  if(u>0){
-    vx.fillStyle="rgba(200,98,43,.9)";
-    vx.beginPath(); vx.moveTo(-26,4); vx.lineTo(-40,0); vx.lineTo(-26,-4); vx.closePath(); vx.fill();
-  } else if(u<0){
-    vx.fillStyle="rgba(178,58,72,.95)";
-    vx.fillRect(20,-8,7,16);
-  }
-  vx.restore();
-}
-
-/* ============================================================
-   ANALYSIS PLOTS
-   ============================================================ */
-function fitCanvas(cv, minH){
-  const r=cv.getBoundingClientRect();
-  const w=Math.max(280,r.width), h=Math.max(minH,r.height);
-  cv.width=w*dpr; cv.height=h*dpr;
-  const c=cv.getContext("2d"); c.setTransform(dpr,0,0,dpr,0,0);
-  return {w,h,c};
-}
-
-let lastOpt=null;
-
-function drawTimePlot(){
-  const {w,h,c}=fitCanvas($("pTime"),220);
-  c.clearRect(0,0,w,h); c.fillStyle="#fff"; c.fillRect(0,0,w,h);
-  const pad={l:42,r:14,t:16,b:30};
-  const player=G.log, ref=lastOpt.log;
-  const Tmax=Math.max(player[player.length-1].t, ref[ref.length-1].t, 0.5);
-  const px=t=>pad.l+t/Tmax*(w-pad.l-pad.r);
-  const pyX=x=>pad.t+(1-clamp(x/(TARGET+0.2),0,1))*(h-pad.t-pad.b);
-  // axes
-  c.strokeStyle="#e3ddce"; c.lineWidth=1;
-  c.beginPath(); c.moveTo(pad.l,pad.t); c.lineTo(pad.l,h-pad.b); c.lineTo(w-pad.r,h-pad.b); c.stroke();
-  // target line
-  c.strokeStyle="#9dbfa8"; c.setLineDash([5,5]);
-  c.beginPath(); c.moveTo(pad.l,pyX(TARGET)); c.lineTo(w-pad.r,pyX(TARGET)); c.stroke();
-  c.setLineDash([]);
-  c.fillStyle="#6b6656"; c.font='10px "JetBrains Mono",monospace';
-  c.fillText("position", pad.l+4, pad.t+10);
-  c.fillText("t (s)", w-pad.r-26, h-pad.b+22);
-  // reference position
-  line(c,ref,px,pyX,"#b8892b",2.4,p=>p.t,p=>p.x);
-  // player position
-  line(c,player,px,pyX,"#1f6f6b",2.4,p=>p.t,p=>p.x);
-}
-
-function drawCtrlPlot(){
-  const {w,h,c}=fitCanvas($("pCtrl"),220);
-  c.clearRect(0,0,w,h); c.fillStyle="#fff"; c.fillRect(0,0,w,h);
-  const pad={l:42,r:14,t:16,b:30};
-  const player=G.log, ref=lastOpt.log;
-  const Tmax=Math.max(player[player.length-1].t, ref[ref.length-1].t, 0.5);
-  const px=t=>pad.l+t/Tmax*(w-pad.l-pad.r);
-  const py=u=>pad.t+(1-(u+1.2)/2.4)*(h-pad.t-pad.b);
-  c.strokeStyle="#e3ddce"; c.lineWidth=1;
-  c.beginPath(); c.moveTo(pad.l,pad.t); c.lineTo(pad.l,h-pad.b); c.lineTo(w-pad.r,h-pad.b); c.stroke();
-  // zero line
-  c.strokeStyle="#eee6d6"; c.beginPath(); c.moveTo(pad.l,py(0)); c.lineTo(w-pad.r,py(0)); c.stroke();
-  c.fillStyle="#6b6656"; c.font='10px "JetBrains Mono",monospace';
-  c.fillText("+1 accel", pad.l+4, py(1)-4);
-  c.fillText("-1 brake", pad.l+4, py(-1)+12);
-  // step-style plot
-  stepLine(c,ref,px,py,"#b8892b",2.6);
-  stepLine(c,player,px,py,"#1f6f6b",1.8);
-}
-
-function line(c,arr,px,py,color,lw,fx,fy){
-  c.strokeStyle=color; c.lineWidth=lw; c.beginPath();
-  arr.forEach((p,i)=>{ const X=px(fx(p)),Y=py(fy(p)); i?c.lineTo(X,Y):c.moveTo(X,Y); });
-  c.stroke();
-}
-function stepLine(c,arr,px,py,color,lw){
-  c.strokeStyle=color; c.lineWidth=lw; c.beginPath();
-  let started=false;
-  for(let i=0;i<arr.length;i++){
-    const X=px(arr[i].t), Y=py(arr[i].u);
-    if(!started){c.moveTo(X,Y);started=true;}
-    else{ c.lineTo(px(arr[i].t),py(arr[i-1].u)); c.lineTo(X,Y); }
-  }
-  c.stroke();
-}
-
-/* ---- critical-region map: computed by scanning the state space ---- */
-let crCache=null;
-function computeCRField(nx=110, nv=90){
-  // scan x0 in [0, 0.95], v0 in [0, VMAX*1.35]
-  const field=[];
-  const xLo=0, xHi=0.95, vLo=0, vHi=VMAX*1.35;
-  for(let j=0;j<nv;j++){
-    const row=[];
-    const v0=vLo+(vHi-vLo)*(j/(nv-1));
-    for(let i=0;i<nx;i++){
-      const x0=xLo+(xHi-xLo)*(i/(nx-1));
-      row.push(regionOf(x0,v0));
+    if (
+        distance
+        < stoppingDistance
+        - 1e-9
+    ) {
+        return {
+            feasible: false,
+            region: "R1",
+            structure: "Infeasible",
+            distance,
+            initialSpeed,
+            stoppingDistance
+        };
     }
-    field.push(row);
-  }
-  crCache={field,nx,nv,xLo,xHi,vLo,vHi};
-  return crCache;
-}
 
-function drawCRMap(){
-  const cv=$("crMap"); const {w,h,c}=fitCanvas(cv,300);
-  if(!crCache) computeCRField();
-  const {field,nx,nv,xLo,xHi,vLo,vHi}=crCache;
-  const pad={l:48,r:14,t:14,b:40};
-  const pw=w-pad.l-pad.r, ph=h-pad.t-pad.b;
-  const cw=pw/nx, ch=ph/nv;
-  c.clearRect(0,0,w,h); c.fillStyle="#fff"; c.fillRect(0,0,w,h);
-  for(let j=0;j<nv;j++){
-    for(let i=0;i<nx;i++){
-      c.fillStyle=field[j][i].color;
-      // note: v axis drawn increasing upward
-      c.fillRect(pad.l+i*cw, pad.t+(nv-1-j)*ch, cw+1, ch+1);
+    const unconstrainedPeakSpeed =
+        Math.sqrt(
+            (
+                2
+                * acceleration
+                * braking
+                * distance
+                +
+                braking
+                * initialSpeed
+                * initialSpeed
+            )
+            /
+            (
+                acceleration
+                + braking
+            )
+        );
+
+    if (
+        unconstrainedPeakSpeed
+        <= speedLimit + 1e-9
+    ) {
+        const accelerationTime =
+            Math.max(
+                0,
+                (
+                    unconstrainedPeakSpeed
+                    - initialSpeed
+                )
+                /
+                acceleration
+            );
+
+        const brakingTime =
+            unconstrainedPeakSpeed
+            /
+            braking;
+
+        return {
+            feasible: true,
+            region: "R2",
+            structure: "Accelerate → brake",
+            speedConstraintActive: false,
+            distance,
+            initialSpeed,
+            peakSpeed: unconstrainedPeakSpeed,
+            accelerationTime,
+            cruiseTime: 0,
+            brakingTime,
+            brakingStart: accelerationTime,
+            minimumTime:
+                accelerationTime
+                + brakingTime
+        };
     }
-  }
-  // boundary emphasis: where neighbor region id changes, darken
-  c.fillStyle="rgba(12,15,20,.55)";
-  for(let j=0;j<nv;j++)for(let i=0;i<nx-1;i++){
-    if(field[j][i].id!==field[j][i+1].id)
-      c.fillRect(pad.l+(i+1)*cw-0.5, pad.t+(nv-1-j)*ch, 1.4, ch+1);
-  }
-  for(let j=0;j<nv-1;j++)for(let i=0;i<nx;i++){
-    if(field[j][i].id!==field[j+1][i].id)
-      c.fillRect(pad.l+i*cw, pad.t+(nv-1-j)*ch-0.5, cw+1, 1.4);
-  }
-  // axes labels
-  c.fillStyle="#3c3a32"; c.font='11px "JetBrains Mono",monospace'; c.textAlign="center";
-  c.fillText("initial position  x₀", pad.l+pw/2, h-8);
-  c.save(); c.translate(14,pad.t+ph/2); c.rotate(-Math.PI/2);
-  c.fillText("initial speed  v₀", 0,0); c.restore();
-  c.textAlign="left";
-  // ticks
-  c.fillStyle="#6b6656"; c.font='9px "JetBrains Mono",monospace';
-  c.fillText(xLo.toFixed(1), pad.l-4, h-pad.b+14);
-  c.fillText(xHi.toFixed(2), pad.l+pw-16, h-pad.b+14);
-  c.fillText(vLo.toFixed(1), pad.l-24, pad.t+ph);
-  c.fillText(vHi.toFixed(2), pad.l-30, pad.t+8);
 
-  // selected marker
-  const mx=pad.l+(selStart.x0-xLo)/(xHi-xLo)*pw;
-  const my=pad.t+(1-(selStart.v0-vLo)/(vHi-vLo))*ph;
-  c.strokeStyle="#0c0f14"; c.lineWidth=2.5; c.fillStyle="#fff";
-  c.beginPath(); c.arc(mx,my,7,0,Math.PI*2); c.fill(); c.stroke();
+    const accelerationTime =
+        Math.max(
+            0,
+            (
+                speedLimit
+                - initialSpeed
+            )
+            /
+            acceleration
+        );
 
-  // legend
-  const legend=[
-    {c:"#1f6f6b",t:"accel → brake"},
-    {c:"#5b4ea8",t:"accel → cruise → brake"},
-    {c:"#b23a48",t:"brake only"},
-  ];
-  let ly=pad.t+6;
-  legend.forEach(L=>{
-    c.fillStyle=L.c; c.fillRect(pad.l+6,ly,12,12);
-    c.fillStyle="#0c0f14"; c.font='10px "JetBrains Mono",monospace';
-    c.fillText(L.t, pad.l+22, ly+10); ly+=17;
-  });
+    const accelerationDistance =
+        (
+            speedLimit * speedLimit
+            - initialSpeed * initialSpeed
+        )
+        /
+        (
+            2 * acceleration
+        );
+
+    const brakingDistance =
+        speedLimit * speedLimit
+        /
+        (
+            2 * braking
+        );
+
+    const cruiseDistance =
+        Math.max(
+            0,
+            distance
+            - accelerationDistance
+            - brakingDistance
+        );
+
+    const cruiseTime =
+        cruiseDistance
+        /
+        speedLimit;
+
+    const brakingTime =
+        speedLimit
+        /
+        braking;
+
+    return {
+        feasible: true,
+        region: "R3",
+        structure: "Accelerate → cruise → brake",
+        speedConstraintActive: true,
+        distance,
+        initialSpeed,
+        peakSpeed: speedLimit,
+        accelerationTime,
+        cruiseTime,
+        brakingTime,
+        brakingStart:
+            accelerationTime
+            + cruiseTime,
+        minimumTime:
+            accelerationTime
+            + cruiseTime
+            + brakingTime
+    };
 }
 
-function drawPhase(){
-  const cv=$("phase"); const {w,h,c}=fitCanvas(cv,300);
-  c.clearRect(0,0,w,h); c.fillStyle="#fff"; c.fillRect(0,0,w,h);
-  const pad={l:48,r:16,t:16,b:40};
-  const pw=w-pad.l-pad.r, ph=h-pad.t-pad.b;
-  const xLo=0,xHi=TARGET+0.05, vLo=0, vHi=VMAX*1.35;
-  const px=x=>pad.l+(x-xLo)/(xHi-xLo)*pw;
-  const py=v=>pad.t+(1-(v-vLo)/(vHi-vLo))*ph;
-  // axes
-  c.strokeStyle="#e3ddce"; c.lineWidth=1;
-  c.beginPath(); c.moveTo(pad.l,pad.t); c.lineTo(pad.l,h-pad.b); c.lineTo(w-pad.r,h-pad.b); c.stroke();
-  // switching curve v = sqrt(2*BRAKE*(TARGET - x))  (brake locus to the target)
-  c.strokeStyle="#b8892b"; c.lineWidth=1.6; c.setLineDash([5,4]);
-  c.beginPath();
-  for(let x=0;x<=TARGET;x+=0.01){
-    const v=Math.sqrt(Math.max(0,2*BRAKE*(TARGET-x)));
-    const X=px(x),Y=py(Math.min(v,vHi)); x===0?c.moveTo(X,Y):c.lineTo(X,Y);
-  }
-  c.stroke(); c.setLineDash([]);
-  c.fillStyle="#b8892b"; c.font='10px "JetBrains Mono",monospace';
-  c.fillText("switching curve", px(0.35), py(Math.min(Math.sqrt(2*BRAKE*(TARGET-0.35)),vHi))-6);
-  // target point
-  c.fillStyle="#2f7d52"; c.beginPath(); c.arc(px(TARGET),py(0),5,0,Math.PI*2); c.fill();
-  c.fillText("target", px(TARGET)-30, py(0)+16);
-  // optimal trajectory for selected start
-  const sol=solveOptimal(selStart.x0,selStart.v0);
-  c.strokeStyle="#1f6f6b"; c.lineWidth=2.6; c.beginPath();
-  sol.log.forEach((p,i)=>{ const X=px(p.x),Y=py(p.v); i?c.lineTo(X,Y):c.moveTo(X,Y); });
-  c.stroke();
-  // start dot
-  c.fillStyle="#0c0f14"; c.beginPath(); c.arc(px(selStart.x0),py(selStart.v0),5,0,Math.PI*2); c.fill();
-  // labels
-  c.fillStyle="#3c3a32"; c.font='11px "JetBrains Mono",monospace'; c.textAlign="center";
-  c.fillText("position x", pad.l+pw/2, h-8);
-  c.save(); c.translate(14,pad.t+ph/2); c.rotate(-Math.PI/2); c.fillText("speed v",0,0); c.restore();
-  c.textAlign="left";
+function exactStateAtTime(
+    time,
+    solution
+) {
+    if (!solution.feasible) {
+        return {
+            position: 0,
+            speed: solution.initialSpeed,
+            control: 0,
+            phase: "INFEASIBLE"
+        };
+    }
+
+    const acceleration =
+        CONSTANTS.acceleration;
+
+    const braking =
+        CONSTANTS.braking;
+
+    const speedLimit =
+        CONSTANTS.speedLimit;
+
+    if (
+        time
+        < solution.accelerationTime
+    ) {
+        return {
+            position:
+                solution.initialSpeed * time
+                +
+                0.5
+                * acceleration
+                * time
+                * time,
+
+            speed:
+                solution.initialSpeed
+                +
+                acceleration
+                * time,
+
+            control: acceleration,
+            phase: "ACCELERATE"
+        };
+    }
+
+    const accelerationDistance =
+        solution.initialSpeed
+        * solution.accelerationTime
+        +
+        0.5
+        * acceleration
+        * solution.accelerationTime
+        * solution.accelerationTime;
+
+    if (
+        solution.speedConstraintActive
+        &&
+        time < solution.brakingStart
+    ) {
+        const cruiseElapsed =
+            time
+            - solution.accelerationTime;
+
+        return {
+            position:
+                accelerationDistance
+                +
+                speedLimit
+                * cruiseElapsed,
+
+            speed: speedLimit,
+            control: 0,
+            phase: "CRUISE AT LIMIT"
+        };
+    }
+
+    const brakingStartPosition =
+        solution.speedConstraintActive
+            ? accelerationDistance
+                + speedLimit
+                * solution.cruiseTime
+            : accelerationDistance;
+
+    const brakingStartSpeed =
+        solution.speedConstraintActive
+            ? speedLimit
+            : solution.peakSpeed;
+
+    if (
+        time
+        < solution.minimumTime
+    ) {
+        const brakingElapsed =
+            time
+            - solution.brakingStart;
+
+        return {
+            position:
+                brakingStartPosition
+                +
+                brakingStartSpeed
+                * brakingElapsed
+                -
+                0.5
+                * braking
+                * brakingElapsed
+                * brakingElapsed,
+
+            speed:
+                Math.max(
+                    0,
+                    brakingStartSpeed
+                    -
+                    braking
+                    * brakingElapsed
+                ),
+
+            control: -braking,
+            phase: "BRAKE"
+        };
+    }
+
+    return {
+        position: solution.distance,
+        speed: 0,
+        control: 0,
+        phase: "STOPPED"
+    };
 }
 
-function updateSelection(){
-  const r=regionOf(selStart.x0,selStart.v0);
-  $("sel").innerHTML=`<b>Selected θ = (${selStart.x0.toFixed(2)}, ${selStart.v0.toFixed(2)})</b> · region <b style="color:${r.color}">${r.id}</b> · optimal: <b>${arcLabel(r.arcs)}</b> · arrival <b>${r.sol.time.toFixed(2)} s</b>`;
-  drawCRMap();
-  drawPhase();
+function createExactHistory(
+    solution,
+    timeStep = 0.02
+) {
+    const history = [];
+
+    for (
+        let time = 0;
+        time < solution.minimumTime;
+        time += timeStep
+    ) {
+        history.push({
+            time,
+            ...exactStateAtTime(
+                time,
+                solution
+            )
+        });
+    }
+
+    history.push({
+        time: solution.minimumTime,
+        ...exactStateAtTime(
+            solution.minimumTime,
+            solution
+        )
+    });
+
+    return history;
 }
 
-function showAnalysis(){
-  lastOpt=solveOptimal(G.log[0].x, G.log[0].v);
-  selStart={x0:G.log[0].x, v0:G.log[0].v};
-  $("result").classList.add("off");
-  $("analysis").classList.remove("hidden");
+/* =========================================================
+   PLAYER SIMULATION
+   ========================================================= */
 
-  $("mYourT").textContent=G.t.toFixed(2)+" s";
-  $("mOptT").textContent=lastOpt.time.toFixed(2)+" s";
-  $("mYourS").textContent=G.switches;
-  $("mOver").textContent=(G.overshoot>0? "+"+G.overshoot.toFixed(3):"0.000");
-  $("mArcs").textContent=arcLabel(lastOpt.arcs);
+function integrateState(
+    state,
+    control,
+    timeStep
+) {
+    const speedLimit =
+        CONSTANTS.speedLimit;
 
-  drawTimePlot();
-  drawCtrlPlot();
-  computeCRField();
-  updateSelection();
+    if (
+        control > 0
+        &&
+        state.speed
+        + control * timeStep
+        > speedLimit
+    ) {
+        const timeToLimit =
+            (
+                speedLimit
+                - state.speed
+            )
+            /
+            control;
 
-  setTimeout(()=>$("analysis").scrollIntoView({behavior:"smooth",block:"start"}),120);
+        state.position +=
+            state.speed
+            * timeToLimit
+            +
+            0.5
+            * control
+            * timeToLimit
+            * timeToLimit
+            +
+            speedLimit
+            * (
+                timeStep
+                - timeToLimit
+            );
+
+        state.speed =
+            speedLimit;
+    } else if (
+        control < 0
+        &&
+        state.speed
+        + control * timeStep
+        < 0
+    ) {
+        const timeToStop =
+            -state.speed
+            /
+            control;
+
+        state.position +=
+            state.speed
+            * timeToStop
+            +
+            0.5
+            * control
+            * timeToStop
+            * timeToStop;
+
+        state.speed = 0;
+    } else {
+        state.position +=
+            state.speed
+            * timeStep
+            +
+            0.5
+            * control
+            * timeStep
+            * timeStep;
+
+        state.speed =
+            clamp(
+                state.speed
+                +
+                control
+                * timeStep,
+                0,
+                speedLimit
+            );
+    }
 }
 
-/* ============================================================
-   INPUT
-   ============================================================ */
-function pointerFromEvent(e){
-  const r=viz.getBoundingClientRect();
-  const y=clamp(e.clientY-r.top,0,r.height)/r.height;
-  input.pointer = y<0.5 ? 1 : -1;   // top half accelerate, bottom brake
+function currentPlayerControl() {
+    if (input.brake) {
+        return -CONSTANTS.braking;
+    }
+
+    if (
+        input.accelerate
+        &&
+        game.speed
+        < CONSTANTS.speedLimit - 1e-8
+    ) {
+        return CONSTANTS.acceleration;
+    }
+
+    return 0;
 }
-viz.addEventListener("pointerdown",e=>{ if(!G.running)return; viz.setPointerCapture(e.pointerId); pointerFromEvent(e); });
-viz.addEventListener("pointermove",e=>{ if(G.running && input.pointer!==0) pointerFromEvent(e); });
-function relPtr(e){ if(e&&viz.hasPointerCapture?.(e.pointerId)) viz.releasePointerCapture(e.pointerId); input.pointer=0; }
-viz.addEventListener("pointerup",relPtr);
-viz.addEventListener("pointercancel",relPtr);
 
-window.addEventListener("keydown",e=>{
-  const k=e.key.toLowerCase();
-  if(["arrowup","arrowdown","w","s"].includes(k)) e.preventDefault();
-  if(k==="arrowup"||k==="w") input.accel=true;
-  if(k==="arrowdown"||k==="s") input.brake=true;
-});
-window.addEventListener("keyup",e=>{
-  const k=e.key.toLowerCase();
-  if(k==="arrowup"||k==="w") input.accel=false;
-  if(k==="arrowdown"||k==="s") input.brake=false;
-});
+function getTrackData() {
+    const rectangle =
+        $("track").getBoundingClientRect();
 
-$("crMap").addEventListener("pointerdown",e=>{
-  const cv=e.currentTarget, r=cv.getBoundingClientRect();
-  const pad={l:48,r:14,t:14,b:40};
-  const pw=r.width-pad.l-pad.r, ph=r.height-pad.t-pad.b;
-  const xLo=0,xHi=0.95,vLo=0,vHi=VMAX*1.35;
-  const fx=clamp((e.clientX-r.left-pad.l)/pw,0,1);
-  const fy=clamp((e.clientY-r.top-pad.t)/ph,0,1);
-  selStart={ x0:xLo+fx*(xHi-xLo), v0:vLo+(1-fy)*(vHi-vLo) };
-  updateSelection();
-});
+    const start =
+        rectangle.width * 0.055;
 
-/* ============================================================
+    const finish =
+        rectangle.width * 0.9;
+
+    return {
+        rectangle,
+        start,
+        finish,
+        usable:
+            finish
+            - start
+    };
+}
+
+function positionToPixels(
+    position,
+    distance = scenario.distance
+) {
+    const {
+        rectangle,
+        start,
+        finish,
+        usable
+    } = getTrackData();
+
+    if (
+        position <= distance
+    ) {
+        return (
+            start
+            +
+            clamp(
+                position / distance,
+                0,
+                1
+            )
+            * usable
+        );
+    }
+
+    return (
+        finish
+        +
+        clamp(
+            (
+                position
+                - distance
+            )
+            /
+            Math.max(
+                12,
+                distance * 0.12
+            ),
+            0,
+            1
+        )
+        * (
+            rectangle.width
+            - finish
+            - 8
+        )
+    );
+}
+
+function updateScene() {
+    const {
+        finish,
+        usable
+    } = getTrackData();
+
+    $("finish").style.left =
+        `${finish}px`;
+
+    const playerPosition =
+        positionToPixels(
+            game.position
+        );
+
+    $("playerCar").style.left =
+        `${playerPosition}px`;
+
+    const stoppingDistance =
+        minimumStoppingDistance(
+            game.speed
+        );
+
+    const bandWidth =
+        Math.max(
+            4,
+            stoppingDistance
+            /
+            scenario.distance
+            * usable
+        );
+
+    const remainingDistance =
+        scenario.distance
+        - game.position;
+
+    const stoppingMargin =
+        remainingDistance
+        - stoppingDistance;
+
+    $("band").style.left =
+        `${playerPosition}px`;
+
+    $("band").style.width =
+        `${
+            Math.min(
+                bandWidth,
+                Math.max(
+                    4,
+                    finish
+                    - playerPosition
+                    +
+                    usable * 0.18
+                )
+            )
+        }px`;
+
+    $("band").className =
+        `band ${
+            stoppingMargin < 0
+                ? "bad"
+                : stoppingMargin < 5
+                    ? "warn"
+                    : ""
+        }`;
+
+    $("band")
+        .querySelector("span")
+        .textContent =
+            stoppingDistance < 1
+                ? "stopping distance grows with speed"
+                : `${
+                    format(
+                        stoppingDistance,
+                        1
+                    )
+                } m minimum braking distance`;
+
+    $("switch").style.left =
+        `${
+            positionToPixels(
+                exactStateAtTime(
+                    exactSolution.brakingStart,
+                    exactSolution
+                ).position
+            )
+        }px`;
+
+    $("time").textContent =
+        `${format(game.time, 2)} s`;
+
+    $("speed").textContent =
+        `${format(game.speed, 1)} m/s`;
+
+    $("remaining").textContent =
+        `${format(remainingDistance, 1)} m`;
+
+    $("margin").textContent =
+        `${
+            stoppingMargin >= 0
+                ? "+"
+                : ""
+        }${
+            format(
+                stoppingMargin,
+                1
+            )
+        } m`;
+
+    $("margin").style.color =
+        stoppingMargin < 0
+            ? "var(--red)"
+            : stoppingMargin < 5
+                ? "var(--gold)"
+                : "var(--green)";
+}
+
+function updateGuide() {
+    if (!game.running) {
+        return;
+    }
+
+    const remainingDistance =
+        scenario.distance
+        - game.position;
+
+    const stoppingMargin =
+        remainingDistance
+        -
+        minimumStoppingDistance(
+            game.speed
+        );
+
+    if (
+        game.speed
+        < CONSTANTS.speedLimit * 0.72
+    ) {
+        setGuide(
+            "STEP 1 OF 5",
+            "Accelerate.",
+            "Time is the objective, so build speed quickly."
+        );
+    } else if (
+        game.speed
+        < CONSTANTS.speedLimit - 0.2
+    ) {
+        setGuide(
+            "STEP 2 OF 5",
+            "Approaching the speed constraint.",
+            "The hard limit may become active in the optimum."
+        );
+    } else if (
+        stoppingMargin
+        >
+        Math.max(
+            5,
+            game.speed * 0.35
+        )
+    ) {
+        setGuide(
+            "STEP 3 OF 5",
+            "Speed limit active.",
+            "Acceleration is blocked. Watch the stopping margin shrink continuously."
+        );
+    } else if (
+        stoppingMargin > -0.8
+        &&
+        !game.hasBraked
+    ) {
+        setGuide(
+            "STEP 4 OF 5",
+            "BRAKE NOW.",
+            "Remaining distance equals minimum braking distance. This is the continuous-time event."
+        );
+    } else {
+        setGuide(
+            "STEP 5 OF 5",
+            "Hold maximum braking.",
+            "Reach x(T)=gate with v(T)=0."
+        );
+    }
+}
+
+function setGuide(
+    step,
+    title,
+    text
+) {
+    $("step").textContent =
+        step;
+
+    $("guideTitle").textContent =
+        title;
+
+    $("guideText").textContent =
+        text;
+}
+
+function resetGame(
+    showIntro = false
+) {
+    cancelAnimationFrame(
+        exactAnimation
+    );
+
+    exactAnimation = null;
+
+    input.accelerate = false;
+    input.brake = false;
+
+    exactSolution =
+        solveExactProblem(
+            scenario.distance,
+            scenario.initialSpeed
+        );
+
+    Object.assign(
+        game,
+        {
+            running: false,
+            position: 0,
+            speed: scenario.initialSpeed,
+            time: 0,
+            control: 0,
+            hasBraked: false,
+            brakingTime: null,
+            stoppedDuration: 0,
+            history: [
+                {
+                    time: 0,
+                    position: 0,
+                    speed:
+                        scenario.initialSpeed,
+                    control: 0
+                }
+            ],
+            previousFrame:
+                performance.now()
+        }
+    );
+
+    $("intro").classList.toggle(
+        "off",
+        !showIntro
+    );
+
+    $("result").classList.add(
+        "off"
+    );
+
+    $("analysis").classList.add(
+        "hidden"
+    );
+
+    $("optimalCar").classList.remove(
+        "show"
+    );
+
+    $("switch").classList.remove(
+        "show"
+    );
+
+    $("playerCar").style.opacity =
+        "1";
+
+    setGuide(
+        "STEP 1 OF 5",
+        "Accelerate.",
+        "Hold the right half. Release to coast."
+    );
+
+    updateScene();
+}
+
+function startGame() {
+    if (!exactSolution.feasible) {
+        return;
+    }
+
+    resetGame(false);
+
+    game.running = true;
+
+    game.previousFrame =
+        performance.now();
+}
+
+function updateGame(
+    timeStep
+) {
+    const control =
+        currentPlayerControl();
+
+    if (
+        control < 0
+        &&
+        !game.hasBraked
+    ) {
+        game.hasBraked = true;
+        game.brakingTime =
+            game.time;
+    }
+
+    game.control =
+        control;
+
+    integrateState(
+        game,
+        control,
+        timeStep
+    );
+
+    game.time +=
+        timeStep;
+
+    game.history.push({
+        time: game.time,
+        position: game.position,
+        speed: game.speed,
+        control
+    });
+
+    updateGuide();
+    updateScene();
+
+    if (
+        game.hasBraked
+        &&
+        game.speed < 0.03
+    ) {
+        game.stoppedDuration +=
+            timeStep;
+
+        if (
+            game.stoppedDuration > 0.12
+        ) {
+            finishGame();
+        }
+    } else {
+        game.stoppedDuration = 0;
+    }
+
+    if (
+        game.position
+        >
+        scenario.distance
+        +
+        Math.max(
+            18,
+            scenario.distance * 0.16
+        )
+    ) {
+        finishGame();
+    }
+
+    if (
+        game.time
+        >
+        Math.max(
+            18,
+            exactSolution.minimumTime + 9
+        )
+    ) {
+        finishGame();
+    }
+}
+
+function finishGame() {
+    if (!game.running) {
+        return;
+    }
+
+    game.running = false;
+
+    input.accelerate = false;
+    input.brake = false;
+
+    const stoppingError =
+        game.position
+        - scenario.distance;
+
+    const switchingError =
+        game.brakingTime === null
+            ? null
+            : game.brakingTime
+                - exactSolution.brakingStart;
+
+    $("resultTitle").textContent =
+        Math.abs(stoppingError) <= 1.2
+            ? "Feasible stop achieved."
+            : stoppingError < 0
+                ? "You stopped before the gate."
+                : "You stopped beyond the gate.";
+
+    $("rError").textContent =
+        `${
+            stoppingError >= 0
+                ? "+"
+                : ""
+        }${
+            format(
+                stoppingError,
+                2
+            )
+        } m`;
+
+    $("rTime").textContent =
+        `${format(game.time, 2)} s`;
+
+    $("rOpt").textContent =
+        `${
+            format(
+                exactSolution.minimumTime,
+                2
+            )
+        } s`;
+
+    $("rSwitch").textContent =
+        switchingError === null
+            ? "No brake"
+            : `${
+                switchingError >= 0
+                    ? "+"
+                    : ""
+            }${
+                format(
+                    switchingError,
+                    2
+                )
+            } s`;
+
+    $("resultText").textContent =
+        switchingError === null
+            ? "No braking switch was created."
+            : `Your first braking action was ${
+                format(
+                    Math.abs(switchingError),
+                    2
+                )
+            } s ${
+                switchingError > 0
+                    ? "late"
+                    : "early"
+            }.`;
+
+    setTimeout(
+        () => {
+            $("result").classList.remove(
+                "off"
+            );
+        },
+        180
+    );
+}
+
+/* =========================================================
+   EXACT ANIMATION
+   ========================================================= */
+
+function watchExactSolution() {
+    if (!exactSolution.feasible) {
+        return;
+    }
+
+    resetGame(false);
+
+    $("playerCar").style.opacity =
+        "0";
+
+    $("optimalCar").classList.add(
+        "show"
+    );
+
+    $("switch").classList.add(
+        "show"
+    );
+
+    const animationStart =
+        performance.now();
+
+    const animationDuration =
+        Math.max(
+            4.5,
+            exactSolution.minimumTime * 0.55
+        );
+
+    function animateExact(now) {
+        const progress =
+            clamp(
+                (
+                    now
+                    - animationStart
+                )
+                /
+                (
+                    animationDuration
+                    * 1000
+                ),
+                0,
+                1
+            );
+
+        const time =
+            progress
+            * exactSolution.minimumTime;
+
+        const state =
+            exactStateAtTime(
+                time,
+                exactSolution
+            );
+
+        $("optimalCar").style.left =
+            `${
+                positionToPixels(
+                    state.position
+                )
+            }px`;
+
+        $("time").textContent =
+            `${format(time, 2)} s`;
+
+        $("speed").textContent =
+            `${format(state.speed, 1)} m/s`;
+
+        $("remaining").textContent =
+            `${
+                format(
+                    scenario.distance
+                    - state.position,
+                    1
+                )
+            } m`;
+
+        $("margin").textContent =
+            state.phase;
+
+        setGuide(
+            "EXACT SOLUTION",
+            state.phase,
+            state.phase === "BRAKE"
+                ? `Exact switch at t=${
+                    format(
+                        exactSolution.brakingStart,
+                        3
+                    )
+                } s.`
+                : state.phase === "CRUISE AT LIMIT"
+                    ? "The speed constraint is active, so u*(t)=0."
+                    : "Maximum acceleration is time-optimal."
+        );
+
+        if (progress < 1) {
+            exactAnimation =
+                requestAnimationFrame(
+                    animateExact
+                );
+        }
+    }
+
+    exactAnimation =
+        requestAnimationFrame(
+            animateExact
+        );
+}
+
+function animationLoop(now) {
+    const timeStep =
+        Math.min(
+            0.035,
+            Math.max(
+                0,
+                (
+                    now
+                    - game.previousFrame
+                )
+                /
+                1000
+                || 0
+            )
+        );
+
+    game.previousFrame =
+        now;
+
+    if (game.running) {
+        updateGame(
+            timeStep
+        );
+    }
+
+    requestAnimationFrame(
+        animationLoop
+    );
+}
+
+/* =========================================================
+   CONTINUOUS-TIME SAMPLING COMPARISON
+   ========================================================= */
+
+function sampledStoppingPosition(
+    switchingTime,
+    solution
+) {
+    let position = 0;
+    let speed =
+        solution.initialSpeed;
+
+    if (
+        switchingTime
+        <= solution.accelerationTime
+    ) {
+        position =
+            speed
+            * switchingTime
+            +
+            0.5
+            * CONSTANTS.acceleration
+            * switchingTime
+            * switchingTime;
+
+        speed =
+            Math.min(
+                CONSTANTS.speedLimit,
+                speed
+                +
+                CONSTANTS.acceleration
+                * switchingTime
+            );
+    } else {
+        position =
+            solution.initialSpeed
+            * solution.accelerationTime
+            +
+            0.5
+            * CONSTANTS.acceleration
+            * solution.accelerationTime
+            * solution.accelerationTime;
+
+        speed =
+            solution.initialSpeed
+            +
+            CONSTANTS.acceleration
+            * solution.accelerationTime;
+
+        if (
+            solution.speedConstraintActive
+        ) {
+            position +=
+                CONSTANTS.speedLimit
+                *
+                (
+                    switchingTime
+                    - solution.accelerationTime
+                );
+
+            speed =
+                CONSTANTS.speedLimit;
+        } else {
+            const additionalTime =
+                switchingTime
+                - solution.accelerationTime;
+
+            const timeToLimit =
+                (
+                    CONSTANTS.speedLimit
+                    - speed
+                )
+                /
+                CONSTANTS.acceleration;
+
+            if (
+                additionalTime
+                <= timeToLimit
+            ) {
+                position +=
+                    speed
+                    * additionalTime
+                    +
+                    0.5
+                    * CONSTANTS.acceleration
+                    * additionalTime
+                    * additionalTime;
+
+                speed +=
+                    CONSTANTS.acceleration
+                    * additionalTime;
+            } else {
+                position +=
+                    speed
+                    * timeToLimit
+                    +
+                    0.5
+                    * CONSTANTS.acceleration
+                    * timeToLimit
+                    * timeToLimit
+                    +
+                    CONSTANTS.speedLimit
+                    *
+                    (
+                        additionalTime
+                        - timeToLimit
+                    );
+
+                speed =
+                    CONSTANTS.speedLimit;
+            }
+        }
+    }
+
+    return (
+        position
+        +
+        speed * speed
+        /
+        (
+            2
+            * CONSTANTS.braking
+        )
+    );
+}
+
+/* =========================================================
+   ANALYSIS
+   ========================================================= */
+
+function revealAnalysis() {
+    $("result").classList.add(
+        "off"
+    );
+
+    $("analysis").classList.remove(
+        "hidden"
+    );
+
+    const earlySwitch =
+        Math.floor(
+            exactSolution.brakingStart
+        );
+
+    const lateSwitch =
+        Math.ceil(
+            exactSolution.brakingStart
+        );
+
+    const earlyError =
+        sampledStoppingPosition(
+            earlySwitch,
+            exactSolution
+        )
+        -
+        scenario.distance;
+
+    const lateError =
+        sampledStoppingPosition(
+            lateSwitch,
+            exactSolution
+        )
+        -
+        scenario.distance;
+
+    const playerError =
+        game.position
+        - scenario.distance;
+
+    $("sStructure").textContent =
+        exactSolution.structure;
+
+    $("sBrake").textContent =
+        `t = ${
+            format(
+                exactSolution.brakingStart,
+                3
+            )
+        } s`;
+
+    $("sTime").textContent =
+        `T* = ${
+            format(
+                exactSolution.minimumTime,
+                3
+            )
+        } s`;
+
+    $("sConstraint").textContent =
+        exactSolution.speedConstraintActive
+            ? "Speed limit active"
+            : "Speed limit inactive";
+
+    $("whyTime").textContent =
+        `Your stop error: ${
+            playerError >= 0
+                ? "+"
+                : ""
+        }${
+            format(
+                playerError,
+                2
+            )
+        } m. Exact minimum time: ${
+            format(
+                exactSolution.minimumTime,
+                3
+            )
+        } s.`;
+
+    $("whyCT").textContent =
+        `Exact brake: ${
+            format(
+                exactSolution.brakingStart,
+                3
+            )
+        } s. A 1 s grid gives ${
+            earlySwitch
+        }.0 s → ${
+            earlyError >= 0
+                ? "+"
+                : ""
+        }${
+            format(
+                earlyError,
+                2
+            )
+        } m or ${
+            lateSwitch
+        }.0 s → ${
+            lateError >= 0
+                ? "+"
+                : ""
+        }${
+            format(
+                lateError,
+                2
+            )
+        } m.`;
+
+    $("whyMP").textContent =
+        `θ=(${
+            format(
+                scenario.distance,
+                1
+            )
+        } m, ${
+            format(
+                scenario.initialSpeed,
+                1
+            )
+        } m/s) lies in ${
+            exactSolution.region
+        }: ${
+            exactSolution.structure
+        }.`;
+
+    drawComparisonChart();
+
+    selectedScenario = {
+        ...scenario
+    };
+
+    updateSelectedScenario();
+
+    setTimeout(
+        () => {
+            $("analysis").scrollIntoView({
+                behavior: "smooth"
+            });
+        },
+        80
+    );
+}
+
+function resizeCanvas(
+    canvas,
+    minimumHeight
+) {
+    const rectangle =
+        canvas.getBoundingClientRect();
+
+    const width =
+        Math.max(
+            320,
+            rectangle.width
+        );
+
+    const height =
+        Math.max(
+            minimumHeight,
+            rectangle.height
+        );
+
+    const pixelRatio =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
+    canvas.width =
+        width * pixelRatio;
+
+    canvas.height =
+        height * pixelRatio;
+
+    const context =
+        canvas.getContext("2d");
+
+    context.setTransform(
+        pixelRatio,
+        0,
+        0,
+        pixelRatio,
+        0,
+        0
+    );
+
+    return {
+        context,
+        width,
+        height
+    };
+}
+
+function drawComparisonChart() {
+    const canvas =
+        $("compareChart");
+
+    const {
+        context,
+        width,
+        height
+    } =
+        resizeCanvas(
+            canvas,
+            340
+        );
+
+    context.fillStyle =
+        "#060a12";
+
+    context.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+    const rows = [
+        {
+            name: "x(t)",
+            minimum: 0,
+            maximum:
+                Math.max(
+                    scenario.distance * 1.1,
+                    game.position
+                ),
+            value:
+                point => point.position
+        },
+        {
+            name: "v(t)",
+            minimum: 0,
+            maximum:
+                CONSTANTS.speedLimit,
+            value:
+                point => point.speed
+        },
+        {
+            name: "u(t)",
+            minimum:
+                -CONSTANTS.braking,
+            maximum:
+                CONSTANTS.acceleration,
+            value:
+                point => point.control
+        }
+    ];
+
+    const exactHistory =
+        createExactHistory(
+            exactSolution
+        );
+
+    const maximumTime =
+        Math.max(
+            exactSolution.minimumTime,
+            game.history.at(-1)?.time
+            || exactSolution.minimumTime
+        );
+
+    const left = 55;
+    const right = 15;
+    const top = 15;
+
+    const rowHeight =
+        (
+            height - 35
+        )
+        /
+        3;
+
+    rows.forEach(
+        (
+            row,
+            index
+        ) => {
+            const rowTop =
+                top
+                +
+                index
+                * rowHeight;
+
+            const rowBottom =
+                rowTop
+                +
+                rowHeight
+                - 12;
+
+            context.strokeStyle =
+                "rgba(255,255,255,.1)";
+
+            context.beginPath();
+
+            context.moveTo(
+                left,
+                rowTop
+            );
+
+            context.lineTo(
+                left,
+                rowBottom
+            );
+
+            context.lineTo(
+                width - right,
+                rowBottom
+            );
+
+            context.stroke();
+
+            context.fillStyle =
+                "#99a4b8";
+
+            context.font =
+                "11px Arial";
+
+            context.fillText(
+                row.name,
+                10,
+                rowTop + 13
+            );
+
+            function drawSeries(
+                points,
+                color
+            ) {
+                context.strokeStyle =
+                    color;
+
+                context.lineWidth =
+                    2.5;
+
+                context.beginPath();
+
+                points.forEach(
+                    (
+                        point,
+                        pointIndex
+                    ) => {
+                        const x =
+                            left
+                            +
+                            point.time
+                            /
+                            maximumTime
+                            *
+                            (
+                                width
+                                - left
+                                - right
+                            );
+
+                        const y =
+                            rowBottom
+                            -
+                            (
+                                row.value(point)
+                                - row.minimum
+                            )
+                            /
+                            (
+                                row.maximum
+                                - row.minimum
+                            )
+                            *
+                            (
+                                rowBottom
+                                - rowTop
+                            );
+
+                        if (
+                            pointIndex === 0
+                        ) {
+                            context.moveTo(
+                                x,
+                                y
+                            );
+                        } else {
+                            context.lineTo(
+                                x,
+                                y
+                            );
+                        }
+                    }
+                );
+
+                context.stroke();
+            }
+
+            drawSeries(
+                game.history,
+                "#65d7ff"
+            );
+
+            drawSeries(
+                exactHistory,
+                "#ffd166"
+            );
+        }
+    );
+}
+
+/* =========================================================
+   MULTIPARAMETRIC MAP
+   ========================================================= */
+
+function drawParameterMap() {
+    const canvas =
+        $("map");
+
+    const {
+        context,
+        width,
+        height
+    } =
+        resizeCanvas(
+            canvas,
+            340
+        );
+
+    const padding = {
+        left: 55,
+        right: 15,
+        top: 20,
+        bottom: 42
+    };
+
+    const plotWidth =
+        width
+        - padding.left
+        - padding.right;
+
+    const plotHeight =
+        height
+        - padding.top
+        - padding.bottom;
+
+    function xFromDistance(distance) {
+        return (
+            padding.left
+            +
+            (
+                distance
+                - CONSTANTS.minimumDistance
+            )
+            /
+            (
+                CONSTANTS.maximumDistance
+                - CONSTANTS.minimumDistance
+            )
+            *
+            plotWidth
+        );
+    }
+
+    function yFromSpeed(speed) {
+        return (
+            padding.top
+            +
+            (
+                1
+                - speed
+                / CONSTANTS.speedLimit
+            )
+            *
+            plotHeight
+        );
+    }
+
+    context.fillStyle =
+        "#060a12";
+
+    context.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+    for (
+        let row = 0;
+        row < plotHeight;
+        row += 2
+    ) {
+        const initialSpeed =
+            CONSTANTS.speedLimit
+            *
+            (
+                1
+                - row / plotHeight
+            );
+
+        const infeasibleBoundary =
+            initialSpeed
+            * initialSpeed
+            /
+            (
+                2
+                * CONSTANTS.braking
+            );
+
+        const speedActiveBoundary =
+            (
+                (
+                    CONSTANTS.acceleration
+                    + CONSTANTS.braking
+                )
+                *
+                CONSTANTS.speedLimit
+                *
+                CONSTANTS.speedLimit
+                -
+                CONSTANTS.braking
+                *
+                initialSpeed
+                *
+                initialSpeed
+            )
+            /
+            (
+                2
+                *
+                CONSTANTS.acceleration
+                *
+                CONSTANTS.braking
+            );
+
+        const infeasibleX =
+            xFromDistance(
+                clamp(
+                    infeasibleBoundary,
+                    CONSTANTS.minimumDistance,
+                    CONSTANTS.maximumDistance
+                )
+            );
+
+        const activeX =
+            xFromDistance(
+                clamp(
+                    speedActiveBoundary,
+                    CONSTANTS.minimumDistance,
+                    CONSTANTS.maximumDistance
+                )
+            );
+
+        context.fillStyle =
+            "rgba(255,112,135,.3)";
+
+        context.fillRect(
+            padding.left,
+            padding.top + row,
+            Math.max(
+                0,
+                infeasibleX
+                - padding.left
+            ),
+            2
+        );
+
+        context.fillStyle =
+            "rgba(102,220,255,.25)";
+
+        context.fillRect(
+            Math.max(
+                padding.left,
+                infeasibleX
+            ),
+            padding.top + row,
+            Math.max(
+                0,
+                Math.min(
+                    width - padding.right,
+                    activeX
+                )
+                -
+                Math.max(
+                    padding.left,
+                    infeasibleX
+                )
+            ),
+            2
+        );
+
+        context.fillStyle =
+            "rgba(156,145,255,.28)";
+
+        context.fillRect(
+            Math.max(
+                padding.left,
+                activeX
+            ),
+            padding.top + row,
+            Math.max(
+                0,
+                width
+                - padding.right
+                -
+                Math.max(
+                    padding.left,
+                    activeX
+                )
+            ),
+            2
+        );
+    }
+
+    context.fillStyle =
+        "#ffffff";
+
+    context.font =
+        "700 13px Arial";
+
+    context.fillText(
+        "R1 INFEASIBLE",
+        padding.left + 8,
+        padding.top + 20
+    );
+
+    context.fillText(
+        "R2 ACCELERATE → BRAKE",
+        padding.left
+        + plotWidth * 0.26,
+        padding.top
+        + plotHeight * 0.68
+    );
+
+    context.fillText(
+        "R3 SPEED LIMIT ACTIVE",
+        padding.left
+        + plotWidth * 0.66,
+        padding.top + 30
+    );
+
+    context.strokeStyle =
+        "#ffd166";
+
+    context.lineWidth =
+        5;
+
+    context.beginPath();
+
+    context.arc(
+        xFromDistance(
+            selectedScenario.distance
+        ),
+        yFromSpeed(
+            selectedScenario.initialSpeed
+        ),
+        8,
+        0,
+        Math.PI * 2
+    );
+
+    context.stroke();
+
+    context.fillStyle =
+        "#98a3b8";
+
+    context.font =
+        "11px Arial";
+
+    context.textAlign =
+        "center";
+
+    context.fillText(
+        "remaining distance d (m)",
+        padding.left
+        + plotWidth / 2,
+        height - 8
+    );
+
+    context.textAlign =
+        "left";
+}
+
+function drawSelectedTrajectory() {
+    const canvas =
+        $("selectedChart");
+
+    const {
+        context,
+        width,
+        height
+    } =
+        resizeCanvas(
+            canvas,
+            340
+        );
+
+    context.fillStyle =
+        "#060a12";
+
+    context.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+    if (!selectedSolution.feasible) {
+        context.fillStyle =
+            "#ff95a6";
+
+        context.font =
+            "700 22px Arial";
+
+        context.textAlign =
+            "center";
+
+        context.fillText(
+            "INFEASIBLE",
+            width / 2,
+            height / 2
+        );
+
+        return;
+    }
+
+    const exactHistory =
+        createExactHistory(
+            selectedSolution
+        );
+
+    const rows = [
+        {
+            name: "x(t)",
+            minimum: 0,
+            maximum:
+                selectedSolution.distance,
+            value:
+                point => point.position
+        },
+        {
+            name: "v(t)",
+            minimum: 0,
+            maximum:
+                CONSTANTS.speedLimit,
+            value:
+                point => point.speed
+        },
+        {
+            name: "u*(t)",
+            minimum:
+                -CONSTANTS.braking,
+            maximum:
+                CONSTANTS.acceleration,
+            value:
+                point => point.control
+        }
+    ];
+
+    const left = 50;
+    const right = 14;
+    const top = 14;
+
+    const rowHeight =
+        (
+            height - 28
+        )
+        /
+        3;
+
+    rows.forEach(
+        (
+            row,
+            index
+        ) => {
+            const rowTop =
+                top
+                +
+                index
+                * rowHeight;
+
+            const rowBottom =
+                rowTop
+                +
+                rowHeight
+                - 12;
+
+            context.strokeStyle =
+                "rgba(255,255,255,.1)";
+
+            context.beginPath();
+
+            context.moveTo(
+                left,
+                rowTop
+            );
+
+            context.lineTo(
+                left,
+                rowBottom
+            );
+
+            context.lineTo(
+                width - right,
+                rowBottom
+            );
+
+            context.stroke();
+
+            context.fillStyle =
+                "#98a3b8";
+
+            context.font =
+                "11px Arial";
+
+            context.fillText(
+                row.name,
+                8,
+                rowTop + 13
+            );
+
+            context.strokeStyle =
+                "#ffd166";
+
+            context.lineWidth =
+                2.6;
+
+            context.beginPath();
+
+            exactHistory.forEach(
+                (
+                    point,
+                    pointIndex
+                ) => {
+                    const x =
+                        left
+                        +
+                        point.time
+                        /
+                        selectedSolution.minimumTime
+                        *
+                        (
+                            width
+                            - left
+                            - right
+                        );
+
+                    const y =
+                        rowBottom
+                        -
+                        (
+                            row.value(point)
+                            - row.minimum
+                        )
+                        /
+                        (
+                            row.maximum
+                            - row.minimum
+                        )
+                        *
+                        (
+                            rowBottom
+                            - rowTop
+                        );
+
+                    if (
+                        pointIndex === 0
+                    ) {
+                        context.moveTo(
+                            x,
+                            y
+                        );
+                    } else {
+                        context.lineTo(
+                            x,
+                            y
+                        );
+                    }
+                }
+            );
+
+            context.stroke();
+        }
+    );
+}
+
+function updateSelectedScenario() {
+    selectedSolution =
+        solveExactProblem(
+            selectedScenario.distance,
+            selectedScenario.initialSpeed
+        );
+
+    drawParameterMap();
+    drawSelectedTrajectory();
+
+    if (!selectedSolution.feasible) {
+        $("selected").innerHTML =
+            `<strong style="color:var(--red)">
+                R1 · INFEASIBLE
+            </strong>
+            <br>
+            Minimum stopping distance:
+            ${
+                format(
+                    selectedSolution.stoppingDistance,
+                    1
+                )
+            } m.`;
+
+        $("load").disabled =
+            true;
+
+        return;
+    }
+
+    $("selected").innerHTML =
+        `<strong>
+            ${selectedSolution.region}
+            ·
+            ${selectedSolution.structure}
+        </strong>
+        <br>
+        d=${
+            format(
+                selectedScenario.distance,
+                1
+            )
+        } m,
+        v₀=${
+            format(
+                selectedScenario.initialSpeed,
+                1
+            )
+        } m/s
+        · brake at
+        ${
+            format(
+                selectedSolution.brakingStart,
+                3
+            )
+        } s
+        · T*=${
+            format(
+                selectedSolution.minimumTime,
+                3
+            )
+        } s.`;
+
+    $("load").disabled =
+        false;
+}
+
+function handleMapClick(event) {
+    const rectangle =
+        $("map").getBoundingClientRect();
+
+    const padding = {
+        left: 55,
+        right: 15,
+        top: 20,
+        bottom: 42
+    };
+
+    const plotWidth =
+        rectangle.width
+        - padding.left
+        - padding.right;
+
+    const plotHeight =
+        rectangle.height
+        - padding.top
+        - padding.bottom;
+
+    const x =
+        clamp(
+            event.clientX
+            - rectangle.left,
+            padding.left,
+            padding.left
+            + plotWidth
+        );
+
+    const y =
+        clamp(
+            event.clientY
+            - rectangle.top,
+            padding.top,
+            padding.top
+            + plotHeight
+        );
+
+    selectedScenario.distance =
+        CONSTANTS.minimumDistance
+        +
+        (
+            x - padding.left
+        )
+        /
+        plotWidth
+        *
+        (
+            CONSTANTS.maximumDistance
+            - CONSTANTS.minimumDistance
+        );
+
+    selectedScenario.initialSpeed =
+        (
+            1
+            -
+            (
+                y - padding.top
+            )
+            /
+            plotHeight
+        )
+        *
+        CONSTANTS.speedLimit;
+
+    updateSelectedScenario();
+}
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+function setPointerControl(event) {
+    const rectangle =
+        $("touch").getBoundingClientRect();
+
+    input.pointerId =
+        event.pointerId;
+
+    input.brake =
+        event.clientX
+        - rectangle.left
+        <
+        rectangle.width / 2;
+
+    input.accelerate =
+        !input.brake;
+}
+
+$("touch").addEventListener(
+    "pointerdown",
+    event => {
+        if (!game.running) {
+            return;
+        }
+
+        $("touch").setPointerCapture(
+            event.pointerId
+        );
+
+        setPointerControl(event);
+    }
+);
+
+$("touch").addEventListener(
+    "pointermove",
+    event => {
+        if (
+            game.running
+            &&
+            input.pointerId
+            === event.pointerId
+        ) {
+            setPointerControl(event);
+        }
+    }
+);
+
+function releasePointer(event) {
+    if (
+        input.pointerId
+        === event.pointerId
+    ) {
+        input.pointerId =
+            null;
+
+        input.accelerate =
+            false;
+
+        input.brake =
+            false;
+    }
+}
+
+$("touch").addEventListener(
+    "pointerup",
+    releasePointer
+);
+
+$("touch").addEventListener(
+    "pointercancel",
+    releasePointer
+);
+
+window.addEventListener(
+    "keydown",
+    event => {
+        const key =
+            event.key.toLowerCase();
+
+        if (
+            key === "w"
+            ||
+            key === "arrowup"
+        ) {
+            input.accelerate =
+                true;
+        }
+
+        if (
+            key === "s"
+            ||
+            key === "arrowdown"
+        ) {
+            input.brake =
+                true;
+        }
+    }
+);
+
+window.addEventListener(
+    "keyup",
+    event => {
+        const key =
+            event.key.toLowerCase();
+
+        if (
+            key === "w"
+            ||
+            key === "arrowup"
+        ) {
+            input.accelerate =
+                false;
+        }
+
+        if (
+            key === "s"
+            ||
+            key === "arrowdown"
+        ) {
+            input.brake =
+                false;
+        }
+    }
+);
+
+/* =========================================================
    BUTTONS
-   ============================================================ */
-$("begin").addEventListener("click",()=>startGame(selStart));
-$("start").addEventListener("click",()=>startGame(selStart));
-$("resetBtn").addEventListener("click",()=>resetGame(false,selStart));
-$("reveal").addEventListener("click",showAnalysis);
-$("driveSel").addEventListener("click",()=>{ startGame(selStart); $("lab").scrollIntoView({behavior:"smooth"}); });
-$("again").addEventListener("click",()=>{ selStart={x0:0,v0:0}; updateSelection(); });
+   ========================================================= */
 
-window.addEventListener("resize",()=>{
-  resizeViz(); drawViz();
-  if(!$("analysis").classList.contains("hidden")){
-    drawTimePlot(); drawCtrlPlot(); drawCRMap(); drawPhase();
-  }
-});
+$("play").onclick =
+    startGame;
 
-/* ============================================================
-   LOOP
-   ============================================================ */
-function loop(now){
-  const dt=Math.min(0.02,Math.max(0,(now-(G.last||now))/1000||0));
-  G.last=now;
-  if(G.running) stepGame(dt);
-  drawViz();
-  requestAnimationFrame(loop);
-}
+$("start").onclick =
+    startGame;
 
-resizeViz();
-resetGame(true,selStart);
-requestAnimationFrame(loop);
+$("reset").onclick =
+    () => resetGame(false);
+
+$("watch").onclick =
+    watchExactSolution;
+
+$("exact").onclick =
+    watchExactSolution;
+
+$("reveal").onclick =
+    revealAnalysis;
+
+$("map").onpointerdown =
+    handleMapClick;
+
+$("load").onclick =
+    () => {
+        if (!selectedSolution.feasible) {
+            return;
+        }
+
+        scenario = {
+            ...selectedScenario
+        };
+
+        exactSolution =
+            solveExactProblem(
+                scenario.distance,
+                scenario.initialSpeed
+            );
+
+        resetGame(false);
+
+        $("experience").scrollIntoView({
+            behavior: "smooth"
+        });
+    };
+
+$("default").onclick =
+    () => {
+        selectedScenario = {
+            ...DEFAULT_SCENARIO
+        };
+
+        updateSelectedScenario();
+    };
+
+window.addEventListener(
+    "resize",
+    () => {
+        updateScene();
+
+        if (
+            !$("analysis")
+                .classList
+                .contains("hidden")
+        ) {
+            drawComparisonChart();
+            drawParameterMap();
+            drawSelectedTrajectory();
+        }
+    }
+);
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
+exactSolution =
+    solveExactProblem(
+        scenario.distance,
+        scenario.initialSpeed
+    );
+
+selectedSolution =
+    solveExactProblem(
+        selectedScenario.distance,
+        selectedScenario.initialSpeed
+    );
+
+resetGame(true);
+
+requestAnimationFrame(
+    animationLoop
+);
 </script>
 
 </body>
