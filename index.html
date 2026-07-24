@@ -49,6 +49,13 @@ header{
 nav{min-height:68px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-weight:900;font-size:20px;letter-spacing:.2px}
 .nav{display:flex;gap:26px;color:#c7ccdc;font-size:15px}
+.nav a{
+  padding:7px 9px;border-radius:9px;transition:.2s
+}
+.nav a:hover{
+  color:#fff;background:rgba(255,255,255,.06)
+}
+section{scroll-margin-top:86px}
 section{padding:96px 0}
 .hero{min-height:86vh;display:flex;align-items:center}
 .eyebrow,.label{
@@ -281,30 +288,44 @@ input[type=range]{width:100%;accent-color:var(--cyan)}
   margin-top:20px;padding:20px;border:1px solid rgba(118,239,178,.24);
   border-radius:17px;background:rgba(118,239,178,.055);color:#d8fbe8
 }
-.tech-note>strong{display:block;margin-bottom:13px;font-size:21px}
-.simple-equation{
-  padding:14px 16px;border:1px solid rgba(255,255,255,.10);
+.tech-note>strong{display:block;margin-bottom:5px;font-size:22px}
+.formulation-intro{margin:0 0 14px;color:#c7d3df;font-size:13px}
+.formulation-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px
+}
+.formula-card{
+  padding:14px;border:1px solid rgba(255,255,255,.10);
   border-radius:14px;background:rgba(5,10,16,.48)
 }
-.simple-equation>span{
-  display:block;color:var(--sub);font-size:9px;font-weight:900;
+.wide-formula-card{grid-column:1/-1}
+.formula-label{
+  display:block;color:var(--green);font-size:9px;font-weight:900;
   letter-spacing:1.2px;text-transform:uppercase
 }
-.simple-equation>b{
-  display:block;margin:4px 0 5px;font-size:clamp(20px,2.8vw,31px);
-  color:#fff;letter-spacing:.1px
+.formula-main{
+  margin:5px 0 6px;color:#fff;
+  font-size:clamp(18px,2.3vw,26px);font-weight:850;line-height:1.35
 }
-.simple-equation small{display:block;color:#c2ccdc;font-size:12px;line-height:1.5}
-.method-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px
+.formula-card p{
+  margin:0;color:#bdc7d8;font-size:12px;line-height:1.48
 }
-.method-grid div{
-  padding:13px;border:1px solid rgba(255,255,255,.09);
-  border-radius:13px;background:rgba(255,255,255,.028)
+.gate-formulas{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+  margin:7px 0 8px
 }
-.method-grid b{display:block;margin-bottom:5px;color:#fff;font-size:13px}
-.method-grid span{display:block;color:#bdc7d8;font-size:12px;line-height:1.45}
-.method-footnote{margin:13px 0 0;color:#bfe9d2;font-size:12px;line-height:1.5}
+.gate-formulas div{
+  padding:9px;border-radius:10px;
+  background:rgba(255,255,255,.04);
+  color:#f4f7ff;font-size:12px;line-height:1.45
+}
+.gold-result-note{
+  margin-top:11px;padding:11px 13px;border-radius:12px;
+  border:1px solid rgba(255,209,102,.22);
+  background:rgba(255,209,102,.065);
+  color:#fff1bd;font-size:12px;line-height:1.55
+}
+.method-footnote{margin:11px 0 0;color:#bfe9d2;font-size:12px;line-height:1.5}
 .mp-why{
   margin:20px 0 18px;padding:18px;border:1px solid rgba(155,144,255,.28);
   border-radius:17px;background:
@@ -335,8 +356,51 @@ input[type=range]{width:100%;accent-color:var(--cyan)}
 .portal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:36px}
 .portal{min-height:230px;padding:27px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.035);transition:.3s}
 .portal:hover{transform:translateY(-5px);border-color:rgba(155,144,255,.55)}
-.portal h3{margin:42px 0 9px;font-size:27px}
-.portal p{color:#aeb4c5}
+.portal h3{margin:14px 0 9px;font-size:24px;line-height:1.22}
+.portal p{color:#aeb4c5;margin:0}
+.work-type{
+  display:inline-flex;padding:6px 9px;border-radius:999px;
+  background:rgba(155,144,255,.10);
+  border:1px solid rgba(155,144,255,.22);
+  color:#d6d1ff;font-size:10px;font-weight:900;
+  letter-spacing:1px;text-transform:uppercase
+}
+.work-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.work-tags span{
+  padding:6px 9px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.025);
+  color:#bfc7d7;font-size:11px
+}
+.portal-link{
+  display:inline-block;margin-top:18px;
+  color:var(--cyan);font-weight:900;font-size:13px
+}
+.portal-more{
+  display:inline-block;margin-top:18px;
+  color:var(--cyan);font-size:13px;font-weight:900
+}
+.software-portal{border-color:rgba(99,221,255,.18)}
+.contact-links{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;margin-top:28px
+}
+.contact-card{
+  padding:18px;border:1px solid rgba(255,255,255,.10);
+  border-radius:17px;background:rgba(255,255,255,.03);
+  transition:.25s;overflow-wrap:anywhere
+}
+.contact-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(99,221,255,.38)
+}
+.contact-card span{
+  display:block;color:var(--sub);font-size:10px;font-weight:900;
+  letter-spacing:1px;text-transform:uppercase
+}
+.contact-card strong{
+  display:block;margin-top:5px;color:#fff;font-size:14px
+}
 footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub)}
 
 @media(max-width:980px){
@@ -346,7 +410,24 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
   .insight-grid,.param-grid{grid-template-columns:1fr}
 }
 @media(max-width:760px){
-  .nav{display:none}
+  nav{
+    min-height:auto;flex-wrap:wrap;gap:6px;
+    padding:8px 0 9px
+  }
+  .logo{
+    width:100%;text-align:center;font-size:16px
+  }
+  .nav{
+    display:grid;width:100%;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:4px;font-size:12px
+  }
+  .nav a{
+    padding:7px 2px;text-align:center;
+    border:1px solid rgba(255,255,255,.07);
+    background:rgba(255,255,255,.025)
+  }
+  section{scroll-margin-top:104px}
   h1{letter-spacing:-3px}
   section{padding:78px 0}
   .wide{width:98%}
@@ -373,10 +454,13 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
   .plot-card{padding:12px}
   .plot-card canvas{height:280px}
   .portal-grid{grid-template-columns:1fr}
+  .contact-links{grid-template-columns:1fr}
   .scenario-buttons{grid-template-columns:1fr}
-  .method-grid{grid-template-columns:1fr}
+  .formulation-grid{grid-template-columns:1fr}
+  .wide-formula-card{grid-column:auto}
+  .gate-formulas{grid-template-columns:1fr}
   .tech-note{padding:15px}
-  .simple-equation{padding:12px}
+  .formula-card{padding:12px}
   .mp-flow{grid-template-columns:1fr}
   .mp-flow b{transform:rotate(90deg);justify-self:center}
 
@@ -419,7 +503,7 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
     </p>
     <div class="buttons">
       <a class="btn primary" href="#experience">Experience my research</a>
-      <a class="btn secondary" href="https://github.com/LidaLMK" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn secondary" href="#portfolio">View portfolio</a>
     </div>
   </div>
 </section>
@@ -670,49 +754,65 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
 
         <div class="tech-note">
           <strong>How the best drive is calculated</strong>
+          <p class="formulation-intro">
+            The computer chooses the sideways acceleration <b>u(t)</b> over the 8-second drive.
+          </p>
 
-          <div class="simple-equation">
-            <span>Goal</span>
-            <b>
-              Minimize
-              J = ∫<sub>0</sub><sup>8</sup>
-              u(t)<sup>2</sup> dt
-            </b>
-            <small>
-              In simple words: pass every gate with the least total sideways acceleration.
-              Sharp changes cost more than gentle changes.
-            </small>
+          <div class="formulation-grid">
+            <div class="formula-card">
+              <span class="formula-label">Objective</span>
+              <div class="formula-main">
+                Minimize&nbsp;
+                J = ∫<sub>0</sub><sup>8</sup> u(t)<sup>2</sup> dt
+              </div>
+              <p>Use as little strong sideways movement as possible.</p>
+            </div>
+
+            <div class="formula-card">
+              <span class="formula-label">Car model</span>
+              <div class="formula-main">
+                ẏ(t) = v(t), &nbsp;&nbsp; v̇(t) = u(t)
+              </div>
+              <p>
+                <b>y</b> is sideways position, <b>v</b> is sideways speed,
+                and <b>u</b> is sideways acceleration.
+              </p>
+            </div>
+
+            <div class="formula-card">
+              <span class="formula-label">Starting condition</span>
+              <div class="formula-main">
+                y(0) = y<sub>0</sub>, &nbsp;&nbsp; v(0) = 0
+              </div>
+              <p>The car starts at the selected position with no sideways movement.</p>
+            </div>
+
+            <div class="formula-card">
+              <span class="formula-label">Finish condition</span>
+              <div class="formula-main">
+                y(8) = 0, &nbsp;&nbsp; v(8) = 0
+              </div>
+              <p>Finish in the center and stop moving sideways.</p>
+            </div>
+
+            <div class="formula-card wide-formula-card">
+              <span class="formula-label">Gate conditions</span>
+              <div class="gate-formulas">
+                <div><b>Gate 1 at 2.0 s:</b> −2.0 ≤ y(2.0) ≤ −0.8 m</div>
+                <div><b>Gate 2 at 4.1 s:</b> &nbsp;1.1 ≤ y(4.1) ≤ &nbsp;2.3 m</div>
+                <div><b>Gate 3 at 6.2 s:</b> −1.8 ≤ y(6.2) ≤ −0.6 m</div>
+              </div>
+              <p>The car must be inside each glowing gate when it reaches that gate.</p>
+            </div>
           </div>
 
-          <div class="method-grid">
-            <div>
-              <b>Car movement</b>
-              <span>
-                y(t) is the car's sideways position.
-                u(t) is its sideways acceleration.
-              </span>
-            </div>
-
-            <div>
-              <b>What the car must do</b>
-              <span>
-                Pass all three gates, then finish in the center
-                without moving sideways.
-              </span>
-            </div>
-
-            <div>
-              <b>What the gold car means</b>
-              <span>
-                The model calculates the smoothest successful drive.
-                The path is not chosen by hand.
-              </span>
-            </div>
+          <div class="gold-result-note">
+            <b>Gold car:</b> among all drives that satisfy the model and every condition above,
+            the gold drive has the smallest value of <b>J</b>. It is calculated, not drawn by hand.
           </div>
 
           <p class="method-footnote">
-            This is a simple car model made to explain the control idea.
-            A multiparametric controller calculates the best drives for many starting positions before the car starts.
+            This simple model is used to make the control idea easy to see.
           </p>
         </div>
       </div>
@@ -723,12 +823,51 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
 <section id="portfolio">
   <div class="container fade">
     <p class="label">Portfolio</p>
-    <h2>Explore an evolving body of work.</h2>
+    <h2>Explore my work.</h2>
+    <p class="section-copy">
+      Choose a section to see more details.
+    </p>
+
     <div class="portal-grid">
-      <a class="portal" href="#"><span class="label">Research</span><h3>Research directions</h3><p>Theory, computational frameworks, and ongoing work in dynamic optimization and intelligent control.</p></a>
-      <a class="portal" href="#"><span class="label">Publications</span><h3>Papers and scholarly work</h3><p>Journal articles, manuscripts, presentations, and technical contributions.</p></a>
-      <a class="portal" href="#"><span class="label">Projects</span><h3>Selected projects</h3><p>Computational studies, engineering applications, and collaborative work.</p></a>
-      <a class="portal" href="https://github.com/LidaLMK" target="_blank" rel="noopener"><span class="label">Software</span><h3>Code and computational tools</h3><p>Numerical implementations, visualization tools, and reproducible workflows.</p></a>
+      <a class="portal" href="research.html">
+        <span class="label">Research</span>
+        <h3>Research directions</h3>
+        <p>
+          Continuous-time optimization, multiparametric control,
+          switching times, and critical regions.
+        </p>
+        <span class="portal-more">View research →</span>
+      </a>
+
+      <a class="portal" href="publications.html">
+        <span class="label">Publications</span>
+        <h3>Papers and presentations</h3>
+        <p>
+          Journal manuscripts, conference papers,
+          presentations, and current work.
+        </p>
+        <span class="portal-more">View publications →</span>
+      </a>
+
+      <a class="portal" href="projects.html">
+        <span class="label">Projects</span>
+        <h3>Selected projects</h3>
+        <p>
+          Computational frameworks, process-control applications,
+          and research communication.
+        </p>
+        <span class="portal-more">View projects →</span>
+      </a>
+
+      <a class="portal" href="software.html">
+        <span class="label">Software</span>
+        <h3>Code and computational tools</h3>
+        <p>
+          Numerical methods, visualizations,
+          and reproducible research workflows.
+        </p>
+        <span class="portal-more">View software →</span>
+      </a>
     </div>
   </div>
 </section>
@@ -736,8 +875,28 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
 <section id="contact">
   <div class="container fade">
     <p class="label">Contact</p>
-    <h2>Let’s build something meaningful.</h2>
-    <p class="about">I am interested in collaborations and opportunities connecting mathematics, computation, intelligent systems, and real engineering problems.</p>
+    <h2>Let’s connect.</h2>
+    <p class="section-copy">
+      I am interested in research collaborations and opportunities in optimization,
+      control, modeling, and scientific computing.
+    </p>
+
+    <div class="contact-links">
+      <a class="contact-card" href="mailto:lida.lamakani@gmail.com">
+        <span>Personal email</span>
+        <strong>lida.lamakani@gmail.com</strong>
+      </a>
+
+      <a class="contact-card" href="mailto:lida.lamakani@tamu.edu">
+        <span>Texas A&amp;M email</span>
+        <strong>lida.lamakani@tamu.edu</strong>
+      </a>
+
+      <a class="contact-card" href="https://github.com/LidaLMK" target="_blank" rel="noopener">
+        <span>GitHub</span>
+        <strong>github.com/LidaLMK ↗</strong>
+      </a>
+    </div>
   </div>
 </section>
 </main>
