@@ -30,3 +30,12 @@ YELLOW PATH FIX
 ---------------
 If the previous website version is already online, you only need to replace index.html
 with the index.html from this package. The four portfolio pages and CSS can stay unchanged.
+
+
+SINGLE MATHEMATICAL TRAJECTORY FIX
+----------------------------------
+Replace the online index.html with the index.html from this package.
+
+Gold car, gold road line, gold charts, and the parameter preview now use the same
+exactPlan and exactHistory data. Purple is calculated exactly from a 0.5-second
+piecewise-constant input model; it is not a random or hand-drawn path.

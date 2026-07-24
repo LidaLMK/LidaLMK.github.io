@@ -283,7 +283,16 @@ input[type=range]{width:100%;accent-color:var(--cyan)}
 .scenario-btn{padding:10px 8px;border:1px solid rgba(255,255,255,.11);border-radius:12px;background:rgba(255,255,255,.03);cursor:pointer;font-weight:800}
 .scenario-btn.active{border-color:var(--cyan);background:rgba(99,221,255,.10)}
 .param-preview{position:relative;height:310px;overflow:hidden;border:1px solid rgba(255,255,255,.075);border-radius:15px;background:#050912}
+.preview-badge{
+  position:absolute;z-index:3;top:10px;left:50%;transform:translateX(-50%);
+  padding:6px 10px;border:1px solid rgba(255,209,102,.25);
+  border-radius:999px;background:rgba(5,9,16,.82);
+  color:#ffe7a0;font-size:10px;font-weight:900;white-space:nowrap
+}
 #paramCanvas{width:100%;height:100%;display:block}
+.plot-note{
+  margin:-5px 0 12px;color:#aeb8ca;font-size:12px;line-height:1.45
+}
 .tech-note{
   margin-top:20px;padding:20px;border:1px solid rgba(118,239,178,.24);
   border-radius:17px;background:rgba(118,239,178,.055);color:#d8fbe8
@@ -686,6 +695,10 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
       <div class="plot-stack">
         <div class="plot-card">
           <strong>Driving path</strong>
+          <p class="plot-note">
+            This chart and the gold car use the same calculated trajectory.
+            The game shows it in road perspective; this chart shows it from above.
+          </p>
           <canvas id="pathChart"></canvas>
         </div>
         <div class="plot-card">
@@ -747,6 +760,7 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
 
           <div class="param-card">
             <div class="param-preview">
+              <div class="preview-badge">Same gold drive — top view</div>
               <canvas id="paramCanvas"></canvas>
             </div>
           </div>
@@ -808,7 +822,8 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
 
           <div class="gold-result-note">
             <b>Gold car:</b> among all drives that satisfy the model and every condition above,
-            the gold drive has the smallest value of <b>J</b>. It is calculated, not drawn by hand.
+            the gold drive has the smallest value of <b>J</b>. The gold car, gold road line,
+            and gold charts all use the same calculated values of <b>y(t)</b>.
           </div>
 
           <p class="method-footnote">
@@ -934,7 +949,9 @@ let selectedStart=2.3;
 let exactPlan=null;
 let playerHistory=[];
 let exactHistory=[];
+let sampledModel=null;
 let sampledHistory=[];
+let sampledInputHistory=[];
 let autoFrame=null;
 let timers=[];
 let mode="idle";
@@ -1205,21 +1222,80 @@ function samplePlan(plan,dt=.0125){
   return pts;
 }
 
-function buildSampledPlan(plan,dt=.0125){
-  const pts=[];
-  let y=plan.start,vy=0,t=0,effort=0;
-  while(t<CFG.T-1e-10){
-    const updateTime=Math.floor(t/CFG.sampledDt)*CFG.sampledDt;
-    const u=splineState(plan,updateTime).u;
-    pts.push({t,y,vy,u});
-    const h=Math.min(dt,CFG.T-t);
-    y+=vy*h+.5*u*h*h;
-    vy+=u*h;
+function buildSampledModel(plan){
+  const segments=[];
+  let y=plan.start;
+  let vy=0;
+  let effort=0;
+
+  for(let t0=0;t0<CFG.T-1e-12;t0+=CFG.sampledDt){
+    const t1=Math.min(CFG.T,t0+CFG.sampledDt);
+    const u=splineState(plan,t0).u;
+    const h=t1-t0;
+
+    segments.push({t0,t1,y0:y,vy0:vy,u});
+
+    y=y+vy*h+.5*u*h*h;
+    vy=vy+u*h;
     effort+=u*u*h;
-    t+=h;
   }
-  pts.push({t:CFG.T,y,vy,u:0});
-  pts.effort=effort;
+
+  return{
+    segments,
+    effort,
+    finalY:y,
+    finalVy:vy
+  };
+}
+
+function sampledStateAt(model,t){
+  const tt=clamp(t,0,CFG.T);
+  if(tt>=CFG.T-1e-12){
+    const last=model.segments.at(-1);
+    const h=last.t1-last.t0;
+    return{
+      t:CFG.T,
+      y:last.y0+last.vy0*h+.5*last.u*h*h,
+      vy:last.vy0+last.u*h,
+      u:last.u
+    };
+  }
+
+  const index=Math.min(
+    model.segments.length-1,
+    Math.floor((tt+1e-12)/CFG.sampledDt)
+  );
+  const seg=model.segments[index];
+  const tau=tt-seg.t0;
+
+  return{
+    t:tt,
+    y:seg.y0+seg.vy0*tau+.5*seg.u*tau*tau,
+    vy:seg.vy0+seg.u*tau,
+    u:seg.u
+  };
+}
+
+function sampleSampledModel(model,dt=.0125){
+  const pts=[];
+  for(let t=0;t<CFG.T;t+=dt)pts.push(sampledStateAt(model,t));
+  pts.push(sampledStateAt(model,CFG.T));
+  pts.effort=model.effort;
+  return pts;
+}
+
+function buildSampledInputHistory(model){
+  const pts=[];
+  model.segments.forEach((seg,i)=>{
+    const start=sampledStateAt(model,seg.t0);
+    const end=sampledStateAt(model,seg.t1);
+
+    if(i===0)pts.push({...start,u:seg.u});
+    pts.push({...end,u:seg.u});
+
+    const next=model.segments[i+1];
+    if(next)pts.push({...end,u:next.u});
+  });
   return pts;
 }
 
@@ -1272,17 +1348,24 @@ function perspectiveY(timeAhead){
   return horizon+Math.pow(q,.62)*(roadH-horizon);
 }
 
-function goldPathScreenY(timeAhead,carScreenY){
-  const visible=4.6;
-  const q=clamp(timeAhead/visible,0,1);
+function courseScreenY(timeAhead,carScreenY){
   const horizon=roadH*.25;
-  return carScreenY-Math.pow(q,.66)*(carScreenY-horizon);
+  const futureWindow=4.6;
+  const pastWindow=1.35;
+
+  if(timeAhead>=0){
+    const q=clamp(timeAhead/futureWindow,0,1);
+    return carScreenY-Math.pow(q,.66)*(carScreenY-horizon);
+  }
+
+  const q=clamp((-timeAhead)/pastWindow,0,1);
+  return carScreenY+Math.pow(q,.72)*(roadH-carScreenY);
 }
 
-function drawGate(ctx,index,currentTime){
+function drawGate(ctx,index,currentTime,carScreenY){
   const dt=CFG.gateTimes[index]-currentTime;
-  if(dt<-0.22||dt>4.6)return;
-  const y=perspectiveY(Math.max(0,dt));
+  if(dt<-1.1||dt>4.6)return;
+  const y=courseScreenY(dt,carScreenY);
   const frac=clamp((y-roadH*.25)/(roadH*.75),0,1);
   const postH=18+70*frac;
   const left=lateralToScreen(CFG.gateCenters[index]-CFG.gateHalf[index],y);
@@ -1382,7 +1465,7 @@ function drawRoad(
     });
   }
 
-  for(let i=0;i<3;i++)drawGate(ctx,i,currentTime);
+  for(let i=0;i<3;i++)drawGate(ctx,i,currentTime,goldCarScreenY);
 
   ctx.save();
   ctx.strokeStyle="rgba(118,239,178,.78)";
@@ -1410,9 +1493,9 @@ function drawRoad(
     let started=false;
     pts.forEach(p=>{
       const timeAhead=p.t-currentTime;
-      if(timeAhead<-1e-9||timeAhead>4.6)return;
+      if(timeAhead<-1.1||timeAhead>4.6)return;
 
-      const py=goldPathScreenY(Math.max(0,timeAhead),goldCarScreenY);
+      const py=courseScreenY(timeAhead,goldCarScreenY);
       const px=lateralToScreen(p.y,py);
 
       if(!started){
@@ -1516,7 +1599,9 @@ function resetGame(showIntro=false,start=selectedStart){
   selectedStart=clamp(start,-3,3);
   exactPlan=solveOptimalPlan(selectedStart);
   exactHistory=samplePlan(exactPlan);
-  sampledHistory=buildSampledPlan(exactPlan);
+  sampledModel=buildSampledModel(exactPlan);
+  sampledHistory=sampleSampledModel(sampledModel);
+  sampledInputHistory=buildSampledInputHistory(sampledModel);
 
   Object.assign(input,{pointer:null,u:0,keyLeft:false,keyRight:false});
   Object.assign(game,{
@@ -1631,12 +1716,12 @@ function startPlayerReplay(){
     const ps=sampleHistory(playerHistory,t);
     const gs=splineState(exactPlan,t);
     roadOffset+=CFG.speed*.016*31;
-    const goldY=roadH*.55;
-    drawRoad(t,gs,true,goldY);
-    setCar($("playerCar"),ps,roadH*.73);
-    setCar($("goldCar"),gs,goldY);
-    setLabel("playerLabel",ps,roadH*.73,"YOUR DRIVE");
-    setLabel("goldLabel",gs,roadH*.55,"BEST DRIVE");
+    const replayY=roadH*.68;
+    drawRoad(t,gs,true,replayY);
+    setCar($("playerCar"),ps,replayY);
+    setCar($("goldCar"),gs,replayY);
+    setLabel("playerLabel",ps,replayY,"YOUR DRIVE");
+    setLabel("goldLabel",gs,replayY,"BEST DRIVE");
 
     const nearest=exactPlan.reversals.find(r=>Math.abs(r-t)<.035);
     if(nearest!==undefined){
@@ -1670,14 +1755,14 @@ function startTimingReplay(){
     const p=clamp((now-start)/duration,0,1);
     const t=CFG.T*p;
     const gs=splineState(exactPlan,t);
-    const ss=sampleHistory(sampledHistory,t);
+    const ss=sampledStateAt(sampledModel,t);
     roadOffset+=CFG.speed*.016*31;
-    const goldY=roadH*.54;
-    drawRoad(t,gs,true,goldY);
-    setCar($("goldCar"),gs,goldY);
-    setCar($("purpleCar"),ss,roadH*.72);
-    setLabel("goldLabel",gs,roadH*.54,"BEST DRIVE");
-    setLabel("purpleLabel",ss,roadH*.72,"0.5 s UPDATES");
+    const replayY=roadH*.68;
+    drawRoad(t,gs,true,replayY);
+    setCar($("goldCar"),gs,replayY);
+    setCar($("purpleCar"),ss,replayY);
+    setLabel("goldLabel",gs,replayY,"BEST DRIVE");
+    setLabel("purpleLabel",ss,replayY,"0.5 s UPDATES");
 
     if(p<1)autoFrame=requestAnimationFrame(frame);
     else{
@@ -1796,21 +1881,17 @@ function drawChart(canvas,series,{xMin=0,xMax=8,yMin=-5,yMax=5,xLabel="time (s)"
   ctx.save();ctx.translate(18,(T+h-B)/2);ctx.rotate(-Math.PI/2);ctx.fillText(yLabel,0,0);ctx.restore();
 }
 
-function sampledGateStatus(points){
+function sampledGateStatus(model){
   return CFG.gateTimes.map((t,i)=>{
-    const s=sampleHistory(points,t);
+    const s=sampledStateAt(model,t);
     return Math.max(0,Math.abs(s.y-CFG.gateCenters[i])-CFG.gateHalf[i]);
   });
 }
 
 function populateReveal(){
   const reversal=exactPlan.reversals.find(r=>r>2.1)||exactPlan.reversals[0]||0;
-  const sampledEff=sampledHistory.effort??sampledHistory.reduce((sum,p,i)=>{
-    if(i===0)return 0;
-    const dt=p.t-sampledHistory[i-1].t;
-    return sum+p.u*p.u*dt;
-  },0);
-  const sampledMiss=sampledGateStatus(sampledHistory);
+  const sampledEff=sampledModel.effort;
+  const sampledMiss=sampledGateStatus(sampledModel);
   const playerPts=playerHistory.length>2?playerHistory:[{t:0,y:selectedStart,vy:0,u:0},{t:8,y:selectedStart,vy:0,u:0}];
 
   $("bestEffort").textContent=fmt(exactPlan.effort,3);
@@ -1841,9 +1922,9 @@ function populateReveal(){
     $("inputChart"),
     [
       {points:exactHistory,color:"#ffd166",x:p=>p.t,y:p=>p.u},
-      {points:sampledHistory,color:"#9b90ff",x:p=>p.t,y:p=>p.u}
+      {points:sampledInputHistory,color:"#9b90ff",x:p=>p.t,y:p=>p.u}
     ],
-    {xMin:0,xMax:8,yMin:-5.4,yMax:5.4,xLabel:"time (s)",yLabel:"sideways acceleration u (m/s²)",stepSeries:[1]}
+    {xMin:0,xMax:8,yMin:-9,yMax:9,xLabel:"time (s)",yLabel:"sideways acceleration u (m/s²)",stepSeries:[1]}
   );
 
   drawChart(
@@ -1900,7 +1981,7 @@ function drawParameterCanvas(plan){
     ctx.strokeRect(x-10,top,20,bottom-top);
   });
 
-  const pts=samplePlan(plan,.025);
+  const pts=(plan===exactPlan)?exactHistory:samplePlan(plan,.0125);
   ctx.strokeStyle="#ffd166";ctx.lineWidth=3;ctx.shadowColor="rgba(255,209,102,.4)";ctx.shadowBlur=9;
   ctx.beginPath();
   pts.forEach((p,i)=>{const x=sx(p.t),y=sy(p.y);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});
@@ -1912,15 +1993,74 @@ function drawParameterCanvas(plan){
 
 function updateParameterPreview(start){
   selectedStart=clamp(Number(start),-3,3);
-  const plan=solveOptimalPlan(selectedStart);
+
+  clearAutomation();
+  mode="idle";
+  game.running=false;
+
+  exactPlan=solveOptimalPlan(selectedStart);
+  exactHistory=samplePlan(exactPlan);
+  sampledModel=buildSampledModel(exactPlan);
+  sampledHistory=sampleSampledModel(sampledModel);
+  sampledInputHistory=buildSampledInputHistory(sampledModel);
+
+  Object.assign(input,{pointer:null,u:0,keyLeft:false,keyRight:false});
+  Object.assign(game,{
+    running:false,t:0,y:selectedStart,vy:0,u:0,effort:0,
+    gates:[false,false,false],gateErrors:[null,null,null],
+    offRoad:false,lastFrame:performance.now()
+  });
+  playerHistory=[{t:0,y:selectedStart,vy:0,u:0}];
+
   $("parameterValue").textContent=signed(selectedStart,2," m");
   $("parameterSlider").value=selectedStart;
   $("activeSetText").textContent=
-    `Best route: ${statusText(plan.status)}. Turning effort: ${fmt(plan.effort,3)}. A full multiparametric controller stores this rule for nearby starts that use the same route pattern.`;
+    `Best route: ${statusText(exactPlan.status)}. Turning effort: ${fmt(exactPlan.effort,3)}. A full multiparametric controller stores this rule for nearby starts that use the same route pattern.`;
+
   document.querySelectorAll(".scenario-btn").forEach(btn=>{
     btn.classList.toggle("active",Math.abs(Number(btn.dataset.start)-selectedStart)<.03);
   });
-  drawParameterCanvas(plan);
+
+  hideReplayCars();
+  $("playerCar").style.opacity="1";
+  updateHud();
+  drawRoad(0,{y:selectedStart,vy:0},false,roadH*.70);
+  setCar($("playerCar"),game,roadH*.70);
+  drawParameterCanvas(exactPlan);
+
+  if(!$("revealSection").classList.contains("hidden")){
+    drawChart(
+      $("pathChart"),
+      [
+        {points:playerHistory,color:"#63ddff",x:p=>CFG.speed*p.t,y:p=>p.y},
+        {points:exactHistory,color:"#ffd166",x:p=>CFG.speed*p.t,y:p=>p.y}
+      ],
+      {xMin:0,xMax:200,yMin:-4.5,yMax:4.5,xLabel:"distance traveled (m)",yLabel:"sideways position (m)"}
+    );
+
+    drawChart(
+      $("inputChart"),
+      [
+        {points:exactHistory,color:"#ffd166",x:p=>p.t,y:p=>p.u},
+        {points:sampledInputHistory,color:"#9b90ff",x:p=>p.t,y:p=>p.u}
+      ],
+      {xMin:0,xMax:8,yMin:-9,yMax:9,xLabel:"time (s)",yLabel:"sideways acceleration u (m/s²)",stepSeries:[1]}
+    );
+
+    drawChart(
+      $("timingChart"),
+      [
+        {points:exactHistory,color:"#ffd166",x:p=>p.t,y:p=>p.y},
+        {points:sampledHistory,color:"#9b90ff",x:p=>p.t,y:p=>p.y,dash:[7,5]}
+      ],
+      {xMin:0,xMax:8,yMin:-4.5,yMax:4.5,xLabel:"time (s)",yLabel:"sideways position (m)"}
+    );
+
+    $("bestEffort").textContent=fmt(exactPlan.effort,3);
+    $("startParameter").textContent=signed(selectedStart,2," m");
+  }
+
+  story("READY","The new start is ready.","Press START when you are ready.");
 }
 
 /* =========================================================
@@ -2032,9 +2172,8 @@ document.querySelectorAll(".scenario-btn").forEach(btn=>{
   btn.onclick=()=>updateParameterPreview(Number(btn.dataset.start));
 });
 $("loadScenarioButton").onclick=()=>{
-  resetGame(false,selectedStart);
+  updateParameterPreview(selectedStart);
   $("experience").scrollIntoView({behavior:"smooth",block:"start"});
-  story("READY","The new starting position is ready.","Press START when you are ready.");
 };
 
 window.addEventListener("resize",()=>{
@@ -2042,8 +2181,8 @@ window.addEventListener("resize",()=>{
   const showGold=mode==="watch"||mode==="replay"||mode==="timing";
   const goldY=
     mode==="watch" ? roadH*.67 :
-    mode==="timing" ? roadH*.54 :
-    roadH*.55;
+    (mode==="timing"||mode==="replay") ? roadH*.68 :
+    roadH*.70;
 
   drawRoad(game.t,{y:game.y,vy:game.vy},showGold,goldY);
   setCar($("playerCar"),game,roadH*.70);
