@@ -334,6 +334,41 @@ input[type=range]{width:100%;accent-color:var(--cyan)}
   background:rgba(255,209,102,.065);
   color:#fff1bd;font-size:12px;line-height:1.55
 }
+.constraint-check{
+  margin-top:11px;padding:14px;border:1px solid rgba(118,239,178,.22);
+  border-radius:14px;background:rgba(5,10,16,.42)
+}
+.constraint-check-title{
+  display:flex;align-items:center;justify-content:space-between;gap:12px
+}
+.constraint-check-title span{
+  display:block;color:var(--sub);font-size:9px;font-weight:900;
+  letter-spacing:1.1px;text-transform:uppercase
+}
+.constraint-check-title strong{display:block;color:#fff;font-size:17px}
+.constraint-check-title>b{
+  flex:none;padding:6px 9px;border-radius:999px;
+  border:1px solid rgba(118,239,178,.30);
+  background:rgba(118,239,178,.10);color:#bdf5d5;font-size:11px
+}
+.constraint-check>p{margin:9px 0;color:#bdc7d8;font-size:12px}
+.constraint-table-wrap{overflow-x:auto}
+.constraint-table{
+  width:100%;border-collapse:collapse;min-width:590px;
+  font-size:11px
+}
+.constraint-table th,.constraint-table td{
+  padding:8px 9px;text-align:left;
+  border-bottom:1px solid rgba(255,255,255,.07)
+}
+.constraint-table th{
+  color:#939fb3;font-size:9px;letter-spacing:.8px;text-transform:uppercase
+}
+.constraint-table td{color:#d7deea}
+.constraint-table td:last-child{font-weight:900;color:#bdf5d5}
+.constraint-check small{
+  display:block;margin-top:10px;color:#bfe9d2;font-size:11px;line-height:1.5
+}
 .method-footnote{margin:11px 0 0;color:#bfe9d2;font-size:12px;line-height:1.5}
 .mp-why{
   margin:20px 0 18px;padding:18px;border:1px solid rgba(155,144,255,.28);
@@ -697,7 +732,8 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
           <strong>Driving path</strong>
           <p class="plot-note">
             This chart and the gold car use the same calculated trajectory.
-            The game shows it in road perspective; this chart shows it from above.
+            The rectangles show the full gate openings. The mathematical limits apply
+            to the center of the car.
           </p>
           <canvas id="pathChart"></canvas>
         </div>
@@ -826,6 +862,70 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
             and gold charts all use the same calculated values of <b>y(t)</b>.
           </div>
 
+          <div class="constraint-check">
+            <div class="constraint-check-title">
+              <div>
+                <span>Automatic mathematical check</span>
+                <strong id="constraintCheckTitle">Gold path verified</strong>
+              </div>
+              <b id="constraintCheckBadge">PASS ✓</b>
+            </div>
+
+            <p>
+              The equations limit the <b>center of the car</b>. The glowing gate is wider
+              so the full car has room to pass.
+            </p>
+
+            <div class="constraint-table-wrap">
+              <table class="constraint-table">
+                <thead>
+                  <tr>
+                    <th>Check</th>
+                    <th>Gold value</th>
+                    <th>Required range</th>
+                    <th>Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Gate 1</td>
+                    <td id="checkGate1Value">—</td>
+                    <td>−2.00 to −0.80 m</td>
+                    <td id="checkGate1Result">—</td>
+                  </tr>
+                  <tr>
+                    <td>Gate 2</td>
+                    <td id="checkGate2Value">—</td>
+                    <td>1.10 to 2.30 m</td>
+                    <td id="checkGate2Result">—</td>
+                  </tr>
+                  <tr>
+                    <td>Gate 3</td>
+                    <td id="checkGate3Value">—</td>
+                    <td>−1.80 to −0.60 m</td>
+                    <td id="checkGate3Result">—</td>
+                  </tr>
+                  <tr>
+                    <td>Finish position</td>
+                    <td id="checkFinishPosition">—</td>
+                    <td>0.00 m</td>
+                    <td id="checkFinishResult">—</td>
+                  </tr>
+                  <tr>
+                    <td>Finish sideways speed</td>
+                    <td id="checkFinishSpeed">—</td>
+                    <td>0.00 m/s</td>
+                    <td id="checkFinishSpeedResult">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <small id="constraintClearanceText">
+              —
+            </small>
+          </div>
+
           <p class="method-footnote">
             This simple model is used to make the control idea easy to see.
           </p>
@@ -937,7 +1037,14 @@ const CFG={
   visualSteerDeg:8,
   gateTimes:[2.0,4.1,6.2],
   gateCenters:[-1.4,1.7,-1.2],
+
+  // The optimization constrains the CENTER of the car.
   gateHalf:[.6,.6,.6],
+
+  // The glowing posts are farther apart so the whole car clears them.
+  carHalfWidth:.30,
+  gateSafetyGap:.10,
+  gateOpeningHalf:[1.0,1.0,1.0],
   finishY:0,
   finishVy:0,
   sampledDt:.5
@@ -1163,6 +1270,48 @@ function enumerateStatuses(n){
 
 const STATUS_LIST=enumerateStatuses(3);
 
+function verifyExactPlan(plan,tol=1e-7){
+  const gateChecks=CFG.gateTimes.map((time,i)=>{
+    const state=splineState(plan,time);
+    const center=CFG.gateCenters[i];
+    const allowedHalf=CFG.gateHalf[i];
+    const openingHalf=CFG.gateOpeningHalf[i];
+    const low=center-allowedHalf;
+    const high=center+allowedHalf;
+
+    const centerMargin=Math.min(state.y-low,high-state.y);
+    const bodyClearance=
+      openingHalf-Math.abs(state.y-center)-CFG.carHalfWidth;
+
+    return{
+      gate:i+1,
+      time,
+      y:state.y,
+      low,
+      high,
+      centerMargin,
+      bodyClearance,
+      pass:state.y>=low-tol&&state.y<=high+tol&&bodyClearance>=-tol
+    };
+  });
+
+  const start=splineState(plan,0);
+  const finish=splineState(plan,CFG.T);
+  const boundaryPass=
+    Math.abs(start.y-plan.start)<=tol &&
+    Math.abs(start.vy)<=tol &&
+    Math.abs(finish.y)<=tol &&
+    Math.abs(finish.vy)<=tol;
+
+  return{
+    gateChecks,
+    start,
+    finish,
+    boundaryPass,
+    pass:boundaryPass&&gateChecks.every(check=>check.pass)
+  };
+}
+
 function solveOptimalPlan(start){
   const{H,f}=quadraticEnergyModel(start);
   const low=CFG.gateCenters.map((c,i)=>c-CFG.gateHalf[i]);
@@ -1212,6 +1361,12 @@ function solveOptimalPlan(start){
       if(root>1e-7&&root<CFG.T-1e-7)best.reversals.push(root);
     }
   }
+
+  best.verification=verifyExactPlan(best);
+  if(!best.verification.pass){
+    throw new Error("The calculated gold path failed its constraint check.");
+  }
+
   return best;
 }
 
@@ -1368,8 +1523,9 @@ function drawGate(ctx,index,currentTime,carScreenY){
   const y=courseScreenY(dt,carScreenY);
   const frac=clamp((y-roadH*.25)/(roadH*.75),0,1);
   const postH=18+70*frac;
-  const left=lateralToScreen(CFG.gateCenters[index]-CFG.gateHalf[index],y);
-  const right=lateralToScreen(CFG.gateCenters[index]+CFG.gateHalf[index],y);
+  const openingHalf=CFG.gateOpeningHalf[index];
+  const left=lateralToScreen(CFG.gateCenters[index]-openingHalf,y);
+  const right=lateralToScreen(CFG.gateCenters[index]+openingHalf,y);
   const glow=index===0?"#63ddff":index===1?"#9b90ff":"#76efb2";
 
   ctx.save();
@@ -1881,6 +2037,37 @@ function drawChart(canvas,series,{xMin=0,xMax=8,yMin=-5,yMax=5,xLabel="time (s)"
   ctx.save();ctx.translate(18,(T+h-B)/2);ctx.rotate(-Math.PI/2);ctx.fillText(yLabel,0,0);ctx.restore();
 }
 
+function updateExactConstraintCheck(plan){
+  const report=plan.verification||verifyExactPlan(plan);
+  const gateChecks=report.gateChecks;
+
+  $("constraintCheckTitle").textContent=
+    report.pass ? "Gold path verified" : "Constraint problem found";
+  $("constraintCheckBadge").textContent=
+    report.pass ? "PASS ✓" : "FAIL";
+
+  gateChecks.forEach((check,i)=>{
+    $(`checkGate${i+1}Value`).textContent=`${signed(check.y,3," m")}`;
+    $(`checkGate${i+1}Result`).textContent=check.pass?"PASS ✓":"FAIL";
+  });
+
+  $("checkFinishPosition").textContent=
+    signed(report.finish.y,6," m");
+  $("checkFinishSpeed").textContent=
+    signed(report.finish.vy,6," m/s");
+  $("checkFinishResult").textContent=
+    Math.abs(report.finish.y)<=1e-7?"PASS ✓":"FAIL";
+  $("checkFinishSpeedResult").textContent=
+    Math.abs(report.finish.vy)<=1e-7?"PASS ✓":"FAIL";
+
+  const minimumBodyClearance=Math.min(
+    ...gateChecks.map(check=>check.bodyClearance)
+  );
+
+  $("constraintClearanceText").textContent=
+    `Minimum calculated clearance between the car body and a glowing gate post: ${fmt(minimumBodyClearance,2)} m. A gold center point may lie exactly on a mathematical limit and still pass the physical gate safely.`;
+}
+
 function sampledGateStatus(model){
   return CFG.gateTimes.map((t,i)=>{
     const s=sampledStateAt(model,t);
@@ -1936,6 +2123,7 @@ function populateReveal(){
     {xMin:0,xMax:8,yMin:-4.5,yMax:4.5,xLabel:"time (s)",yLabel:"sideways position (m)"}
   );
 
+  updateExactConstraintCheck(exactPlan);
   updateParameterPreview(selectedStart);
 }
 
@@ -1973,8 +2161,9 @@ function drawParameterCanvas(plan){
 
   CFG.gateTimes.forEach((t,i)=>{
     const x=sx(t);
-    const top=sy(CFG.gateCenters[i]+CFG.gateHalf[i]);
-    const bottom=sy(CFG.gateCenters[i]-CFG.gateHalf[i]);
+    const openingHalf=CFG.gateOpeningHalf[i];
+    const top=sy(CFG.gateCenters[i]+openingHalf);
+    const bottom=sy(CFG.gateCenters[i]-openingHalf);
     ctx.fillStyle=i===0?"rgba(99,221,255,.18)":i===1?"rgba(155,144,255,.18)":"rgba(118,239,178,.18)";
     ctx.fillRect(x-10,top,20,bottom-top);
     ctx.strokeStyle=i===0?"#63ddff":i===1?"#9b90ff":"#76efb2";
@@ -2058,6 +2247,7 @@ function updateParameterPreview(start){
 
     $("bestEffort").textContent=fmt(exactPlan.effort,3);
     $("startParameter").textContent=signed(selectedStart,2," m");
+    updateExactConstraintCheck(exactPlan);
   }
 
   story("READY","The new start is ready.","Press START when you are ready.");
