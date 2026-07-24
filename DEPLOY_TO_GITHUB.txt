@@ -24,3 +24,9 @@ Important:
 
 The ZIP places all website files directly at the ZIP root. Extract it and upload all files,
 not the ZIP itself.
+
+
+YELLOW PATH FIX
+---------------
+If the previous website version is already online, you only need to replace index.html
+with the index.html from this package. The four portfolio pages and CSS can stay unchanged.

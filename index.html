@@ -1272,6 +1272,13 @@ function perspectiveY(timeAhead){
   return horizon+Math.pow(q,.62)*(roadH-horizon);
 }
 
+function goldPathScreenY(timeAhead,carScreenY){
+  const visible=4.6;
+  const q=clamp(timeAhead/visible,0,1);
+  const horizon=roadH*.25;
+  return carScreenY-Math.pow(q,.66)*(carScreenY-horizon);
+}
+
 function drawGate(ctx,index,currentTime){
   const dt=CFG.gateTimes[index]-currentTime;
   if(dt<-0.22||dt>4.6)return;
@@ -1303,7 +1310,12 @@ function drawGate(ctx,index,currentTime){
   ctx.restore();
 }
 
-function drawRoad(currentTime=game.t,displayState={y:game.y,vy:game.vy},showGold=false){
+function drawRoad(
+  currentTime=game.t,
+  displayState={y:game.y,vy:game.vy},
+  showGold=false,
+  goldCarScreenY=roadH*.55
+){
   const ctx=roadCtx,w=roadW,h=roadH;
   ctx.clearRect(0,0,w,h);
 
@@ -1389,17 +1401,29 @@ function drawRoad(currentTime=game.t,displayState={y:game.y,vy:game.vy},showGold
     ctx.save();
     ctx.strokeStyle="rgba(255,209,102,.90)";
     ctx.lineWidth=4;
+    ctx.lineCap="round";
+    ctx.lineJoin="round";
     ctx.shadowColor="rgba(255,209,102,.48)";
     ctx.shadowBlur=12;
     ctx.beginPath();
-    pts.forEach((p,i)=>{
+
+    let started=false;
+    pts.forEach(p=>{
       const timeAhead=p.t-currentTime;
-      if(timeAhead<0||timeAhead>4.6)return;
-      const py=perspectiveY(timeAhead);
+      if(timeAhead<-1e-9||timeAhead>4.6)return;
+
+      const py=goldPathScreenY(Math.max(0,timeAhead),goldCarScreenY);
       const px=lateralToScreen(p.y,py);
-      if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+
+      if(!started){
+        ctx.moveTo(px,py);
+        started=true;
+      }else{
+        ctx.lineTo(px,py);
+      }
     });
-    ctx.stroke();
+
+    if(started)ctx.stroke();
     ctx.restore();
   }
 }
@@ -1607,9 +1631,10 @@ function startPlayerReplay(){
     const ps=sampleHistory(playerHistory,t);
     const gs=splineState(exactPlan,t);
     roadOffset+=CFG.speed*.016*31;
-    drawRoad(t,gs,true);
+    const goldY=roadH*.55;
+    drawRoad(t,gs,true,goldY);
     setCar($("playerCar"),ps,roadH*.73);
-    setCar($("goldCar"),gs,roadH*.55);
+    setCar($("goldCar"),gs,goldY);
     setLabel("playerLabel",ps,roadH*.73,"YOUR DRIVE");
     setLabel("goldLabel",gs,roadH*.55,"BEST DRIVE");
 
@@ -1647,8 +1672,9 @@ function startTimingReplay(){
     const gs=splineState(exactPlan,t);
     const ss=sampleHistory(sampledHistory,t);
     roadOffset+=CFG.speed*.016*31;
-    drawRoad(t,gs,true);
-    setCar($("goldCar"),gs,roadH*.54);
+    const goldY=roadH*.54;
+    drawRoad(t,gs,true,goldY);
+    setCar($("goldCar"),gs,goldY);
     setCar($("purpleCar"),ss,roadH*.72);
     setLabel("goldLabel",gs,roadH*.54,"BEST DRIVE");
     setLabel("purpleLabel",ss,roadH*.72,"0.5 s UPDATES");
@@ -1676,8 +1702,9 @@ function watchExact(){
     const t=CFG.T*p;
     const s=splineState(exactPlan,t);
     roadOffset+=CFG.speed*.016*31;
-    drawRoad(t,s,true);
-    setCar($("goldCar"),s,roadH*.67);
+    const goldY=roadH*.67;
+    drawRoad(t,s,true,goldY);
+    setCar($("goldCar"),s,goldY);
     setLabel("goldLabel",s,roadH*.67,"BEST DRIVE");
     $("hudTime").textContent=`${fmt(CFG.T-t,2)} s`;
     $("hudDistance").textContent=`${Math.round(CFG.speed*t)} / 200 m`;
@@ -2012,7 +2039,13 @@ $("loadScenarioButton").onclick=()=>{
 
 window.addEventListener("resize",()=>{
   resizeRoad();
-  drawRoad(game.t,{y:game.y,vy:game.vy},mode==="watch"||mode==="replay"||mode==="timing");
+  const showGold=mode==="watch"||mode==="replay"||mode==="timing";
+  const goldY=
+    mode==="watch" ? roadH*.67 :
+    mode==="timing" ? roadH*.54 :
+    roadH*.55;
+
+  drawRoad(game.t,{y:game.y,vy:game.vy},showGold,goldY);
   setCar($("playerCar"),game,roadH*.70);
   if(!$("revealSection").classList.contains("hidden"))populateReveal();
 });
