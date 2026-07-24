@@ -1,0 +1,26 @@
+GITHUB PAGES DEPLOYMENT
+
+The 404 error happens when index.html is online but the linked portfolio pages are not
+in the same published folder.
+
+Upload ALL of these files together to the SAME repository folder:
+
+index.html
+research.html
+publications.html
+projects.html
+software.html
+portfolio-pages.css
+
+Important:
+1. Do not upload only index.html.
+2. Do not put the five pages inside another folder unless index.html is also inside that folder.
+3. File names are case-sensitive on GitHub Pages.
+4. Keep the names exactly lowercase as shown above.
+5. In GitHub: Settings > Pages > Build and deployment.
+   Choose "Deploy from a branch", then select the branch and "/ (root)" if these files
+   are in the repository root.
+6. Wait about one minute after committing, then refresh the website.
+
+The ZIP places all website files directly at the ZIP root. Extract it and upload all files,
+not the ZIP itself.
