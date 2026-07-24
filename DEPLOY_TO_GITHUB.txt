@@ -49,3 +49,20 @@ The mathematical gate limits apply to the center of the car. The visible gate po
 are now drawn farther apart to include the car width and a safety gap. The page also
 performs and displays an automatic numerical check of all three gate constraints and
 both final conditions.
+
+
+CLEAR GATE MAP
+--------------
+Replace the online index.html with this version.
+
+The parameter map no longer draws each gate as a filled rectangle. Each gate is now
+shown as two separate glowing posts with an empty gap between them. A green PASS point
+marks the exact calculated gold position at each gate.
+
+
+OPEN IN-GAME GATES
+------------------
+Replace the online index.html with this version.
+
+The gates inside the game are now two separate posts. Nothing is filled between
+the posts. The car must pass through the empty space between them.

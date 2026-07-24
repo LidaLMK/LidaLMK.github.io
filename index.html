@@ -290,6 +290,14 @@ input[type=range]{width:100%;accent-color:var(--cyan)}
   color:#ffe7a0;font-size:10px;font-weight:900;white-space:nowrap
 }
 #paramCanvas{width:100%;height:100%;display:block}
+.preview-help{
+  position:absolute;z-index:3;left:50%;bottom:9px;transform:translateX(-50%);
+  width:max-content;max-width:calc(100% - 22px);
+  padding:5px 9px;border-radius:999px;
+  background:rgba(5,9,16,.84);color:#c5cede;
+  border:1px solid rgba(255,255,255,.08);
+  font-size:10px;font-weight:800;text-align:center
+}
 .plot-note{
   margin:-5px 0 12px;color:#aeb8ca;font-size:12px;line-height:1.45
 }
@@ -732,8 +740,8 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
           <strong>Driving path</strong>
           <p class="plot-note">
             This chart and the gold car use the same calculated trajectory.
-            The rectangles show the full gate openings. The mathematical limits apply
-            to the center of the car.
+            A gate is the empty space between its two posts. The green PASS point shows
+            where the center of the gold car crosses that gate.
           </p>
           <canvas id="pathChart"></canvas>
         </div>
@@ -796,8 +804,11 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
 
           <div class="param-card">
             <div class="param-preview">
-              <div class="preview-badge">Same gold drive — top view</div>
+              <div class="preview-badge">Same gold drive — course map</div>
               <canvas id="paramCanvas"></canvas>
+              <div class="preview-help">
+                Each gate is the empty space between two glowing posts.
+              </div>
             </div>
           </div>
         </div>
@@ -852,7 +863,10 @@ footer{padding:43px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--sub
                 <div><b>Gate 2 at 4.1 s:</b> &nbsp;1.1 ≤ y(4.1) ≤ &nbsp;2.3 m</div>
                 <div><b>Gate 3 at 6.2 s:</b> −1.8 ≤ y(6.2) ≤ −0.6 m</div>
               </div>
-              <p>The car must be inside each glowing gate when it reaches that gate.</p>
+              <p>
+                At each gate time, the center of the car must lie inside the listed range.
+                Passing between the two gate posts satisfies the constraint.
+              </p>
             </div>
           </div>
 
@@ -1520,9 +1534,13 @@ function courseScreenY(timeAhead,carScreenY){
 function drawGate(ctx,index,currentTime,carScreenY){
   const dt=CFG.gateTimes[index]-currentTime;
   if(dt<-1.1||dt>4.6)return;
+
   const y=courseScreenY(dt,carScreenY);
   const frac=clamp((y-roadH*.25)/(roadH*.75),0,1);
   const postH=18+70*frac;
+  const postRadius=2.5+4.5*frac;
+  const baseWidth=8+17*frac;
+
   const openingHalf=CFG.gateOpeningHalf[index];
   const left=lateralToScreen(CFG.gateCenters[index]-openingHalf,y);
   const right=lateralToScreen(CFG.gateCenters[index]+openingHalf,y);
@@ -1534,18 +1552,56 @@ function drawGate(ctx,index,currentTime,carScreenY){
   ctx.shadowColor=glow;
   ctx.shadowBlur=14;
   ctx.lineWidth=3+2*frac;
+  ctx.lineCap="round";
+
+  // Two separate posts. The space between them stays completely empty.
+  [left,right].forEach(x=>{
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.lineTo(x,y-postH);
+    ctx.stroke();
+
+    // Glowing light at the top of each post.
+    ctx.beginPath();
+    ctx.arc(x,y-postH,postRadius,0,Math.PI*2);
+    ctx.fill();
+
+    // Small base on the road.
+    ctx.beginPath();
+    ctx.moveTo(x-baseWidth/2,y);
+    ctx.lineTo(x+baseWidth/2,y);
+    ctx.stroke();
+  });
+
+  // Small arrows point toward the open gap without covering it.
+  ctx.shadowBlur=7;
+  ctx.lineWidth=2+frac;
+  const arrowY=y-postH*.48;
+  const arrowSize=4+6*frac;
+
   ctx.beginPath();
-  ctx.moveTo(left,y);
-  ctx.lineTo(left,y-postH);
-  ctx.moveTo(right,y);
-  ctx.lineTo(right,y-postH);
+  ctx.moveTo(left,arrowY);
+  ctx.lineTo(left+arrowSize,arrowY-arrowSize*.55);
+  ctx.moveTo(left,arrowY);
+  ctx.lineTo(left+arrowSize,arrowY+arrowSize*.55);
+
+  ctx.moveTo(right,arrowY);
+  ctx.lineTo(right-arrowSize,arrowY-arrowSize*.55);
+  ctx.moveTo(right,arrowY);
+  ctx.lineTo(right-arrowSize,arrowY+arrowSize*.55);
   ctx.stroke();
-  ctx.globalAlpha=.18;
-  ctx.fillRect(left,y-postH,Math.max(4,right-left),postH);
-  ctx.globalAlpha=1;
+
+  ctx.shadowBlur=0;
   ctx.font=`900 ${9+7*frac}px Arial`;
   ctx.textAlign="center";
-  ctx.fillText(`GATE ${index+1}`, (left+right)/2, y-postH-8);
+  ctx.fillText(`GATE ${index+1}`, (left+right)/2, y-postH-9);
+
+  if(frac>.45){
+    ctx.fillStyle="rgba(225,232,244,.78)";
+    ctx.font=`800 ${8+3*frac}px Arial`;
+    ctx.fillText("PASS BETWEEN THE POSTS",(left+right)/2,y-postH+16+8*frac);
+  }
+
   ctx.restore();
 }
 
@@ -2159,15 +2215,64 @@ function drawParameterCanvas(plan){
     ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(w-R,y);ctx.stroke();
   }
 
+  const gateColors=["#63ddff","#9b90ff","#76efb2"];
+
   CFG.gateTimes.forEach((t,i)=>{
     const x=sx(t);
+    const color=gateColors[i];
+    const center=CFG.gateCenters[i];
     const openingHalf=CFG.gateOpeningHalf[i];
-    const top=sy(CFG.gateCenters[i]+openingHalf);
-    const bottom=sy(CFG.gateCenters[i]-openingHalf);
-    ctx.fillStyle=i===0?"rgba(99,221,255,.18)":i===1?"rgba(155,144,255,.18)":"rgba(118,239,178,.18)";
-    ctx.fillRect(x-10,top,20,bottom-top);
-    ctx.strokeStyle=i===0?"#63ddff":i===1?"#9b90ff":"#76efb2";
-    ctx.strokeRect(x-10,top,20,bottom-top);
+    const allowedHalf=CFG.gateHalf[i];
+
+    const upperPostY=sy(center+openingHalf);
+    const lowerPostY=sy(center-openingHalf);
+    const upperLimitY=sy(center+allowedHalf);
+    const lowerLimitY=sy(center-allowedHalf);
+
+    // Two physical posts. The empty space between them is the gate.
+    ctx.save();
+    ctx.strokeStyle=color;
+    ctx.fillStyle=color;
+    ctx.shadowColor=color;
+    ctx.shadowBlur=12;
+    ctx.lineWidth=4;
+
+    [upperPostY,lowerPostY].forEach(postY=>{
+      ctx.beginPath();
+      ctx.moveTo(x-8,postY);
+      ctx.lineTo(x+8,postY);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(x,postY,4.2,0,Math.PI*2);
+      ctx.fill();
+    });
+    ctx.restore();
+
+    // Thin dashed bracket showing the allowed range for the CAR CENTER.
+    ctx.save();
+    ctx.strokeStyle=color;
+    ctx.globalAlpha=.55;
+    ctx.setLineDash([3,4]);
+    ctx.lineWidth=1.5;
+    ctx.beginPath();
+    ctx.moveTo(x,upperLimitY);
+    ctx.lineTo(x,lowerLimitY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    [upperLimitY,lowerLimitY].forEach(limitY=>{
+      ctx.beginPath();
+      ctx.moveTo(x-5,limitY);
+      ctx.lineTo(x+5,limitY);
+      ctx.stroke();
+    });
+    ctx.restore();
+
+    ctx.fillStyle=color;
+    ctx.font="900 10px Arial";
+    ctx.textAlign="center";
+    ctx.fillText(`GATE ${i+1}`,x,Math.max(T+12,upperPostY-11));
   });
 
   const pts=(plan===exactPlan)?exactHistory:samplePlan(plan,.0125);
@@ -2176,8 +2281,34 @@ function drawParameterCanvas(plan){
   pts.forEach((p,i)=>{const x=sx(p.t),y=sy(p.y);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});
   ctx.stroke();ctx.shadowBlur=0;
 
-  ctx.fillStyle="#a7b0c2";ctx.font="11px Arial";ctx.textAlign="center";
-  ctx.fillText("time through the 8-second horizon",L+(w-L-R)/2,h-10);
+  // Exact mathematical intersection of the gold trajectory with each gate.
+  CFG.gateTimes.forEach((time,i)=>{
+    const state=splineState(plan,time);
+    const x=sx(time);
+    const y=sy(state.y);
+
+    ctx.save();
+    ctx.fillStyle="#76efb2";
+    ctx.strokeStyle="#071019";
+    ctx.lineWidth=2;
+    ctx.shadowColor="#76efb2";
+    ctx.shadowBlur=10;
+    ctx.beginPath();
+    ctx.arc(x,y,5,0,Math.PI*2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle="#bff7d8";
+    ctx.font="900 9px Arial";
+    ctx.textAlign="left";
+    ctx.fillText("PASS",x+8,y-7);
+  });
+
+  ctx.fillStyle="#a7b0c2";
+  ctx.font="11px Arial";
+  ctx.textAlign="center";
+  ctx.fillText("distance along the road",L+(w-L-R)/2,h-10);
 }
 
 function updateParameterPreview(start){
