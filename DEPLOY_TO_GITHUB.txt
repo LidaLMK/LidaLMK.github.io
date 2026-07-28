@@ -6,3 +6,9 @@ CDC 2026 and FOCAPO-CPC 2027 are both marked as accepted.
 Both entries now include their arXiv preprint links.
 
 If the rest of the website is already online, replacing publications.html is enough.
+
+
+STATUS WORDING UPDATE
+---------------------
+The journal manuscript status now says only "Submitted".
+Replace publications.html on GitHub.
