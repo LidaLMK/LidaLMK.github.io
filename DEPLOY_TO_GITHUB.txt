@@ -12,3 +12,14 @@ STATUS WORDING UPDATE
 ---------------------
 The journal manuscript status now says only "Submitted".
 Replace publications.html on GitHub.
+
+
+PURPLE COMPARISON VISIBILITY
+----------------------------
+Replace the online index.html with this version.
+
+The purple 0.5-second-update comparison now:
+1. runs automatically after "Watch best drive",
+2. has its own direct button,
+3. shows a dashed purple trajectory calculated from the sampled model, and
+4. remains visible when it overlaps the gold car.
